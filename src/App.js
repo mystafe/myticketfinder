@@ -1,12 +1,18 @@
 import "./App.css";
-import TicketEvent from "./components/TicketEvent";
+import Header from "./components/Header";
+import Main from "./components/Main";
+
+// import TicketEvent from "./components/TicketEvent";
+
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="App">
-      <h1>My Ticket Finder App</h1>
-
-      <TicketEvent />
+      <Header />
+      <Main />
+      {/* <TicketEvent /> */}
+      <Footer />
     </div>
   );
 }

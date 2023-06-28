@@ -6,8 +6,6 @@ import Navbar from "../components/Navbar";
 function Events() {
   return (
     <div className="events">
-      <Header />
-      <Navbar />
       <EventList />
     </div>
   );

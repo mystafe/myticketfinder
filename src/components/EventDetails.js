@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Map from "./Map";
 import Header from "./Header";
 import Navbar from "./Navbar";
@@ -25,8 +25,6 @@ function EventDetails() {
   };
   return (
     <div className="detail">
-      <Header />
-      <Navbar />
       <div className="eventdetails">
         {showEventDetailScreen && (
           <div className="eventdetail">

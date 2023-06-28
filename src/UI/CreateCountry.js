@@ -6,8 +6,6 @@ import CreateCountryForm from "../components/CreateCountryForm";
 function CreateCountry() {
   return (
     <div className="create-country">
-      <Header />
-      <Navbar />
       <CreateCountryForm />
     </div>
   );

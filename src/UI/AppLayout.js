@@ -3,13 +3,18 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Main from "../components/Main";
 import Navbar from "../components/Navbar";
+import { Outlet } from "react-router-dom";
 
-function Home() {
+function AppLayout() {
   return (
-    <div className="home">
-      <Main />
+    <div className="App">
+      <Header />
+      <Navbar />
+
+      <Outlet />
+
+      <Footer />
     </div>
   );
 }
-
-export default Home;
+export default AppLayout;

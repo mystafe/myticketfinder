@@ -6,24 +6,30 @@ import Home from "./UI/Home";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import EventDetails from "./components/EventDetails";
 import CreateCountry from "./UI/CreateCountry";
+import AppLayout from "./UI/AppLayout";
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <Home />,
-    },
-    {
-      path: "/event",
-      element: <Events />,
-    },
-    {
-      path: "/event/:id",
-      element: <EventDetails />,
-    },
-    {
-      path: "/country/create",
-      element: <CreateCountry />,
+      element: <AppLayout />,
+      children: [
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/event",
+          element: <Events />,
+        },
+        {
+          path: "/event/:id",
+          element: <EventDetails />,
+        },
+        {
+          path: "/country/create",
+          element: <CreateCountry />,
+        },
+      ],
     },
   ]);
 

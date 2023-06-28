@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Under Construction
+![image](https://github.com/mystafe/myticketfinder/assets/75567558/a04a4998-fe4f-4f62-9ba8-a1f2f1dadb33)
+
+
 ## Available Scripts
 
 In the project directory, you can run:

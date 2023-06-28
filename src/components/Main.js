@@ -1,12 +1,24 @@
 import React from "react";
-import EventList from "./EventList";
-import Navbar from "./Navbar";
+import EventList from "../components/EventList";
+import Navbar from "../components/Navbar";
 
 function Main() {
   return (
     <div className="main">
-      <Navbar />
-      <EventList />
+      <div className="slider">
+        <h1>Slider</h1>
+      </div>
+      <div className="popular">
+        <h1>Popular Events</h1>
+      </div>
+
+      <div className="eventlist">
+        <h1>Event list</h1>
+      </div>
+
+      <div className="upcoming">
+        <h1>Upcoming Events</h1>
+      </div>
     </div>
   );
 }

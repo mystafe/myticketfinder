@@ -3,26 +3,21 @@
   padding: 0;
   box-sizing: border-box;
 }
-.App {
+body,
+.home,
+.events {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   text-align: center;
   display: flex;
-  flex-direction: column;
-
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
-.App > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-.App .header {
-  width: 100%;
+
+.header {
+  width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -32,7 +27,7 @@
   padding: 1rem;
   background: #61dafb;
 }
-.App .header .logo {
+.header .logo {
   color: #282c34;
   display: flex;
   flex-direction: row;
@@ -41,7 +36,7 @@
   gap: 1rem;
 }
 
-.App .header .searchbar {
+.header .searchbar {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -49,52 +44,117 @@
   gap: 1rem;
   padding: 1rem;
 }
-.App .header .searchbar input {
+.header .searchbar input {
   padding: 0.5rem;
   border: 1px solid #282c34;
   border-radius: 10px;
   background-color: #fff;
   width: 25rem;
 }
-.App .header .searchbar button {
+.header .searchbar button {
   padding: 0.5rem;
   border: 1px solid #282c34;
   border-radius: 10px;
   background-color: #fff;
   cursor: pointer;
 }
-.App .header .searchbar button:hover {
+.header .searchbar button:hover {
   background-color: #282c34;
   color: #fff;
   transform: scale(1.1);
 }
-
-.App .main {
+.detail {
   display: flex;
   flex-direction: row;
-  gap: 15rem;
-  padding: 1rem;
-  margin: 1rem;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
-  background-color: bisque;
-  /* align-items: flex-start; */
-  justify-content: flex-start;
-
   flex-wrap: wrap;
+  width: 100vw;
+}
+.logo img {
+  width: 40px;
+  height: 40px;
+}
+.eventdetails {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3rem;
+  text-align: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  width: 70vw;
 }
 
-.App .main .eventlist {
-  /* background-color: burlywood; */
+.eventdetail,
+.ticket-purchase-screen {
+  box-sizing: border-box;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  text-align: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 50%;
+}
+.map {
+  box-sizing: border-box;
+  margin: 3rem;
+  width: 40%;
+  height: 50%;
+  border: 3px solid #282c34;
+}
+.main {
+  padding: 1rem;
+  margin: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background-color: bisque;
+
+  box-sizing: border-box;
+  text-align: start;
+}
+.create-country {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.eventlist {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1.5rem;
+  margin-bottom: 3rem;
+  text-align: center;
   justify-content: flex-start;
-  width: 70%;
+  width: 60vw;
+}
+.main > div {
+  margin: 1rem;
+  padding: 1rem;
+  background-color: bisque;
+  min-width: 70vw;
+  box-sizing: border-box;
+  text-align: start;
 }
 
-.App .footer {
+.slider {
+  margin-bottom: 3rem;
+}
+.popular {
+  margin-bottom: 3rem;
+}
+.upcoming {
+  margin-bottom: 3rem;
+}
+
+.events {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.footer {
   width: 100vw;
 
   display: flex;
@@ -109,42 +169,14 @@
   background: #7c8a8e;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.App .main .navbar {
+.navbar {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
+  width: 18vw;
+  box-sizing: border-box;
 }
 
 ul {
@@ -171,10 +203,6 @@ a {
   text-decoration: none;
   color: #ffffff;
   padding: 5px;
-}
-
-.eventlist {
-  margin-top: 20px;
 }
 
 .eventtable {

@@ -1,20 +1,41 @@
 import "./App.css";
-import Header from "./components/Header";
-import Main from "./components/Main";
+import Header from "../src/components/Header";
+import Events from "../src/UI/Events";
+import Home from "./UI/Home";
 
-// import TicketEvent from "./components/TicketEvent";
-
-import Footer from "./components/Footer";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import EventDetails from "./components/EventDetails";
+import CreateCountry from "./UI/CreateCountry";
 
 function App() {
-  return (
-    <div className="App">
-      <Header />
-      <Main />
-      {/* <TicketEvent /> */}
-      <Footer />
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+    {
+      path: "/event",
+      element: <Events />,
+    },
+    {
+      path: "/event/:id",
+      element: <EventDetails />,
+    },
+    {
+      path: "/country/create",
+      element: <CreateCountry />,
+    },
+  ]);
+
+  // return (
+  //   <div className="App">
+  //     <Header />
+  //     <Main />
+  //     {/* <TicketEvent /> */}
+  //     <Footer />
+  //   </div>
+  // );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

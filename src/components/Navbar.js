@@ -5,13 +5,13 @@ function Navbar() {
     <div className="navbar">
       <ul>
         <li>
-          <a href="#event">All Events</a>
+          <a href="/event">All Events</a>
         </li>
         <li>
-          <a href="#popular">Popular Events</a>
+          <a href="/event/1">Popular Events</a>
         </li>
         <li>
-          <a href="#upcoming">Upcoming Events </a>
+          <a href="/country/create">Upcoming Events </a>
         </li>
         <li>
           <a href="#past">Past Events</a>

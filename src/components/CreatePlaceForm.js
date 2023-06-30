@@ -16,7 +16,8 @@ function CreatePlaceForm() {
   const [closeHour, setCloseHour] = useState("22:00");
   const [isActive, setIsActive] = useState(true);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(1);
+  const [selectedCountryId, setSelectedCountryId] = useState(1);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const [fullAddress, setFullAddress] = useState("sample full adress");
   const [latitude, setLatitude] = useState("41.3");
@@ -27,6 +28,8 @@ function CreatePlaceForm() {
   const [selectedCity, setSelectedCity] = useState("");
   const [countryName, setCountryName] = useState("");
 
+  const [showAdditionalFields, setShowAdditionalFields] = useState(true);
+
   const handleSelectedRow = (id) => {
     setSelectedTable(id);
   };
@@ -35,12 +38,23 @@ function CreatePlaceForm() {
   };
 
   const handleAddressId = (id) => {
-    if (id == null) {
+    console.log("id", id);
+    if (id == 0 || id == null) {
       setAddressId(null);
+      setShowAdditionalFields(true);
+
       return;
     }
     setAddressId(id);
-    setSelectedAddress(addresses.find((address) => address.id == id));
+    const selectedAddress = addresses.find((address) => address.id == id);
+
+    setSelectedAddress(selectedAddress);
+    setSelectedCity(selectedAddress.city.name);
+    setSelectedCountryId(selectedAddress.city.countryId);
+    setSelectedCountry(
+      countries.find((country) => country.id == selectedAddress.city.countryId)
+    );
+    setShowAdditionalFields(false);
   };
 
   const handleCountryId = (id) => {
@@ -72,7 +86,7 @@ function CreatePlaceForm() {
         const res4 = await axios.get("https://localhost:7169/api/city");
         setCities(res4.data);
         setAvailableCities(
-          res4.data.filter((city) => city.countryId == selectedCountry)
+          res4.data.filter((city) => city.countryId == selectedCountryId)
         );
       } catch (error) {
         console.log(error);
@@ -241,7 +255,7 @@ function CreatePlaceForm() {
             value={addressId}
             onChange={(e) => handleAddressId(e.target.value)}
           >
-            <option value={null}>Select Address</option>
+            <option value={0}>Select Address</option>
             {addresses.map((address) => (
               <option key={address.id} value={address.id}>
                 {address.fullAddress}
@@ -250,71 +264,88 @@ function CreatePlaceForm() {
           </select>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="FullAddress">Full Address</label>
-          <input
-            type="text"
-            className="form-control"
-            id="FullAddress"
-            placeholder="Enter Fulladdress"
-            value={fullAddress}
-            onChange={(e) => setFullAddress(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="GeoLat">Latitude</label>
-          <input
-            type="text"
-            className="form-control"
-            id="GeoLat"
-            placeholder="Enter Latitude"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="GeoLong">Longitude</label>
-          <input
-            type="text"
-            className="form-control"
-            id="GeoLong"
-            placeholder="Enter Longitude"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="country-id">Country</label>
-          <select
-            className="form-control"
-            id="country-id"
-            onChange={(e) => handleCountryId(e.target.value)}
-            value={countryId}
-          >
-            <option value={null}>Select country</option>
-            {countries.map((country) => (
-              <option key={country.id} value={country.id}>
-                {country.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="city-id">City</label>
-          <select
-            className="form-control"
-            id="city-id"
-            onChange={(e) => handleCityId(e.target.value)}
-            value={cityId}
-          >
-            <option value={null}>Select city</option>
-            {availableCities.map((city) => (
-              <option key={city.id} value={city.id}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-        </div>
+        {showAdditionalFields && (
+          <>
+            <div className="form-group">
+              <label htmlFor="FullAddress">Full Address</label>
+              <input
+                type="text"
+                className="form-control"
+                id="FullAddress"
+                placeholder="Enter Fulladdress"
+                value={fullAddress}
+                onChange={(e) => setFullAddress(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="GeoLat">Latitude</label>
+              <input
+                type="text"
+                className="form-control"
+                id="GeoLat"
+                placeholder="Enter Latitude"
+                value={latitude}
+                onChange={(e) => setLatitude(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="GeoLong">Longitude</label>
+              <input
+                type="text"
+                className="form-control"
+                id="GeoLong"
+                placeholder="Enter Longitude"
+                value={longitude}
+                onChange={(e) => setLongitude(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="country-id">Country</label>
+              <select
+                className="form-control"
+                id="country-id"
+                onChange={(e) => handleCountryId(e.target.value)}
+                value={countryId}
+              >
+                <option value={null}>Select country</option>
+                {countries.map((country) => (
+                  <option key={country.id} value={country.id}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="city-id">City</label>
+              <select
+                className="form-control"
+                id="city-id"
+                onChange={(e) => handleCityId(e.target.value)}
+                value={cityId}
+              >
+                <option value={null}>Select city</option>
+                {availableCities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </>
+        )}
+        {!showAdditionalFields && (
+          <>
+            <div className="form-group" style={{ color: "red" }}>
+              <p>{selectedAddress.fullAddress} </p>
+              {console.log("selectedAddress", selectedAddress)}
+              {/* <p>{selectedAddress.city.name} </p>
+              <p>{selectedCountry}</p> */}
+              <p>{selectedCity} </p>
+              {console.log("selectedCity", selectedCity)}
+              <p>{selectedCountry.name} </p>
+            </div>
+          </>
+        )}
 
         <button type="submit" className="btn btn-primary">
           Create Place
@@ -342,7 +373,9 @@ function CreatePlaceForm() {
                     key={place.id}
                     onMouseEnter={() => handleSelectedRow(place.id)}
                     onMouseLeave={() => handleUnselectedRow()}
-                    className={place.id === selectedTable ? "selected" : ""}
+                    className={
+                      place.id === selectedTable ? "selectedTable" : ""
+                    }
                   >
                     <td>{place.name}</td>
                     <td>{place.openHour}</td>

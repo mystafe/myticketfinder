@@ -139,7 +139,12 @@ body,
 .create-country,
 .create-city,
 .create-address,
-.create-place {
+.create-place,
+.create-event,
+.reate-customer,
+.create-ticket,
+.create-stage,
+.create-eventstage {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

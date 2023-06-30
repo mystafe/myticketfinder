@@ -10,6 +10,11 @@ import AppLayout from "./UI/AppLayout";
 import CreateCity from "./UI/CreateCity";
 import CreateAddress from "./UI/CreateAddress";
 import CreatePlace from "./UI/CreatePlace";
+import CreateCustomer from "./UI/CreateCustomer";
+import NotFound from "./UI/NotFound";
+import CreateStage from "./UI/CreateStage";
+import CreateEvent from "./UI/CreateEvent";
+import CreateTicket from "./UI/CreateTicket";
 
 function App() {
   const router = createBrowserRouter([
@@ -23,6 +28,10 @@ function App() {
         {
           path: "/event",
           element: <Events />,
+        },
+        {
+          path: "/event/create",
+          element: <CreateEvent />,
         },
         {
           path: "/event/:id",
@@ -42,8 +51,24 @@ function App() {
         },
 
         {
+          path: "/ticket/create",
+          element: <CreateTicket />,
+        },
+        {
           path: "/place/create",
           element: <CreatePlace />,
+        },
+        {
+          path: "/customer/create",
+          element: <CreateCustomer />,
+        },
+        {
+          path: "/stage/create",
+          element: <CreateStage />,
+        },
+        {
+          path: "*",
+          element: <NotFound />,
         },
       ],
     },

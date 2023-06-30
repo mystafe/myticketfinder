@@ -5,35 +5,35 @@ function Navbar() {
     <div className="navbar">
       <ul>
         <li>
-          <a href="/event">All Events</a>
+          <a href="/event">event - All Events</a>
         </li>
         <li>
-          <a href="/event/1">Popular Events</a>
+          <a href="/event/1">event 1 - Popular Events</a>
         </li>
         <li>
-          <a href="/country/create">Upcoming Events </a>
+          <a href="/country/create">country - Upcoming Events </a>
         </li>
         <li>
-          <a href="/city/create">Past Events</a>
+          <a href="/city/create">city - Past Events</a>
         </li>
         <li>
-          <a href="/address/create">Free Events</a>
+          <a href="/address/create">address - Free Events</a>
         </li>
         <li>
-          <a href="/place/create">Today's Events</a>
+          <a href="/place/create">place - Today's Events</a>
         </li>
         <li>
-          <a href="#thisweek">This Week's Events</a>
+          <a href="/customer/create">customer - This Week's Events</a>
         </li>
         <li>
-          <a href="#family">Free Events</a>
+          <a href="/stage/create">Stage - Free Events</a>
         </li>
 
         <li>
-          <a href="#concert">Concert Events</a>
+          <a href="/event/create">Event - Concert Events</a>
         </li>
         <li>
-          <a href="#sports">Sports Events</a>
+          <a href="/ticket/create">Ticket - Sports Events</a>
         </li>
         <li>
           <a href="#comedy">Comedy Events</a>

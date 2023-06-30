@@ -136,10 +136,14 @@ body,
   box-sizing: border-box;
   text-align: start;
 }
-.create-country {
+.create-country,
+.create-city,
+.create-address,
+.create-place {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 2rem;
 }
 .eventlist {
   display: flex;

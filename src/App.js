@@ -1,5 +1,5 @@
 import "./App.css";
-import Header from "../src/components/Header";
+
 import Events from "../src/UI/Events";
 import Home from "./UI/Home";
 
@@ -7,6 +7,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import EventDetails from "./components/EventDetails";
 import CreateCountry from "./UI/CreateCountry";
 import AppLayout from "./UI/AppLayout";
+import CreateCity from "./UI/CreateCity";
+import CreateAddress from "./UI/CreateAddress";
+import CreatePlace from "./UI/CreatePlace";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +31,19 @@ function App() {
         {
           path: "/country/create",
           element: <CreateCountry />,
+        },
+        {
+          path: "/city/create",
+          element: <CreateCity />,
+        },
+        {
+          path: "/address/create",
+          element: <CreateAddress />,
+        },
+
+        {
+          path: "/place/create",
+          element: <CreatePlace />,
         },
       ],
     },

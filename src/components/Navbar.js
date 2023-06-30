@@ -14,13 +14,13 @@ function Navbar() {
           <a href="/country/create">Upcoming Events </a>
         </li>
         <li>
-          <a href="#past">Past Events</a>
+          <a href="/city/create">Past Events</a>
         </li>
         <li>
-          <a href="#free">Free Events</a>
+          <a href="/address/create">Free Events</a>
         </li>
         <li>
-          <a href="#today">Today's Events</a>
+          <a href="/place/create">Today's Events</a>
         </li>
         <li>
           <a href="#thisweek">This Week's Events</a>

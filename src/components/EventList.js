@@ -72,7 +72,7 @@ function EventList() {
                     {events.map((event) => (
                       <tr
                         key={event.id}
-                        onMouseEnter={() => handleSelectedRow(event.id)}
+                        onClick={() => handleSelectedRow(event.id)}
                         onMouseLeave={() => handleUnselectedRow()}
                         className={`${
                           selectedTable === event.id ? "selectedTable" : ""

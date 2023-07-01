@@ -277,3 +277,37 @@ a {
 
   transform: scale(1.01);
 }
+
+.btn {
+  background-color: #282c34;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 0.5rem;
+}
+.btn:hover {
+  background-color: #f07c7c;
+  color: #fff;
+  transform: scale(1.1);
+}
+.btn-primary {
+  background-color: #224faa;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 0.5rem;
+}
+
+#eventImages {
+  background-color: #2d56aa !important;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 0.5rem;
+}

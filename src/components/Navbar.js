@@ -36,22 +36,16 @@ function Navbar() {
           <a href="/ticket/create">Ticket - Sports Events</a>
         </li>
         <li>
-          <a href="#comedy">Comedy Events</a>
+          <a href="/eventseat/list">Eventseat - Comedy Events</a>
         </li>
         <li>
-          <a href="#festivals">Festivals</a>
+          <a href="/eventimage/create">EventImage - Movies</a>
         </li>
         <li>
-          <a href="#movies">Movies</a>
+          <a href="/rating/create">Rating - Nightlife</a>
         </li>
         <li>
-          <a href="#nightlife">Nightlife</a>
-        </li>
-        <li>
-          <a href="#art">Art</a>
-        </li>
-        <li>
-          <a href="#food">Food</a>
+          <a href="/eventstage/create">EventStage - Art</a>
         </li>
       </ul>
     </div>

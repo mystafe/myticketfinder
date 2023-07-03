@@ -15,7 +15,10 @@ import NotFound from "./UI/NotFound";
 import CreateStage from "./UI/CreateStage";
 import CreateEvent from "./UI/CreateEvent";
 import CreateTicket from "./UI/CreateTicket";
-
+import ListEventSeats from "./UI/ListEventSeats";
+import CreateEventImage from "./UI/CreateEventImage";
+import CreateRating from "./UI/CreateRating";
+import CreateEventStage from "./UI/CreateEventStage";
 function App() {
   const router = createBrowserRouter([
     {
@@ -55,6 +58,10 @@ function App() {
           element: <CreateTicket />,
         },
         {
+          path: "/eventseat/list",
+          element: <ListEventSeats />,
+        },
+        {
           path: "/place/create",
           element: <CreatePlace />,
         },
@@ -63,9 +70,18 @@ function App() {
           element: <CreateCustomer />,
         },
         {
+          path: "/rating/create",
+          element: <CreateRating />,
+        },
+        {
           path: "/stage/create",
           element: <CreateStage />,
         },
+        {
+          path: "/eventimage/create",
+          element: <CreateEventImage />,
+        },
+        { path: "/eventstage/create", element: <CreateEventStage /> },
         {
           path: "*",
           element: <NotFound />,

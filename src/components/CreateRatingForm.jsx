@@ -48,6 +48,9 @@ function CreateRatingForm() {
         setEvents(res.data);
         const res2 = await axios.get("https://localhost:7169/api/customer");
         setCustomers(res2.data);
+        const res3 = await axios.get("https://localhost:7169/api/rating");
+        setRatings(res3.data);
+        console.log(res3.data);
 
         setLoading(false);
       } catch (error) {
@@ -93,7 +96,7 @@ function CreateRatingForm() {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Rating</h2>
         <div>
@@ -107,7 +110,7 @@ function CreateRatingForm() {
           />
         </div>
         <div>
-          <label htmlFor="comment">Comment</label>
+          <label htmlFor="event">Event</label>
           <Select
             options={events.map((event) => ({
               value: event.id,
@@ -148,48 +151,45 @@ function CreateRatingForm() {
         </button>
       </form>
 
-      <div className="eventRatings">
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <>
-            <h2>Ratings</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Customer</th>
-                  <th>Event</th>
-                  <th>Rating</th>
-                  <th>Comment</th>
-                </tr>
-              </thead>
-              <tbody>
-                {ratings.map((rating) => (
-                  <tr key={rating.id}>
-                    <td>
-                      {customers.map((customer) =>
-                        customer.id === rating.customerId
-                          ? customer.fullname
-                          : ""
-                      )}
-                    </td>
-                    <td>
-                      {" "}
-                      {events.map((event) =>
-                        event.id === rating.eventId ? event.name : ""
-                      )}
-                    </td>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <h2>Ratings</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Event</th>
+                <th>Rating</th>
+                <th>Comment</th>
+              </tr>
+            </thead>
+            <tbody>
+              {ratings.map((rating) => (
+                <tr key={rating.id}>
+                  <td>
+                    {customers
+                      .filter((customer) => customer.id == rating.customer.id)
+                      .map((customer) => customer.fullname)}
+                  </td>
+                  <td>
+                    {" "}
+                    {console.log("rating eventId", rating.event.id)}
+                    {events
+                      .filter((event) => event.id == rating.event.id)
+                      .map((event) => event.name)}
+                  </td>
 
-                    <td>{rating.ratingValue}</td>
-                    <td>{rating.comment}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </div>
-    </>
+                  <td>{rating.ratingValue}</td>
+                  <td>{rating.comment}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
 }
 

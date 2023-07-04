@@ -3,7 +3,7 @@ import axios from "axios";
 import Select from "react-select";
 import { set, useForm } from "react-cool-form";
 
-function CreateCityForm() {
+function CreateCityForm({ allCountries, allCities, fetchCity }) {
   const Field = ({ label, id, error, ...rest }) => (
     <div>
       <label htmlFor={id}>{label}</label>
@@ -17,14 +17,10 @@ function CreateCityForm() {
     onSubmit: (values) => console.log("onSubmit: ", values),
   });
 
-  const [cities, setCities] = useState([]);
-
-  const [countries, setCountries] = useState([]);
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [countryOptions, setCountryOptions] = useState([]);
 
   const handleSelectedRow = (id) => {
     setSelectedTable(id);
@@ -34,7 +30,7 @@ function CreateCityForm() {
   };
 
   const handleCountry = (id) => {
-    setSelectedCountry(countries.filter((c) => c.id == id)[0]);
+    setSelectedCountry(allCountries.filter((c) => c.id == id)[0]);
   };
 
   const handleSubmit = (e) => {
@@ -43,41 +39,20 @@ function CreateCityForm() {
     const name = e.target["city-name"].value;
     const CountryId = selectedCountry.id;
 
-    axios.post("https://localhost:7169/api/city", {
-      name,
-      CountryId,
-    });
-    setCities([...cities, { name, CountryId, id: cities.length + 1 }]);
+    axios
+      .post("https://localhost:7169/api/city", {
+        name,
+        CountryId,
+      })
+      .then((res) => {
+        fetchCity();
+      });
   };
 
-  useEffect(() => {
-    const fetchCity = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("https://localhost:7169/api/city");
-        setCities(res.data);
-
-        const res2 = await axios.get("https://localhost:7169/api/country");
-        setCountries(res2.data);
-        setCountryOptions(
-          res2.data.map((country) => ({
-            value: country.id,
-            label: country.name,
-          }))
-        );
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCity();
-  }, []);
-
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
-        <h2>Create city Form</h2>
+        <h2>Create City</h2>
         <div>
           <label htmlFor="city-name">city Name</label>
           <input type="text" id="city-name" />
@@ -89,7 +64,9 @@ function CreateCityForm() {
             onChange={(e) => {
               handleCountry(e.value);
             }}
-            options={countryOptions}
+            options={allCountries.map((c) => {
+              return { value: c.id, label: c.name };
+            })}
           />
         </div>
 
@@ -98,57 +75,50 @@ function CreateCityForm() {
         </button>
       </form>
 
-      <div className="citylist">
-        {" "}
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <>
-            {cities && (
-              <>
-                <h2>Cities</h2>
-                <table className="cssTable">
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Name</th>
-                      <th>CountryId</th>
-                      <th>Counrty Name</th>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          {allCities && (
+            <div>
+              <h2>All cities</h2>
+              <table className="cssTable">
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>CountryId</th>
+                    <th>Counrty Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allCities.map((city) => (
+                    <tr
+                      key={city.id}
+                      onMouseEnter={() => handleSelectedRow(city.id)}
+                      onMouseLeave={() => handleUnselectedRow()}
+                      className={`${
+                        selectedTable === city.id ? " selectedTable " : ""
+                      }`}
+                    >
+                      <td>{city.id}</td>
+                      <td>{city.name}</td>
+                      <td>{city.countryId}</td>
+                      <td>
+                        {allCountries.find((c) => c.id == city.countryId)
+                          ?.name ||
+                          selectedCountry.name ||
+                          "Not Found"}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {cities.map((city) => (
-                      <tr
-                        key={city.id}
-                        onMouseEnter={() => handleSelectedRow(city.id)}
-                        onMouseLeave={() => handleUnselectedRow()}
-                        className={`${
-                          selectedTable === city.id ? " selectedTable " : ""
-                        }`}
-                      >
-                        <td>{city.id}</td>
-                        <td>{city.name}</td>
-                        <td>{city.countryId}</td>
-                        <td>
-                          {
-                            countries.find((c) => c.id == city.countryId)
-                              ?.name ||
-                              selectedCountry.name ||
-                              "Not Found"
-
-                            // if (countries.find((c) => c.id == city.countryId)) {
-                          }
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </>
-            )}
-          </>
-        )}
-      </div>
-    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
+    </div>
   );
 }
 

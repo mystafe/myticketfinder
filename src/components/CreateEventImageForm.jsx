@@ -103,7 +103,7 @@ function CreateEventImageForm() {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Event Image</h2>
         <Field
@@ -150,52 +150,50 @@ function CreateEventImageForm() {
         </button>
       </form>
 
-      <div className="eventImageList">
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <>
-            <h2>Event Images</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Picture</th>
-                  <th>Description</th>
-                  <th>Event</th>
-                  <th>Actions</th>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div>
+          <h2>Event Images</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>Event</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {eventImages.map((eventImage) => (
+                <tr key={eventImage.id}>
+                  <td>
+                    <img
+                      src={eventImage.urlAddress}
+                      alt={eventImage.description}
+                      width="100"
+                      height="100"
+                    />
+                  </td>
+                  <td>{eventImage.description}</td>
+                  <td>{eventImage.eventId}</td>
+                  <td>
+                    {" "}
+                    <button
+                      className="btn btn-danger"
+                      value={eventImage.id}
+                      onClick={(e) => deleteEventImage(e)}
+                    >
+                      Delete
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {eventImages.map((eventImage) => (
-                  <tr key={eventImage.id}>
-                    <td>
-                      <img
-                        src={eventImage.urlAddress}
-                        alt={eventImage.description}
-                        width="100"
-                        height="100"
-                      />
-                    </td>
-                    <td>{eventImage.description}</td>
-                    <td>{eventImage.eventId}</td>
-                    <td>
-                      {" "}
-                      <button
-                        className="btn btn-danger"
-                        value={eventImage.id}
-                        onClick={(e) => deleteEventImage(e)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>
-        )}
-      </div>
-    </>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
   );
 }
 

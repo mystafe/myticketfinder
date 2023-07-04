@@ -155,7 +155,7 @@ function CreateEventForm() {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <Field
           label="Event Name"
@@ -249,7 +249,7 @@ function CreateEventForm() {
           {loading ? (
             <h1>Loading...</h1>
           ) : (
-            <>
+            <div>
               <h2>Event List</h2>
               <table>
                 <thead>
@@ -297,11 +297,11 @@ function CreateEventForm() {
                   ))}
                 </tbody>
               </table>
-            </>
+            </div>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

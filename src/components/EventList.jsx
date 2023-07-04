@@ -41,14 +41,13 @@ function EventList() {
   // eslint-disable-next-line no-lone-blocks
   {
     return (
-      <div className="eventlist">
-        {" "}
+      <>
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           <>
             {events && (
-              <>
+              <div>
                 <h2>Here are events</h2>
                 <table className="eventtable">
                   <thead>
@@ -122,11 +121,11 @@ function EventList() {
                     ))}
                   </tbody>
                 </table>
-              </>
+              </div>
             )}
           </>
         )}
-      </div>
+      </>
     );
   }
 }

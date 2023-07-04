@@ -58,7 +58,6 @@ function CreateStageForm() {
         capacityVip,
       })
       .then((res) => {
-   
         const newStages = [...stages, res.data];
         setStages(newStages);
         setName("");
@@ -77,13 +76,12 @@ function CreateStageForm() {
   };
 
   const handleIsIndoor = (value) => {
-
     if (value == "on") setIsIndoor(true);
     else setIsIndoor(false);
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Stage</h2>
         <div className="form-group">
@@ -163,7 +161,7 @@ function CreateStageForm() {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <>
+          <div>
             <h2>Stages</h2>
             <table className="table">
               <thead>
@@ -189,10 +187,10 @@ function CreateStageForm() {
                 ))}
               </tbody>
             </table>
-          </>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

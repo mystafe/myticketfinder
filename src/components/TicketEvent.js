@@ -39,11 +39,11 @@ function TicketEvent() {
   }, []);
 
   return (
-    <div className="ticketEvents">
+    <>
       {loading ? (
         <h1>Loading...</h1>
       ) : (
-        <>
+        <div>
           <h2>Ticket Events</h2>
           <table>
             <thead>
@@ -102,9 +102,9 @@ function TicketEvent() {
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

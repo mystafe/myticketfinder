@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import axios, { all } from "axios";
 import { set } from "react-cool-form";
 
-function CreateCountryForm({ allCountrites, setAllCountries }) {
-  console.log("Here are all countries", allCountrites);
-
+function CreateCountryForm({ allCountries, fetchCountry }) {
   const [loading, setLoading] = React.useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
 
@@ -19,29 +17,24 @@ function CreateCountryForm({ allCountrites, setAllCountries }) {
     e.preventDefault();
 
     const countryName = e.target["country-name"].value;
-    var countryId = null;
 
     try {
-      const res = axios.post("https://localhost:7169/api/country", {
-        name: countryName,
-      });
-      res.then((res) => {
-        countryId = res.data.id;
-      });
+      const res = axios
+        .post("https://localhost:7169/api/country", {
+          name: countryName,
+        })
+        .then((res) => {
+          fetchCountry();
+        });
     } catch (error) {
       console.log(error);
     }
-
-    setAllCountries([
-      ...allCountrites,
-      { name: countryName, id: allCountrites[allCountrites.length - 1].id + 1 },
-    ]);
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
-        <h2 className="formHeader">Create Country Form</h2>
+        <h2 className="formHeader">Create Country</h2>
         <div>
           <label htmlFor="country-name">Country Name</label>
           <input type="text" id="country-name" />
@@ -51,15 +44,15 @@ function CreateCountryForm({ allCountrites, setAllCountries }) {
           Create Country
         </button>
       </form>
-      <div className="countrylist">
+      <div className="adminTable">
         {" "}
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           <>
-            {allCountrites && (
-              <>
-                <h2>Here are countries</h2>
+            {allCountries && (
+              <div>
+                <h2>All Countries</h2>
                 <table>
                   <thead>
                     <tr>
@@ -68,7 +61,7 @@ function CreateCountryForm({ allCountrites, setAllCountries }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {allCountrites.map((country) => (
+                    {allCountries.map((country) => (
                       <tr
                         key={country.id}
                         onMouseEnter={() => handleSelectedRow(country.id)}
@@ -91,12 +84,12 @@ function CreateCountryForm({ allCountrites, setAllCountries }) {
                     ))}
                   </tbody>
                 </table>
-              </>
+              </div>
             )}
           </>
         )}
       </div>
-    </>
+    </div>
   );
 }
 

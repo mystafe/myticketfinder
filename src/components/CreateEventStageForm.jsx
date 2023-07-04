@@ -46,7 +46,7 @@ function CreateEventStageForm() {
       setLoading(true);
       try {
         const res = await axios.get("https://localhost:7169/api/event");
-    
+
         setEvents(res.data);
         setEventOptions(
           res.data.map((event) => {
@@ -74,13 +74,7 @@ function CreateEventStageForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // "id": 14,
-    // "name": "AY, CARMELA!2",
-    // "basePrice": 200.0,
-    // "eventId": 1,
-
     try {
-   
       setLoading(true);
       const res = await axios.post("https://localhost:7169/api/eventstage", {
         name,
@@ -88,7 +82,7 @@ function CreateEventStageForm() {
         eventId,
         stageId,
       });
-    
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -96,7 +90,7 @@ function CreateEventStageForm() {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Event Stage</h2>
         <Field
@@ -117,7 +111,6 @@ function CreateEventStageForm() {
           placeholder="Enter base price"
           value={basePrice}
           onChange={(e) => {
-      
             setBasePrice(e.target.value);
           }}
           required
@@ -139,7 +132,6 @@ function CreateEventStageForm() {
             id="stageId"
             name="stageId"
             onChange={(e) => setStageId(e.value)}
-            // {...set({ required: "Stage is required!" })}
             options={stageOptions}
             placeholder="Select stage"
           />
@@ -153,7 +145,7 @@ function CreateEventStageForm() {
         {loading ? (
           <h1>Loading...</h1>
         ) : (
-          <>
+          <div>
             <h2>Event Stages</h2>
             <table>
               <thead>
@@ -179,10 +171,10 @@ function CreateEventStageForm() {
                 ))}
               </tbody>
             </table>
-          </>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 export default CreateEventStageForm;

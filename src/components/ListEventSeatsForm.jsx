@@ -40,11 +40,11 @@ function ListEventSeatsForm() {
   }, []);
 
   return (
-    <div>
+    <>
       {loading ? (
         <div>Loading...</div>
       ) : (
-        <>
+        <div>
           <h2>Event Seats</h2>
           <table className="table table-striped">
             <thead>
@@ -93,9 +93,9 @@ function ListEventSeatsForm() {
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
 

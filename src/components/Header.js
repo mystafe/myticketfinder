@@ -8,7 +8,7 @@ function Header() {
   return (
     <>
       <div className="header">
-        <Logo /> <Searchbar /> Istanbul 📌 <Login /> <Register />
+        <Logo /> <Searchbar /> <h2>Istanbul📌</h2> <Login /> <Register />
       </div>
     </>
   );

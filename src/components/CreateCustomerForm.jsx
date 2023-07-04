@@ -161,7 +161,7 @@ function CreateCustomerForm() {
   }, []);
 
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Customer</h2>
         <div className="form-group">
@@ -329,7 +329,7 @@ function CreateCustomerForm() {
         {loading ? (
           <h1>Loading...</h1>
         ) : (
-          <>
+          <div>
             <h2>Customers</h2>
             <table>
               <thead>
@@ -364,10 +364,10 @@ function CreateCustomerForm() {
                 ))}
               </tbody>
             </table>
-          </>
+          </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 export default CreateCustomerForm;

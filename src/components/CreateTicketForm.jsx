@@ -79,7 +79,7 @@ function CreateTicketForm() {
   };
 
   return (
-    <>
+    <div>
       <form className="form-group" onSubmit={(e) => handleSubmit(e)}>
         <h2>Customer</h2>
         <div className="form-group">
@@ -136,7 +136,7 @@ function CreateTicketForm() {
           Submit
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

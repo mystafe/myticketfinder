@@ -1,67 +1,180 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 
-import CreateAddress from "./CreateAddress";
-import CreateCity from "./CreateCity";
-import CreatePlace from "./CreatePlace";
-import CreateStage from "./CreateStage";
-import CreateCustomer from "./CreateCustomer";
-import CreateEvent from "./CreateEvent";
-import CreateEventImage from "./CreateEventImage";
-import CreateRating from "./CreateRating";
-import CreateEventStage from "./CreateEventStage";
-import CreateTicket from "./CreateTicket";
 import { useState } from "react";
 import CreateCountryForm from "../components/CreateCountryForm";
+import CreateCityForm from "../components/CreateCityForm";
+import CreateAddressForm from "../components/CreateAddressForm";
+import CreatePlaceForm from "../components/CreatePlaceForm";
+import CreateStageForm from "../components/CreateStageForm";
+import CreateCustomerForm from "../components/CreateCustomerForm";
+import CreateEventForm from "../components/CreateEventForm";
+import CreateEventImageForm from "../components/CreateEventImageForm";
+import CreateRatingForm from "../components/CreateRatingForm";
+import CreateEventStageForm from "../components/CreateEventStageForm";
+import CreateTicketForm from "../components/CreateTicketForm";
+import ListEventSeatsForm from "../components/ListEventSeatsForm";
 
 function AdminPage() {
   const [allCountries, setAllCountries] = useState([]);
   const [allCities, setAllCities] = useState([]);
+  const [allAddresses, setAllAddresses] = useState([]);
+  const [allPlaces, setAllPlaces] = useState([]);
+  const [allStages, setAllStages] = useState([]);
+  const [allCustomers, setAllCustomers] = useState([]);
+  const [allEvents, setAllEvents] = useState([]);
+  const [allEventImages, setAllEventImages] = useState([]);
+  const [allRatings, setAllRatings] = useState([]);
+  const [allEventStages, setAllEventStages] = useState([]);
+  const [allTickets, setAllTickets] = useState([]);
+
+  const fetchCountry = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/country");
+      setAllCountries(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCity = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/city");
+      setAllCities(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchAddress = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/address");
+      setAllAddresses(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchPlace = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/place");
+      setAllPlaces(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchStage = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/stage");
+      setAllStages(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchCustomer = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/customer");
+      setAllCustomers(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEvent = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/event");
+      setAllEvents(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventImage = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/eventimage");
+      setAllEventImages(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchRating = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/rating");
+      setAllRatings(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchEventStage = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/eventstage");
+      setAllEventStages(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchTicket = async () => {
+    try {
+      const res = await axios.get("https://localhost:7169/api/ticket");
+      setAllTickets(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const fetchCountry = async () => {
-      try {
-        const res = await axios.get("https://localhost:7169/api/country");
-        setAllCountries(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchCountry();
-  }, []);
-
-  useEffect(() => {
-    const fetchCity = async () => {
-      try {
-        const res = await axios.get("https://localhost:7169/api/city");
-        setAllCities(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     fetchCity();
+    fetchAddress();
+    fetchPlace();
+    fetchStage();
+    fetchCustomer();
+    fetchEvent();
+    fetchEventImage();
+    fetchRating();
+    fetchEventStage();
+    fetchTicket();
   }, []);
 
   return (
     <div className="adminPage">
       <h2>Admin Page</h2>
       <CreateCountryForm
-        allCountrites={allCountries}
-        allCities={allCities}
-        setAllCountries={setAllCountries}
+        allCountries={allCountries}
+        fetchCountry={fetchCountry}
       />
-      <CreateCity />
-      <CreateAddress />
-      <CreatePlace />
-      <CreateStage />
-      <CreateCustomer />
-      <CreateEvent />
-      <CreateEventImage />
-      <CreateRating />
-      <CreateEventStage />
-      <CreateTicket />
+      <CreateCityForm
+        allCountries={allCountries}
+        allCities={allCities}
+        fetchCity={fetchCity}
+      />
+      <CreateAddressForm
+        allCountries={allCountries}
+        allCities={allCities}
+        allAddresses={allAddresses}
+        fetchAddress={fetchAddress}
+      />
+      <CreatePlaceForm
+        allCountries={allCountries}
+        allCities={allCities}
+        allAddresses={allAddresses}
+        allPlaces={allPlaces}
+        fetchAddress={fetchAddress}
+        fetchPlace={fetchPlace}
+      />
+      <CreateStageForm />
+      <CreateCustomerForm />
+      <CreateEventForm />
+      <CreateEventImageForm />
+      <CreateRatingForm />
+      <CreateEventStageForm />
+      <CreateTicketForm />
+      <ListEventSeatsForm />
     </div>
   );
 }

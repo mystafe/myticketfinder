@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
+import { set } from "react-cool-form";
 
-function CreateCountryForm() {
-  const [countries, setCountries] = useState([]);
-  const [loading, setLoading] = React.useState(true);
+function CreateCountryForm({ allCountrites, setAllCountries }) {
+  console.log("Here are all countries", allCountrites);
+
+  const [loading, setLoading] = React.useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
 
   const handleSelectedRow = (id) => {
@@ -17,52 +19,48 @@ function CreateCountryForm() {
     e.preventDefault();
 
     const countryName = e.target["country-name"].value;
-    console.log(countryName);
-    axios.post("https://localhost:7169/api/country", {
-      name: countryName,
-    });
-    setCountries([
-      ...countries,
-      { name: countryName, id: countries.length + 1 },
+    var countryId = null;
+
+    try {
+      const res = axios.post("https://localhost:7169/api/country", {
+        name: countryName,
+      });
+      res.then((res) => {
+        countryId = res.data.id;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+    setAllCountries([
+      ...allCountrites,
+      { name: countryName, id: allCountrites[allCountrites.length - 1].id + 1 },
     ]);
   };
-
-  useState(() => {
-    const fetchCountry = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("https://localhost:7169/api/country");
-        setCountries(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCountry();
-  }, [countries]);
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <h1>Create Country Form</h1>
-        <label htmlFor="country-name">Country Name</label>
-        <input type="text" id="country-name" />
+        <h2 className="formHeader">Create Country Form</h2>
+        <div>
+          <label htmlFor="country-name">Country Name</label>
+          <input type="text" id="country-name" />
+        </div>
 
-        <button type="submit">Create Country</button>
+        <button className="btn-primary" type="submit">
+          Create Country
+        </button>
       </form>
-
       <div className="countrylist">
         {" "}
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           <>
-            {countries && (
+            {allCountrites && (
               <>
-                <h1>Here is countries</h1>
-                <table className="countrytable">
+                <h2>Here are countries</h2>
+                <table>
                   <thead>
                     <tr>
                       <th>Id</th>
@@ -70,7 +68,7 @@ function CreateCountryForm() {
                     </tr>
                   </thead>
                   <tbody>
-                    {countries.map((country) => (
+                    {allCountrites.map((country) => (
                       <tr
                         key={country.id}
                         onMouseEnter={() => handleSelectedRow(country.id)}

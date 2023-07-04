@@ -49,7 +49,7 @@ function EventList() {
           <>
             {events && (
               <>
-                <h1>Here is events</h1>
+                <h2>Here are events</h2>
                 <table className="eventtable">
                   <thead>
                     <tr>
@@ -88,6 +88,8 @@ function EventList() {
                         <td>{event.date}</td>
                         <td>{event.avgRating}</td>
                         <td>{event.duration}</td>
+
+                        {/* will be implemented later */}
                         {[
                           console.log(
                             event.eventStages[0] == null

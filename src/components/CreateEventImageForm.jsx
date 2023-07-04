@@ -56,7 +56,7 @@ function CreateEventImageForm() {
         description,
         eventId,
       });
-      console.log(res.data);
+
       setLoading(false);
       alert("Event image created successfully!");
     } catch (error) {
@@ -89,7 +89,7 @@ function CreateEventImageForm() {
       const res = await axios.delete(
         `https://localhost:7169/api/eventimage/${e.target.value}`
       );
-      console.log(res.data);
+
       setLoading(false);
       alert("Event image deleted successfully!");
     } catch (error) {
@@ -103,16 +103,23 @@ function CreateEventImageForm() {
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
+        <h2>Create Event Image</h2>
         <Field
           label="Url Address"
+          type="url"
           id="urlAddress"
           name="urlAddress"
           placeholder="Enter url address"
           value={urlAddress}
-          onChange={(e) => setUrlAddress(e.target.value)}
+          onChange={(e) => {
+            e.preventDefault();
+
+            setUrlAddress(e.target.value);
+          }}
           required
+
           // error={errors.urlAddress}
         />
         <Field
@@ -125,17 +132,19 @@ function CreateEventImageForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        <div className="form-group">
+          <label htmlFor="event">Event</label>
 
-        <Select
-          defaultValue={[]}
-          placeholder="Select event"
-          name="eventId"
-          required
-          default={0}
-          options={eventOptions}
-          onChange={(e) => setEventId(e.value)}
-        />
-
+          <Select
+            defaultValue={[]}
+            placeholder="Select event"
+            name="eventId"
+            required
+            default={0}
+            options={eventOptions}
+            onChange={(e) => setEventId(e.value)}
+          />
+        </div>
         <button type="submit" className="btn btn-primary">
           Create Event Image
         </button>
@@ -146,6 +155,7 @@ function CreateEventImageForm() {
           <h1>Loading...</h1>
         ) : (
           <>
+            <h2>Event Images</h2>
             <table>
               <thead>
                 <tr>
@@ -185,7 +195,7 @@ function CreateEventImageForm() {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }
 

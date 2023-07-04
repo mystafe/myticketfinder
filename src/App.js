@@ -5,20 +5,24 @@ import Home from "./UI/Home";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import EventDetails from "./components/EventDetails";
-import CreateCountry from "./UI/CreateCountry";
+
 import AppLayout from "./UI/AppLayout";
-import CreateCity from "./UI/CreateCity";
-import CreateAddress from "./UI/CreateAddress";
-import CreatePlace from "./UI/CreatePlace";
-import CreateCustomer from "./UI/CreateCustomer";
+
 import NotFound from "./UI/NotFound";
-import CreateStage from "./UI/CreateStage";
-import CreateEvent from "./UI/CreateEvent";
-import CreateTicket from "./UI/CreateTicket";
-import ListEventSeats from "./UI/ListEventSeats";
-import CreateEventImage from "./UI/CreateEventImage";
-import CreateRating from "./UI/CreateRating";
-import CreateEventStage from "./UI/CreateEventStage";
+
+import AdminPage from "./UI/AdminPage";
+import CreateTicketForm from "./components/CreateTicketForm";
+import CreateEventForm from "./components/CreateEventForm";
+import CreateCountryForm from "./components/CreateCountryForm";
+import CreateCityForm from "./components/CreateCityForm";
+import CreateAddressForm from "./components/CreateAddressForm";
+import ListEventSeatsForm from "./components/ListEventSeatsForm";
+import CreatePlaceForm from "./components/CreatePlaceForm";
+import CreateCustomerForm from "./components/CreateCustomerForm";
+import CreateRatingForm from "./components/CreateRatingForm";
+import CreateStageForm from "./components/CreateStageForm";
+import CreateEventImageForm from "./components/CreateEventImageForm";
+import CreateEventStageForm from "./components/CreateEventStageForm";
 function App() {
   const router = createBrowserRouter([
     {
@@ -29,12 +33,20 @@ function App() {
           element: <Home />,
         },
         {
+          path: "/home",
+          element: <Home />,
+        },
+        {
+          path: "/admin",
+          element: <AdminPage />,
+        },
+        {
           path: "/event",
           element: <Events />,
         },
         {
           path: "/event/create",
-          element: <CreateEvent />,
+          element: <CreateEventForm />,
         },
         {
           path: "/event/:id",
@@ -42,46 +54,46 @@ function App() {
         },
         {
           path: "/country/create",
-          element: <CreateCountry />,
+          element: <CreateCountryForm />,
         },
         {
           path: "/city/create",
-          element: <CreateCity />,
+          element: <CreateCityForm />,
         },
         {
           path: "/address/create",
-          element: <CreateAddress />,
+          element: <CreateAddressForm />,
         },
 
         {
           path: "/ticket/create",
-          element: <CreateTicket />,
+          element: <CreateTicketForm />,
         },
         {
           path: "/eventseat/list",
-          element: <ListEventSeats />,
+          element: <ListEventSeatsForm />,
         },
         {
           path: "/place/create",
-          element: <CreatePlace />,
+          element: <CreatePlaceForm />,
         },
         {
           path: "/customer/create",
-          element: <CreateCustomer />,
+          element: <CreateCustomerForm />,
         },
         {
           path: "/rating/create",
-          element: <CreateRating />,
+          element: <CreateRatingForm />,
         },
         {
           path: "/stage/create",
-          element: <CreateStage />,
+          element: <CreateStageForm />,
         },
         {
           path: "/eventimage/create",
-          element: <CreateEventImage />,
+          element: <CreateEventImageForm />,
         },
-        { path: "/eventstage/create", element: <CreateEventStage /> },
+        { path: "/eventstage/create", element: <CreateEventStageForm /> },
         {
           path: "*",
           element: <NotFound />,

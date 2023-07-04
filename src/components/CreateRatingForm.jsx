@@ -50,9 +50,6 @@ function CreateRatingForm() {
         setCustomers(res2.data);
 
         setLoading(false);
-
-        console.log("events", res.data);
-        console.log("customers", res2.data);
       } catch (error) {
         console.log(error);
       }
@@ -63,17 +60,7 @@ function CreateRatingForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // "ratingValue": 5,
-    // "comment": "This is amazing",
-    // "eventId": {{EventId}},
-    // "customerId": {{CustomerId}}
-
     try {
-      console.log("ratingValue", ratingValue);
-      console.log("comment", comment);
-      console.log("eventId", eventId);
-      console.log("customerId", customerId);
-
       setLoading(true);
       const res = await axios.post("https://localhost:7169/api/rating", {
         ratingValue,
@@ -81,7 +68,7 @@ function CreateRatingForm() {
         eventId,
         customerId,
       });
-      console.log(res.data);
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -106,35 +93,45 @@ function CreateRatingForm() {
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
-        <Select
-          options={ratingOptions}
-          onChange={(e) => setRatingValue(e.value)}
-          placeholder="Select Rating"
-          required
-        />
+        <h2>Create Rating</h2>
+        <div>
+          <label htmlFor="ratingValue">Rating Value</label>
 
-        <Select
-          options={events.map((event) => ({
-            value: event.id,
-            label: event.name,
-          }))}
-          onChange={(e) => setEventId(e.value)}
-          placeholder="Select Event"
-          required
-        />
+          <Select
+            options={ratingOptions}
+            onChange={(e) => setRatingValue(e.value)}
+            placeholder="Select Rating"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="comment">Comment</label>
+          <Select
+            options={events.map((event) => ({
+              value: event.id,
+              label: event.name,
+            }))}
+            onChange={(e) => setEventId(e.value)}
+            placeholder="Select Event"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="customer">Customer</label>
+          <Select
+            options={customers.map((customer) => ({
+              value: customer.id,
+              label: customer.fullname,
+            }))}
+            onChange={(e) => setCustomerId(e.value)}
+            placeholder="Select Customer"
+            required
+          />
+        </div>
 
-        <Select
-          options={customers.map((customer) => ({
-            value: customer.id,
-            label: customer.fullname,
-          }))}
-          onChange={(e) => setCustomerId(e.value)}
-          placeholder="Select Customer"
-          required
-        />
-        <div className="form-group">
+        <div className="">
           <label htmlFor="comment">Comment</label>
           <textarea
             className="form-control"
@@ -151,11 +148,12 @@ function CreateRatingForm() {
         </button>
       </form>
 
-      <div className="eventImageList">
+      <div className="eventRatings">
         {loading ? (
           <h1>Loading...</h1>
         ) : (
           <>
+            <h2>Ratings</h2>
             <table>
               <thead>
                 <tr>
@@ -191,7 +189,7 @@ function CreateRatingForm() {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }
 

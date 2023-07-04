@@ -2,11 +2,7 @@ import React from "react";
 import CreateAddressForm from "../components/CreateAddressForm";
 
 function CreateAddress() {
-  return (
-    <div className="create-address">
-      <CreateAddressForm />
-    </div>
-  );
+  return <CreateAddressForm />;
 }
 
 export default CreateAddress;

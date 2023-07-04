@@ -3,11 +3,7 @@ import React from "react";
 import CreateCityForm from "../components/CreateCityForm";
 
 function CreateCity() {
-  return (
-    <div className="create-city">
-      <CreateCityForm />
-    </div>
-  );
+  return <CreateCityForm />;
 }
 
 export default CreateCity;

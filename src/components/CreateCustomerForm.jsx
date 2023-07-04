@@ -40,7 +40,6 @@ function CreateCustomerForm() {
   };
 
   const handleAddressId = (id) => {
-    console.log("id", id);
     if (id == 0 || id == null) {
       setAddressId(null);
       setShowAdditionalFields(true);
@@ -76,11 +75,9 @@ function CreateCustomerForm() {
     // const cityName = city.name;
     let myCity = null;
     if (addressId != null) {
-      console.log("addressId", addressId);
       myCity = addresses.find((address) => address.id == addressId).city;
       setSelectedCity(myCity);
     } else if (addressId == null) {
-      console.log("addressId", addressId);
       myCity = cities.find((city) => city.id == cityId);
       setSelectedCity(myCity);
     }
@@ -104,11 +101,8 @@ function CreateCustomerForm() {
       })
       .then((res) => {
         setCustomerId(res.data.id);
-        console.log(res);
-        console.log(res.data);
       });
 
-    console.log("myCity", myCity);
     setCustomers([
       ...customers,
       {
@@ -169,6 +163,7 @@ function CreateCustomerForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
+        <h2>Create Customer</h2>
         <div className="form-group">
           <label htmlFor="firstname">Firstname</label>
           <input
@@ -335,6 +330,7 @@ function CreateCustomerForm() {
           <h1>Loading...</h1>
         ) : (
           <>
+            <h2>Customers</h2>
             <table>
               <thead>
                 <tr>

@@ -38,75 +38,74 @@ function TicketEvent() {
     fetchEvent();
   }, []);
 
-  if (loading) {
-    return <p>Loading event...</p>;
-  }
-
-  {
-    return (
-      <div>
-        <h1>Here is events</h1>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Date</th>
-              <th>AvgRating</th>
-              <th>Duration</th>
-              <th>Image</th>
-              <th>IsActive</th>
-              <th>IsAvailable</th>
-              <th>IsOnSale</th>
-              <th>EventType</th>
-              <th>Price</th>
-              <th>Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            {event.map((event) => (
-              <tr key={event.id}>
-                <td>{event.id}</td>
-                <td>{event.name}</td>
-                <td>{event.description}</td>
-                <td>{event.date}</td>
-                <td>{event.avgRating}</td>
-                <td>{event.duration}</td>
-                {/* {[event.eventImages.map((eventImage) => (
+  return (
+    <div className="ticketEvents">
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <h2>Ticket Events</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>AvgRating</th>
+                <th>Duration</th>
+                <th>Image</th>
+                <th>IsActive</th>
+                <th>IsAvailable</th>
+                <th>IsOnSale</th>
+                <th>EventType</th>
+                <th>Price</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              {event.map((event) => (
+                <tr key={event.id}>
+                  <td>{event.id}</td>
+                  <td>{event.name}</td>
+                  <td>{event.description}</td>
+                  <td>{event.date}</td>
+                  <td>{event.avgRating}</td>
+                  <td>{event.duration}</td>
+                  {/* {[event.eventImages.map((eventImage) => (
                                 <p>{eventImage.urlAddress}</p>
                                 ))
                             ]} */}
-                {console.log(
-                  Array(
-                    event.eventImages[0] == null
-                      ? "No no"
-                      : event.eventImages[0].urlAddress
-                  )
-                )}
-                <img
-                  style={{ width: 200 }}
-                  src={
-                    event.eventImages[0] == null
-                      ? "No no"
-                      : event.eventImages[0].urlAddress
-                  }
-                  alt="Sample image"
-                />
-                <td>{event.isActive}</td>
-                <td>{event.isAvailable}</td>
-                <td>{event.isOnSale}</td>
-                <td>{event.eventType}</td>
-                <td>{event.price}</td>
-                <td>{event.location}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+                  {console.log(
+                    Array(
+                      event.eventImages[0] == null
+                        ? "No no"
+                        : event.eventImages[0].urlAddress
+                    )
+                  )}
+                  <img
+                    style={{ width: 200 }}
+                    src={
+                      event.eventImages[0] == null
+                        ? "No no"
+                        : event.eventImages[0].urlAddress
+                    }
+                    alt="Sample image"
+                  />
+                  <td>{event.isActive}</td>
+                  <td>{event.isAvailable}</td>
+                  <td>{event.isOnSale}</td>
+                  <td>{event.eventType}</td>
+                  <td>{event.price}</td>
+                  <td>{event.location}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
+    </div>
+  );
 }
 
 export default TicketEvent;

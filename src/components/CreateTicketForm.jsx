@@ -47,10 +47,6 @@ function CreateTicketForm() {
         setEvents(res3.data);
 
         setLoading(false);
-
-        console.log("customers", res.data);
-        console.log("eventSeats", res2.data);
-        console.log("events", res3.data);
       } catch (error) {
         console.log(error);
       }
@@ -61,17 +57,16 @@ function CreateTicketForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // "dateOfPurchase": "2023-07-03T09:07:20.696Z",
       setDateOfPurchase(
         new Date().toISOString().slice(0, 19).replace("T", " ")
       );
-      console.log(dateOfPurchase, customerId, eventSeatId);
+
       const res = await axios.post("https://localhost:7169/api/ticket", {
         dateOfPurchase: dateOfPurchase,
         customerId: customerId,
         eventSeatId: eventSeatId,
       });
-      console.log(res.data);
+
       alert("Ticket purchased successfully!");
       setDateOfPurchase(
         new Date().toISOString().slice(0, 19).replace("T", " ")
@@ -84,59 +79,64 @@ function CreateTicketForm() {
   };
 
   return (
-    <div className="ticketCreate">
+    <>
       <form className="form-group" onSubmit={(e) => handleSubmit(e)}>
-        <label htmlFor="customerId">Customer</label>
-        <Select
-          defaultValue={[]}
-          placeholder="Select customer"
-          name="customerId"
-          required
-          default={0}
-          options={customers.map((customer) => ({
-            value: customer.id,
-            label: customer.fullname,
-          }))}
-          className="basic-single-select"
-          classNamePrefix="select"
-          onChange={(e) => {
-            setCustomerId(e.value);
-          }}
-        />
+        <h2>Customer</h2>
+        <div className="form-group">
+          <label htmlFor="dateOfPurchase">Customer</label>
 
-        <label htmlFor="eventSeatId">Event Seat</label>
-        <Select
-          defaultValue={[]}
-          placeholder="Select event seat"
-          name="eventSeatId"
-          required
-          error={errors.eventSeatId}
-          default={0}
-          options={eventSeats
-            .filter((eventSeat) => eventSeat.isSold === false)
-            .map((eventSeat) => ({
-              value: eventSeat.id,
-              label:
-                events.find((e) => e.id == eventSeat?.eventId)?.name +
-                " " +
-                eventSeat.id +
-                " " +
-                eventSeat.seat.name +
-                " " +
-                eventSeat.eventPrice,
+          <Select
+            defaultValue={[]}
+            placeholder="Select customer"
+            name="customerId"
+            required
+            default={0}
+            options={customers.map((customer) => ({
+              value: customer.id,
+              label: customer.fullname,
             }))}
-          className="basic-single-select"
-          classNamePrefix="select"
-          onChange={(e) => {
-            setEventSeatId(e.value);
-          }}
-        />
+            className="basic-single-select"
+            classNamePrefix="select"
+            onChange={(e) => {
+              setCustomerId(e.value);
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="eventSeatId">Event Seat</label>
+          <Select
+            defaultValue={[]}
+            placeholder="Select event seat"
+            name="eventSeatId"
+            required
+            error={errors.eventSeatId}
+            default={0}
+            options={eventSeats
+              .filter((eventSeat) => eventSeat.isSold === false)
+              .map((eventSeat) => ({
+                value: eventSeat.id,
+                label:
+                  events.find((e) => e.id == eventSeat?.eventId)?.name +
+                  " " +
+                  eventSeat.id +
+                  " " +
+                  eventSeat.seat.name +
+                  " " +
+                  eventSeat.eventPrice,
+              }))}
+            className="basic-single-select"
+            classNamePrefix="select"
+            onChange={(e) => {
+              setEventSeatId(e.value);
+            }}
+          />
+        </div>
 
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
       </form>
-    </div>
+    </>
   );
 }
 

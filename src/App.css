@@ -16,54 +16,27 @@ body,
   align-items: flex-start;
   flex-wrap: wrap;
 }
-
-.header {
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  font-weight: bold;
-  font-size: 1.5rem;
-  padding: 1rem;
-  background: #61dafb;
-}
-.header .logo {
-  color: #282c34;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header .searchbar {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem;
+h2 {
+  color: #53565b;
   padding: 1rem;
 }
-.header .searchbar input {
-  padding: 0.5rem;
-  border: 1px solid #282c34;
-  border-radius: 10px;
-  background-color: #fff;
-  width: 25rem;
+.adminPage {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
 }
-.header .searchbar button {
-  padding: 0.5rem;
-  border: 1px solid #282c34;
-  border-radius: 10px;
-  background-color: #fff;
-  cursor: pointer;
+.adminPage > div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  border: 1px dotted black !important;
 }
-.header .searchbar button:hover {
-  background-color: #282c34;
-  color: #fff;
-  transform: scale(1.1);
-}
+
 .detail {
   display: flex;
   flex-direction: row;
@@ -74,53 +47,6 @@ body,
 .logo img {
   width: 40px;
   height: 40px;
-}
-.eventdetails {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 2rem;
-  text-align: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-.ticketCreate {
-  padding: 1rem;
-  margin: 1rem;
-}
-
-.eventdetail,
-.ticket-purchase-screen {
-  border: 1px solid black;
-  box-sizing: border-box;
-  margin-top: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-  text-align: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  width: 50%;
-}
-.ticket-purchase-screen form {
-  margin: 2rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-
-.ticket-purchase-screen form > label {
-  margin: 0.5rem;
-  display: flex;
 }
 
 .map {
@@ -141,53 +67,7 @@ body,
   box-sizing: border-box;
   text-align: start;
 }
-.create-country,
-.create-city,
-.create-address,
-.create-place,
-.create-event,
-.reate-customer,
-.create-ticket,
-.create-stage,
-.create-eventstage {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding-top: 2rem;
-}
-.eventlist {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-  text-align: center;
-  justify-content: flex-start;
-  width: 60vw;
-}
-.main > div {
-  margin: 1rem;
-  padding: 1rem;
-  background-color: bisque;
-  min-width: 70vw;
-  box-sizing: border-box;
-  text-align: start;
-}
 
-.slider {
-  margin-bottom: 3rem;
-}
-.popular {
-  margin-bottom: 3rem;
-}
-.upcoming {
-  margin-bottom: 3rem;
-}
-
-.events {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 .footer {
   width: 100vw;
 
@@ -239,72 +119,46 @@ a {
   padding: 5px;
 }
 
-.eventtable {
+table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.eventtable th,
-.eventtable td {
+table th,
+table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.eventtable th {
+table th {
   background-color: #f2f2f2;
 }
-.eventtable tbody tr:nth-child(odd) {
+table tbody tr:nth-child(odd) {
   background-color: #fff;
 }
-.eventtable tbody tr:nth-child(even) {
+table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.eventtable tbody tr:hover {
+table tbody tr:hover {
   background-color: #f5f5f5;
 }
 
-.eventtable img {
+table img {
   max-width: 100px;
   height: auto;
 }
-.eventtable td a {
+table td a {
   color: #000;
   text-decoration: none;
 }
-.eventtable td a:hover {
-  color: #f07c7c;
-  text-decoration: underline;
-}
-.selectedTable {
-  background-color: #b43e3e;
 
-  transform: scale(1.01);
-}
-
-.btn {
-  background-color: #282c34;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.5rem;
-  cursor: pointer;
-  margin: 0.5rem;
-}
-.btn:hover {
+button:hover,
+.button:hover {
   background-color: #f07c7c;
   color: #fff;
   transform: scale(1.1);
-}
-.btn-primary {
-  background-color: #224faa;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.5rem;
-  cursor: pointer;
-  margin: 0.5rem;
 }
 
 #eventImages {
@@ -315,4 +169,183 @@ a {
   padding: 0.5rem;
   cursor: pointer;
   margin: 0.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+
+table th,
+table td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+button,
+.button {
+  padding: 1rem;
+  background-color: hsla(10, 10%, 60%, 0.936);
+  color: hsla(9, 100%, 100%, 0.936);
+  font-size: large;
+  width: 100%;
+  background-color: #224faa;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  margin: 0.5rem;
+}
+
+.App form {
+  width: 35%;
+  border: 1px solid black;
+  padding: 2.2rem;
+  margin: 1.5rem;
+  border-radius: 2rem;
+  border-color: hsl(0, 0%, 80%);
+  display: flex;
+  flex-direction: column;
+}
+
+form > div {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: default;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+
+  padding: 0.2rem;
+  margin: 0.2rem;
+  min-height: 38px;
+  outline: 0 !important;
+  position: relative;
+  -webkit-transition: all 100ms;
+  transition: all 100ms;
+  background-color: hsl(0, 0%, 100%);
+  border-color: hsl(0, 0%, 80%);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  box-sizing: border-box;
+
+  width: 100%;
+}
+
+.App form label,
+.App form .label {
+  color: hsla(10, 10%, 60%, 0.936);
+  margin: 0 auto;
+  padding: 0.4rem;
+  margin: 0rem;
+
+  align-items: center;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: #585e61;
+}
+form select,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="search"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="file"] {
+  width: 50%;
+  border: 1px solid gray;
+  color: #224faa;
+  display: flex;
+  height: 10 0%;
+  padding: 0.7rem;
+  border-radius: 0.5rem;
+  justify-self: end;
+  justify-self: flex-end !important;
+}
+
+.header {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding: 1rem;
+  background: #61dafb;
+}
+.header .logo {
+  color: #282c34;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header .searchbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+.header .searchbar input {
+  padding: 0.7rem;
+  border: 1px solid #282c34;
+  border-radius: 10px;
+  background-color: #fff;
+  width: 25rem;
+}
+.header .searchbar button {
+  width: 5rem;
+  padding: 0.5rem;
+  border: 1px solid #282c34;
+  border-radius: 5rem;
+  background-color: #b34949;
+  cursor: pointer;
+  color: #fff;
+}
+.header .searchbar button:hover {
+  background-color: #1f52b8;
+  color: #fff;
+  transform: scale(1.1);
+}
+.basic-multi-select {
+  box-sizing: border-box;
+  width: 50%;
+
+  padding: 0.7rem;
+  border-radius: 0.5rem;
 }

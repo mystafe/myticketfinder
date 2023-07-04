@@ -46,7 +46,7 @@ function CreateEventStageForm() {
       setLoading(true);
       try {
         const res = await axios.get("https://localhost:7169/api/event");
-        console.log("events:", res.data);
+    
         setEvents(res.data);
         setEventOptions(
           res.data.map((event) => {
@@ -80,7 +80,7 @@ function CreateEventStageForm() {
     // "eventId": 1,
 
     try {
-      console.log("handlesubmit", basePrice);
+   
       setLoading(true);
       const res = await axios.post("https://localhost:7169/api/eventstage", {
         name,
@@ -88,7 +88,7 @@ function CreateEventStageForm() {
         eventId,
         stageId,
       });
-      console.log(res.data);
+    
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -96,8 +96,9 @@ function CreateEventStageForm() {
   };
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
+        <h2>Create Event Stage</h2>
         <Field
           label="Event Name"
           id="eventname"
@@ -106,6 +107,7 @@ function CreateEventStageForm() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          type="text"
         />
         <Field
           label="Base Price"
@@ -115,32 +117,35 @@ function CreateEventStageForm() {
           placeholder="Enter base price"
           value={basePrice}
           onChange={(e) => {
-            console.log("inside", e.target.value);
+      
             setBasePrice(e.target.value);
           }}
           required
         />
+        <div>
+          <label htmlFor="eventId">Event</label>
+          <Select
+            id="eventId"
+            name="eventId"
+            options={eventOptions}
+            onChange={(e) => setEventId(e.value)}
+            placeholder="Select event"
+          />
+        </div>
+        <div>
+          <label htmlFor="stageId">Stage</label>
 
-        <Select
-          id="eventId"
-          name="eventId"
-          // {...set({ required: "Event is required!" })}
-          options={eventOptions}
-          onChange={(e) => setEventId(e.value)}
-          placeholder="Select event"
-        />
-
-        <Select
-          id="stageId"
-          name="stageId"
-          onChange={(e) => setStageId(e.value)}
-          // {...set({ required: "Stage is required!" })}
-          options={stageOptions}
-          placeholder="Select stage"
-        />
-
-        <button className="btn btn-primary" type="submit">
-          Submit
+          <Select
+            id="stageId"
+            name="stageId"
+            onChange={(e) => setStageId(e.value)}
+            // {...set({ required: "Stage is required!" })}
+            options={stageOptions}
+            placeholder="Select stage"
+          />
+        </div>
+        <button className="btn-primary" type="submit">
+          Create Event Stage
         </button>
       </form>
 
@@ -149,6 +154,7 @@ function CreateEventStageForm() {
           <h1>Loading...</h1>
         ) : (
           <>
+            <h2>Event Stages</h2>
             <table>
               <thead>
                 <tr>
@@ -176,7 +182,7 @@ function CreateEventStageForm() {
           </>
         )}
       </div>
-    </div>
+    </>
   );
 }
 export default CreateEventStageForm;

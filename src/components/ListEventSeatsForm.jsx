@@ -27,7 +27,7 @@ function ListEventSeatsForm() {
         setEventSeats(res.data);
         const res2 = await axios.get("https://localhost:7169/api/eventstage");
         setEventStages(res2.data);
-        console.log(res2.data);
+
         const res3 = await axios.get("https://localhost:7169/api/event");
         setEvents(res3.data);
 
@@ -45,7 +45,7 @@ function ListEventSeatsForm() {
         <div>Loading...</div>
       ) : (
         <>
-          <h1>Event Seats</h1>
+          <h2>Event Seats</h2>
           <table className="table table-striped">
             <thead>
               <tr>

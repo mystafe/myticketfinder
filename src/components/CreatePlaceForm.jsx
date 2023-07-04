@@ -38,7 +38,7 @@ function CreatePlaceForm() {
   };
 
   const handleAddressId = (id) => {
-    console.log("id", id);
+
     if (id == 0 || id == null) {
       setAddressId(null);
       setShowAdditionalFields(true);
@@ -107,7 +107,7 @@ function CreatePlaceForm() {
     // console.log("address", address);
 
     if (address == undefined) {
-      console.log("address is undefined");
+     
 
       axios
         .post("https://localhost:7169/api/address", {
@@ -159,7 +159,7 @@ function CreatePlaceForm() {
             });
         });
     } else {
-      console.log("address is defined");
+   
 
       axios
 
@@ -202,7 +202,8 @@ function CreatePlaceForm() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <h2>Crate Place</h2>
+        <div>
           <label htmlFor="name">Place Name</label>
           <input
             required
@@ -214,43 +215,39 @@ function CreatePlaceForm() {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="form-group">
+        <div>
           <label htmlFor="openHour">Open Hour</label>
           <input
             type="time"
-            className="form-control"
             id="openHour"
             placeholder="Enter Open Hour"
             value={openHour}
             onChange={(e) => setOpenHour(e.target.value)}
           />
         </div>
-        <div className="form-group">
+        <div>
           <label htmlFor="closeHour">Close Hour</label>
           <input
             type="time"
-            className="form-control"
             id="closeHour"
             placeholder="Enter Close Hour"
             value={closeHour}
             onChange={(e) => setCloseHour(e.target.value)}
           />
         </div>
-        <div className="form-group">
+        <div>
           <label htmlFor="isActive">Is Active</label>
           <input
             type="checkbox"
-            className="form-control"
             id="isActive"
             placeholder="Enter Is Active"
             defaultChecked={isActive}
             onChange={(e) => handleIsActive(e.target.checked)}
           />
         </div>
-        <div className="form-group">
+        <div>
           <label htmlFor="addressId">Address</label>
           <select
-            className="form-control"
             id="addressId"
             value={addressId}
             onChange={(e) => handleAddressId(e.target.value)}
@@ -266,7 +263,7 @@ function CreatePlaceForm() {
 
         {showAdditionalFields && (
           <>
-            <div className="form-group">
+            <div>
               <label htmlFor="FullAddress">Full Address</label>
               <input
                 type="text"
@@ -277,7 +274,7 @@ function CreatePlaceForm() {
                 onChange={(e) => setFullAddress(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div>
               <label htmlFor="GeoLat">Latitude</label>
               <input
                 type="text"
@@ -288,7 +285,7 @@ function CreatePlaceForm() {
                 onChange={(e) => setLatitude(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div>
               <label htmlFor="GeoLong">Longitude</label>
               <input
                 type="text"
@@ -299,7 +296,7 @@ function CreatePlaceForm() {
                 onChange={(e) => setLongitude(e.target.value)}
               />
             </div>
-            <div className="form-group">
+            <div>
               <label htmlFor="country-id">Country</label>
               <select
                 className="form-control"
@@ -315,7 +312,7 @@ function CreatePlaceForm() {
                 ))}
               </select>
             </div>
-            <div className="form-group">
+            <div>
               <label htmlFor="city-id">City</label>
               <select
                 className="form-control"
@@ -335,13 +332,11 @@ function CreatePlaceForm() {
         )}
         {!showAdditionalFields && (
           <>
-            <div className="form-group" style={{ color: "red" }}>
+            <div style={{ color: "red" }}>
               <p>{selectedAddress.fullAddress} </p>
-              {console.log("selectedAddress", selectedAddress)}
-              {/* <p>{selectedAddress.city.name} </p>
-              <p>{selectedCountry}</p> */}
+
               <p>{selectedCity} </p>
-              {console.log("selectedCity", selectedCity)}
+ 
               <p>{selectedCountry.name} </p>
             </div>
           </>
@@ -357,6 +352,7 @@ function CreatePlaceForm() {
           <div>Loading...</div>
         ) : (
           <>
+            <h2>Places</h2>
             <table className="table">
               <thead>
                 <tr>

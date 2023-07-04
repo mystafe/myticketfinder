@@ -96,7 +96,7 @@ function CreateEventForm() {
         eventImages,
         stageIds,
       });
-      console.log(res.data);
+
       setEventStages(res.data.eventStages);
       tempEventStages = res.data.eventStages;
     } catch (error) {
@@ -161,6 +161,7 @@ function CreateEventForm() {
           label="Event Name"
           id="name"
           name="name"
+          type="text"
           placeholder="Enter event name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -199,23 +200,9 @@ function CreateEventForm() {
           onChange={(e) => setDuration(e.target.value)}
         />
 
-        {/* <Field
-          label="Event Images"
-          isMulti
-          id="eventImages"
-          name="eventImages"
-          type="file"
-          placeholder="Enter event images"
-          onChange={handleImageChange}
-        />
-        <button className="btn btn-primary" onClick={handleImageUpload}>
-          Upload
-        </button> */}
-
-        {/* //upload multiple images */}
         <Field
           label="Event Images"
-          id="images"
+          id="imageUpload"
           name="images"
           type="file"
           placeholder="Enter event images"
@@ -225,20 +212,6 @@ function CreateEventForm() {
         <button className="btn btn-primary" onClick={handleImageUpload}>
           Upload
         </button>
-
-        {/* <div className="form-group">
-          <label htmlFor="eventImages">Event Images</label>
-          <input
-            type="file"
-            className="form-control"
-            id="eventImages"
-            placeholder="Enter event images"
-            onChange={handleImageChange}
-          />
-          <button className="btn btn-primary" onClick={handleImageUpload}>
-            Upload
-          </button>
-        </div> */}
 
         <div className="form-group">
           <label htmlFor="stages">Stages</label>
@@ -277,6 +250,7 @@ function CreateEventForm() {
             <h1>Loading...</h1>
           ) : (
             <>
+              <h2>Event List</h2>
               <table>
                 <thead>
                   <tr>

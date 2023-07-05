@@ -9,7 +9,6 @@ function AppLayout() {
   return (
     <div className="App">
       <Header />
-      <Navbar />
 
       <Outlet />
 

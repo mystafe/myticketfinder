@@ -23,11 +23,16 @@ import CreateRatingForm from "./components/CreateRatingForm";
 import CreateStageForm from "./components/CreateStageForm";
 import CreateEventImageForm from "./components/CreateEventImageForm";
 import CreateEventStageForm from "./components/CreateEventStageForm";
+import TestDiv from "./UI/TestDiv";
 function App() {
   const router = createBrowserRouter([
     {
       element: <AppLayout />,
       children: [
+        {
+          path: "/test",
+          element: <TestDiv />,
+        },
         {
           path: "/",
           element: <Home />,

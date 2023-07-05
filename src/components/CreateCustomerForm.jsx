@@ -1,10 +1,18 @@
 import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
 
-function CreateCustomerForm() {
-  const [customers, setCustomers] = useState([]);
-  const [customerId, setCustomerId] = useState(null);
+import { useState } from "react";
+
+function CreateCustomerForm({
+  allCustomers,
+  allAddresses,
+  allCities,
+  allCountries,
+  createCustomer,
+  deleteCustomer,
+  createAddress,
+  fetchAddress,
+  loading,
+}) {
   const [firstname, setFirstname] = useState("Test");
   const [middlename, setMiddlename] = useState("");
   const [lastname, setLastname] = useState("User");
@@ -18,17 +26,11 @@ function CreateCustomerForm() {
   const [fullAddress, setFullAddress] = useState("sample address");
   const [latitude, setLatitude] = useState("41.2");
   const [longitude, setLongitude] = useState("23.4");
-  const [addresses, setAddresses] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [selectedTable, setSelectedTable] = useState(null);
   const [availableCities, setAvailableCities] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [selectedCountryId, setSelectedCountryId] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
   const [showAdditionalFields, setShowAdditionalFields] = useState(true);
 
   const handleSelectedRow = (id) => {
@@ -40,52 +42,44 @@ function CreateCustomerForm() {
   };
 
   const handleAddressId = (id) => {
-    if (id == 0 || id == null) {
+    if (id === 0 || id == null) {
       setAddressId(null);
       setShowAdditionalFields(true);
-
       return;
     }
     setAddressId(id);
-    const selectedAddress = addresses.find((address) => address.id == id);
+    const selectedAddress = allAddresses.find((address) => address.id === id);
 
     setSelectedAddress(selectedAddress);
     setSelectedCity(selectedAddress.city.name);
-    setSelectedCountryId(selectedAddress.city.countryId);
+
     setSelectedCountry(
-      countries.find((country) => country.id == selectedAddress.city.countryId)
+      allCountries.find(
+        (country) => country.id === selectedAddress.city.countryId
+      )
     );
     setShowAdditionalFields(false);
   };
 
   const handleCityId = (id) => {
     setCityId(id);
-    const city = cities.find((city) => city.id == id);
+    const city = allCities.find((city) => city.id === id);
     setSelectedCity(city.name);
   };
   const handleCountryId = (id) => {
     setCountryId(id);
-    setAvailableCities(cities.filter((city) => city.countryId == id));
+    setAvailableCities(allCities.filter((city) => city.countryId === id));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const GeoLocation = `[${latitude},${longitude}]`;
 
     // const cityName = city.name;
     let myCity = null;
     if (addressId != null) {
-      myCity = addresses.find((address) => address.id == addressId).city;
+      myCity = allAddresses.find((address) => address.id === addressId).city;
       setSelectedCity(myCity);
-    } else if (addressId == null) {
-      myCity = cities.find((city) => city.id == cityId);
-      setSelectedCity(myCity);
-    }
-
-    const fullname = `${firstname} ${middlename} ${lastname}`;
-
-    axios
-      .post("https://localhost:7169/api/customer", {
+      const customer = {
         firstname,
         middlename,
         lastname,
@@ -94,29 +88,31 @@ function CreateCustomerForm() {
         email,
         phone,
         addressId,
-        cityId: myCity.id,
-        fullAddress,
-        latitude,
-        longitude,
-      })
-      .then((res) => {
-        setCustomerId(res.data.id);
-      });
+      };
+      createCustomer(customer);
+      setFirstname("");
+      setMiddlename("");
+      setLastname("");
+    } else if (addressId == null) {
+      myCity = allCities.find((city) => city.id === cityId);
+      setSelectedCity(myCity);
+    }
 
-    setCustomers([
-      ...customers,
-      {
-        fullname,
-        username,
-        password,
-        email,
-        phone,
-        cityName: myCity.name,
-        fullAddress: myCity.fullAddress || fullAddress,
-        id: customerId,
-        // id: customers.length + 1,
-      },
-    ]);
+    const customer = {
+      firstname,
+      middlename,
+      lastname,
+      username,
+      password,
+      email,
+      phone,
+      addressId,
+      cityId: myCity.id,
+      fullAddress,
+      latitude,
+      longitude,
+    };
+    createCustomer(customer);
 
     setFirstname("");
     setMiddlename("");
@@ -131,34 +127,9 @@ function CreateCustomerForm() {
     setFullAddress("");
     setLatitude("");
     setLongitude("");
-    setCustomerId(null);
+
     setSelectedCity(null);
   };
-
-  useEffect(() => {
-    const fetchCustomer = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("https://localhost:7169/api/customer");
-        setCustomers(res.data);
-        const res2 = await axios.get("https://localhost:7169/api/address");
-        setAddresses(res2.data);
-        const res3 = await axios.get("https://localhost:7169/api/city");
-        setCities(res3.data);
-
-        const res4 = await axios.get("https://localhost:7169/api/country");
-        setCountries(res4.data);
-        setAvailableCities(
-          res3.data.filter((city) => city.countryId == countryId)
-        );
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCustomer();
-  }, []);
 
   return (
     <div>
@@ -237,7 +208,7 @@ function CreateCustomerForm() {
             }}
           >
             <option value={0}>Select Address</option>
-            {addresses.map((address) => (
+            {allAddresses.map((address) => (
               <option key={address.id} value={address.id}>
                 {address.fullAddress}
               </option>
@@ -256,7 +227,7 @@ function CreateCustomerForm() {
                 }}
               >
                 <option value={null}>Select Country</option>
-                {countries.map((country) => (
+                {allCountries.map((country) => (
                   <option key={country.id} value={country.id}>
                     {country.name}
                   </option>
@@ -344,13 +315,13 @@ function CreateCustomerForm() {
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer) => (
+                {allCustomers.map((customer) => (
                   <tr
                     key={customer.id}
                     onMouseEnter={() => handleSelectedRow(customer.id)}
                     onMouseLeave={handleUnselectedRow}
                     className={
-                      selectedTable == customer.id ? "selectedTable" : ""
+                      selectedTable === customer.id ? "selectedTable" : ""
                     }
                   >
                     <td>{customer.fullname}</td>

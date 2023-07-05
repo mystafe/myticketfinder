@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
 import Select from "react-select";
 function CreateAddressForm({
@@ -7,6 +6,9 @@ function CreateAddressForm({
   allCities,
   allAddresses,
   fetchAddress,
+  createAddress,
+  deleteAddress,
+  loading,
 }) {
   const [fullAddress, setFullAddress] = useState(
     `Some Address ${(Math.random() * 100).toFixed()}`
@@ -17,62 +19,50 @@ function CreateAddressForm({
   const [longitude, setLongitude] = useState(
     `${(Math.random() * 100).toFixed(3)}`
   );
-
   const [cityId, setCityId] = useState(null);
-
-  const [availableCities, setAvailableCities] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
-
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
-
   const handleSelectedRow = (id) => {
     setSelectedTable(id);
   };
-
   const handleUnselectedRow = () => {
     setSelectedTable(null);
   };
-
   const handleCity = (id) => {
     console.log("Citye gelen id", id);
-    const myCity = allCities.find((city) => city.id == id);
+    const myCity = allCities.find((city) => city.id === id);
     console.log("myCity", myCity);
     setCityId(id);
-    setSelectedCity(myCity);
   };
-
   const handleCountry = (id) => {
-    setSelectedCity(null);
-    setSelectedCountry(allCountries.find((country) => country.id == id));
-    setAvailableCities(allCities.filter((city) => city.countryId == id));
+    setSelectedCountry(allCountries.find((country) => country.id === id));
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("fullAddress checking now?", fullAddress);
 
-    axios
-      .post("https://localhost:7169/api/address", {
-        fullAddress,
-        latitude,
-        longitude,
-        cityId,
-      })
-      .then((res) => {
-        fetchAddress();
+    const address = {
+      fullAddress,
+      latitude,
+      longitude,
+      cityId,
+    };
+    const res = await createAddress(address);
+    alert("Address Created!");
+    console.log("res", res);
+    fetchAddress();
+    setFullAddress("");
+    setLatitude("");
+    setLongitude("");
+    setSelectedCountry(null);
+  };
 
-        alert("Address Created!");
-        setFullAddress("");
-        setLatitude("");
-        setLongitude("");
-        setSelectedCountry(null);
-        setSelectedCity(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure?");
+    if (confirmDelete === false) return;
+    await deleteAddress(id);
+    alert("Address Deleted!");
+    fetchAddress();
   };
 
   return (
@@ -128,7 +118,7 @@ function CreateAddressForm({
             id="cityid"
             onChange={(e) => handleCity(e.value)}
             options={allCities
-              .filter((city) => city.countryId == selectedCountry?.id)
+              .filter((city) => city.countryId === selectedCountry?.id)
               .map((city) => ({
                 value: city.id,
                 label: city.name,
@@ -141,45 +131,61 @@ function CreateAddressForm({
         </button>
       </form>
 
-      <>
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <div>
-            <h2>Adresses</h2>
-            <table className="cssTable">
-              <thead>
-                <tr>
-                  <th scope="col">Full Address</th>
-                  <th scope="col">GeoLocation</th>
-                  <th scope="col">City</th>
-                  <th scope="col">Country</th>
-                </tr>
-              </thead>
-              <tbody>
-                {allAddresses.map((address) => (
-                  <tr
-                    key={address.id}
-                    onClick={() => handleSelectedRow(address.id)}
-                    className={selectedTable === address.id ? "selected" : ""}
-                  >
-                    <td>{address.fullAddress}</td>
-                    <td>{address.GeoLocation}</td>
-                    <td>{address.city?.name}</td>
-                    <td>
-                      {
-                        allCountries.find(
-                          (country) => country.id === address.city.countryId
-                        )?.name
-                      }
-                    </td>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          {allAddresses && (
+            <div>
+              <h2>Addresses</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">Full Address</th>
+                    <th scope="col">GeoLocation</th>
+                    <th scope="col">City</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </>
+                </thead>
+                <tbody>
+                  {allAddresses.map((address) => (
+                    <tr
+                      key={address.id}
+                      onMouseEnter={() => handleSelectedRow(address.id)}
+                      onMouseLeave={handleUnselectedRow}
+                      className={selectedTable === address.id ? "selected" : ""}
+                    >
+                      <td>{address.fullAddress}</td>
+                      <td>
+                        {" "}
+                        Lat: {address.geoLocation.slice(1).split(",")[0]} -
+                        Long: {address.geoLocation.split(",")[1].slice(0, -1)}
+                      </td>
+                      <td>{address.city?.name}</td>
+                      <td>
+                        {
+                          allCountries.find(
+                            (country) => country.id === address.city.countryId
+                          )?.name
+                        }
+                      </td>
+                      <td>
+                        <button
+                          className="btn-danger"
+                          onClick={() => handleDelete(address.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

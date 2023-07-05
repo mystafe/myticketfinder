@@ -1,45 +1,32 @@
 import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function CreateStageForm() {
-  // "name": "string",
-  // "isIndoor": true,
-  // "placeId": 0,
-  // "capacity": 0,
-  // "capacityNormal": 0,
-  // "capacityVip": 0
-
-  const [stages, setStages] = useState([]);
+function CreateStageForm({
+  allPlaces,
+  allStages,
+  fetchStage,
+  createStage,
+  deleteStage,
+  loading,
+}) {
   const [name, setName] = useState("");
   const [isIndoor, setIsIndoor] = useState(true);
   const [placeId, setPlaceId] = useState(0);
   const [capacityNormal, setCapacityNormal] = useState(0);
   const [capacityVip, setCapacityVip] = useState(0);
-  const [capacity, setCapacity] = useState(capacityNormal + capacityVip);
-  const [places, setPlaces] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchPlace = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("https://localhost:7169/api/place");
-        setPlaces(res.data);
-        const res2 = await axios.get("https://localhost:7169/api/stage");
-        setStages(res2.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPlace();
-  }, []);
+  const handleDeletion = (id) => {
+    const confirm = window.confirm("Are you sure?");
+    if (confirm === false) return;
+
+    deleteStage(id);
+
+    fetchStage();
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCapacity(Number(capacityNormal) + Number(capacityVip));
+
     const stage = {
       name,
       isIndoor,
@@ -47,36 +34,18 @@ function CreateStageForm() {
       capacityNormal,
       capacityVip,
     };
-    setLoading(true);
 
-    axios
-      .post("https://localhost:7169/api/stage", {
-        name,
-        isIndoor,
-        placeId,
-        capacityNormal,
-        capacityVip,
-      })
-      .then((res) => {
-        const newStages = [...stages, res.data];
-        setStages(newStages);
-        setName("");
-        setIsIndoor(true);
-        setPlaceId(0);
-        setCapacityNormal(0);
-        setCapacityVip(0);
-        setCapacity(0);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    createStage(stage);
+    fetchStage();
+    setName("");
+    setIsIndoor(true);
+    setPlaceId(0);
+    setCapacityNormal(0);
+    setCapacityVip(0);
   };
 
   const handleIsIndoor = (value) => {
-    if (value == "on") setIsIndoor(true);
+    if (value === "on") setIsIndoor(true);
     else setIsIndoor(false);
   };
 
@@ -117,7 +86,7 @@ function CreateStageForm() {
             required
           >
             <option value="">Select Place</option>
-            {places.map((place) => (
+            {allPlaces.map((place) => (
               <option key={place.id} value={place.id}>
                 {place.name}
               </option>
@@ -172,10 +141,11 @@ function CreateStageForm() {
                   <th scope="col">Capacity</th>
                   <th scope="col">Capacity Normal</th>
                   <th scope="col">Capacity VIP</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {stages.map((stage) => (
+                {allStages.map((stage) => (
                   <tr key={stage.id}>
                     <td>{stage.name}</td>
                     <td>{stage.isIndoor ? "Yes" : "No"}</td>
@@ -183,6 +153,17 @@ function CreateStageForm() {
                     <td>{stage.capacity}</td>
                     <td>{stage.capacityNormal}</td>
                     <td>{stage.capacityVip}</td>
+                    <td>
+                      {" "}
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          handleDeletion(stage.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

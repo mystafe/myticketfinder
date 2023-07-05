@@ -105,7 +105,7 @@ function TestDiv() {
           <div
             className="card_circle transition"
             style={{
-              backgroundImage: `url(${image1})`,
+              backgroundImage: `url(${image2})`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center bottom",
             }}
@@ -126,7 +126,7 @@ function TestDiv() {
           <div
             className="card_circle transition"
             style={{
-              backgroundImage: `url(${image1})`,
+              backgroundImage: `url(${image3})`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center bottom",
             }}

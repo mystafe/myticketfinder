@@ -1,26 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Select from "react-select";
-import { set, useForm } from "react-cool-form";
 
-function CreateCityForm({ allCountries, allCities, fetchCity }) {
-  const Field = ({ label, id, error, ...rest }) => (
-    <div>
-      <label htmlFor={id}>{label}</label>
-      <input id={id} {...rest} />
-      {error && <p>{error}</p>}
-    </div>
-  );
-
-  const { form, use } = useForm({
-    defaultValues: { username: "", email: "", password: "" },
-    onSubmit: (values) => console.log("onSubmit: ", values),
-  });
-
-  const [loading, setLoading] = React.useState(false);
+function CreateCityForm({ allCountries, allCities, fetchCity, loading }) {
   const [selectedTable, setSelectedTable] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedCity, setSelectedCity] = useState(null);
 
   const handleSelectedRow = (id) => {
     setSelectedTable(id);
@@ -30,13 +14,13 @@ function CreateCityForm({ allCountries, allCities, fetchCity }) {
   };
 
   const handleCountry = (id) => {
-    setSelectedCountry(allCountries.filter((c) => c.id == id)[0]);
+    setSelectedCountry(allCountries.filter((c) => c.id === id)[0]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const name = e.target["city-name"].value;
+    const name = e.target["city-name"]?.value;
     const CountryId = selectedCountry.id;
 
     axios
@@ -105,7 +89,7 @@ function CreateCityForm({ allCountries, allCities, fetchCity }) {
                       <td>{city.name}</td>
                       <td>{city.countryId}</td>
                       <td>
-                        {allCountries.find((c) => c.id == city.countryId)
+                        {allCountries.find((c) => c.id === city.countryId)
                           ?.name ||
                           selectedCountry.name ||
                           "Not Found"}

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import axios, { all } from "axios";
-import { set } from "react-cool-form";
+import axios from "axios";
 
-function CreateCountryForm({ allCountries, fetchCountry }) {
-  const [loading, setLoading] = React.useState(false);
+function CreateCountryForm({ allCountries, fetchCountry, loading }) {
   const [selectedTable, setSelectedTable] = useState(null);
 
   const handleSelectedRow = (id) => {
@@ -19,7 +17,7 @@ function CreateCountryForm({ allCountries, fetchCountry }) {
     const countryName = e.target["country-name"].value;
 
     try {
-      const res = axios
+      axios
         .post("https://localhost:7169/api/country", {
           name: countryName,
         })
@@ -44,51 +42,48 @@ function CreateCountryForm({ allCountries, fetchCountry }) {
           Create Country
         </button>
       </form>
-      <div className="adminTable">
-        {" "}
-        {loading ? (
-          <h1>Loading...</h1>
-        ) : (
-          <>
-            {allCountries && (
-              <div>
-                <h2>All Countries</h2>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Id</th>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allCountries.map((country) => (
-                      <tr
-                        key={country.id}
-                        onMouseEnter={() => handleSelectedRow(country.id)}
-                        onMouseLeave={() => handleUnselectedRow()}
-                        className={`${
-                          selectedTable === country.id ? "selectedTable" : ""
-                        }`}
-                      >
-                        <td>{country.id}</td>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          {allCountries && (
+            <div>
+              <h2>Countries</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allCountries.map((country) => (
+                    <tr
+                      key={country.id}
+                      onMouseEnter={() => handleSelectedRow(country.id)}
+                      onMouseLeave={() => handleUnselectedRow()}
+                      className={`${
+                        selectedTable === country.id ? "selectedTable" : ""
+                      }`}
+                    >
+                      <td>{country.id}</td>
 
-                        <td>
-                          <a
-                            style={{ color: "black" }}
-                            href={`/country/${country.id}`}
-                          >
-                            {country.name}
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+                      <td>
+                        <a
+                          style={{ color: "black" }}
+                          href={`/country/${country.id}`}
+                        >
+                          {country.name}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

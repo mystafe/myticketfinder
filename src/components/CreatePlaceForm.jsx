@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
 import Select from "react-select";
-import { set } from "react-cool-form";
 
 function CreatePlaceForm({
   allCountries,
@@ -11,10 +9,9 @@ function CreatePlaceForm({
   allPlaces,
   fetchAddress,
   fetchPlace,
+  loading,
 }) {
-  const [loading, setLoading] = useState(false);
   const [selectedTable, setSelectedTable] = useState(null);
-
   const [name, setName] = useState("place name");
   const [openHour, setOpenHour] = useState("10:00");
   const [closeHour, setCloseHour] = useState("22:00");
@@ -40,41 +37,35 @@ function CreatePlaceForm({
   };
 
   const handleAddress = (id) => {
-    console.log("Handle Address Id:", id);
-    if (id == 0 || id == null) {
+    if (id === 0 || id == null) {
       setSelectedAddress(null);
       setShowAdditionalFields(true);
-
       return;
     }
-    console.log("Handle Address Id:", id);
-    const address = allAddresses.find((address) => address.id == id);
-    setSelectedAddress(address);
 
+    const address = allAddresses.find((address) => address.id === id);
+    setSelectedAddress(address);
     setSelectedCity(address.city?.name);
     setSelectedCountry(
-      allCountries.find((country) => country.id == address.city?.countryId)
+      allCountries.find((country) => country.id === address.city?.countryId)
     );
-
     setShowAdditionalFields(false);
   };
 
   const handleCity = (id) => {
-    setSelectedCity(allCities.find((city) => city.id == id));
+    setSelectedCity(allCities.find((city) => city.id === id));
   };
 
   const handleCountry = (id) => {
-    setSelectedCountry(allCountries.find((country) => country.id == id));
+    setSelectedCountry(allCountries.find((country) => country.id === id));
   };
   const handleIsActive = (value) => {
-    if (value == "on") setIsActive(true);
+    if (value === "on") setIsActive(true);
     else setIsActive(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log("first");
 
     console.log("second", selectedAddress);
     if (selectedAddress == null) {
@@ -259,7 +250,7 @@ function CreatePlaceForm({
                 id="city"
                 onSubmit={(e) => handleCity(e.value)}
                 options={allCities
-                  .filter((city) => city.countryId == selectedCountry?.id)
+                  .filter((city) => city.countryId === selectedCountry?.id)
                   .map((city) => ({ value: city.id, label: city.name }))}
               />
             </div>

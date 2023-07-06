@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import axios from "axios";
+
 import Select from "react-select";
 
-function CreateCityForm({ allCountries, allCities, fetchCity, loading }) {
+function CreateCityForm({
+  allCountries,
+  allCities,
+  createCity,
+  deleteCity,
+  loading,
+}) {
   const [selectedTable, setSelectedTable] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
 
@@ -23,14 +29,17 @@ function CreateCityForm({ allCountries, allCities, fetchCity, loading }) {
     const name = e.target["city-name"]?.value;
     const CountryId = selectedCountry.id;
 
-    axios
-      .post("https://localhost:7169/api/city", {
-        name,
-        CountryId,
-      })
-      .then((res) => {
-        fetchCity();
-      });
+    const city = { name, CountryId };
+    createCity(city);
+  };
+  const handleCityDelete = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this city?"
+    );
+
+    if (confirmDelete) {
+      deleteCity(id);
+    }
   };
 
   return (
@@ -73,6 +82,7 @@ function CreateCityForm({ allCountries, allCities, fetchCity, loading }) {
                     <th>Name</th>
                     <th>CountryId</th>
                     <th>Counrty Name</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,6 +103,14 @@ function CreateCityForm({ allCountries, allCities, fetchCity, loading }) {
                           ?.name ||
                           selectedCountry.name ||
                           "Not Found"}
+                      </td>
+                      <td>
+                        <button
+                          className="btn-danger"
+                          onClick={() => handleCityDelete(city.id)}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}

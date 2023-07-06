@@ -5,7 +5,7 @@ function CreateAddressForm({
   allCountries,
   allCities,
   allAddresses,
-  fetchAddress,
+
   createAddress,
   deleteAddress,
   loading,
@@ -39,7 +39,6 @@ function CreateAddressForm({
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("fullAddress checking now?", fullAddress);
 
     const address = {
       fullAddress,
@@ -47,10 +46,8 @@ function CreateAddressForm({
       longitude,
       cityId,
     };
-    const res = await createAddress(address);
-    alert("Address Created!");
-    console.log("res", res);
-    fetchAddress();
+    await createAddress(address);
+
     setFullAddress("");
     setLatitude("");
     setLongitude("");
@@ -61,8 +58,6 @@ function CreateAddressForm({
     const confirmDelete = window.confirm("Are you sure?");
     if (confirmDelete === false) return;
     await deleteAddress(id);
-    alert("Address Deleted!");
-    fetchAddress();
   };
 
   return (

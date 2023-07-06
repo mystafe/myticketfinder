@@ -1,126 +1,74 @@
 import React from "react";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { set, useForm } from "react-cool-form";
+import { useState } from "react";
+
 import Select from "react-select";
 
-function CreateEventStageForm() {
-  const Field = ({ label, id, error, ...rest }) => (
-    <div>
-      <label htmlFor={id}>{label}</label>
-      <input id={id} {...rest} />
-      {error && <p>{error}</p>}
-    </div>
-  );
-
-  const { form, use } = useForm({
-    defaultValues: { username: "", email: "", password: "" },
-
-    onSubmit: (values) => console.log("onSubmit: ", values),
-  });
-
-  const errors = use("errors", { errorWithTouched: true }); // Default is "false"
-
-  // "id": 14,
-  // "name": "AY, CARMELA!2",
-  // "basePrice": 200.0,
-  // "eventId": 1,
-  // "stage":
+function CreateEventStageForm({
+  createEventStage,
+  deleteEventStage,
+  allEvents,
+  allStages,
+  allEventStages,
+  loading,
+}) {
   const [name, setName] = useState(
     `Test Event Stage ${Math.random().toFixed(3) * 1000}`
   );
   const [basePrice, setBasePrice] = useState(100);
   const [eventId, setEventId] = useState(0);
   const [stageId, setStageId] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [events, setEvents] = useState([]);
-  const [stages, setStages] = useState([]);
-  const [eventStages, setEventStages] = useState([]);
-
-  const [stageOptions, setStageOptions] = useState([]);
-
-  const [eventOptions, setEventOptions] = useState([]);
-
-  useEffect(() => {
-    const fetchEvent = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.get("https://localhost:7169/api/event");
-
-        setEvents(res.data);
-        setEventOptions(
-          res.data.map((event) => {
-            return { value: event.id, label: event.name };
-          })
-        );
-        const res2 = await axios.get("https://localhost:7169/api/stage");
-        setStages(res2.data);
-        setStageOptions(
-          res2.data.map((stage) => {
-            return { value: stage.id, label: stage.name };
-          })
-        );
-        const res3 = await axios.get("https://localhost:7169/api/eventstage");
-        setEventStages(res3.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvent();
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      const res = await axios.post("https://localhost:7169/api/eventstage", {
-        name,
-        basePrice,
-        eventId,
-        stageId,
-      });
+    await createEventStage({ name, basePrice, eventId, stageId });
+  };
 
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleDeleteEventStage = async (id) => {
+    const confirmDelete = window.confirm("Are you sure?");
+    if (confirmDelete === false) return;
+    await deleteEventStage(id);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Event Stage</h2>
-        <Field
-          label="Event Name"
-          id="eventname"
-          name="eventname"
-          placeholder="Enter event name "
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          type="text"
-        />
-        <Field
-          label="Base Price"
-          id="basePrice"
-          name="basePrice"
-          type="number"
-          placeholder="Enter base price"
-          value={basePrice}
-          onChange={(e) => {
-            setBasePrice(e.target.value);
-          }}
-          required
-        />
+        <div>
+          <label htmlFor="eventname">Event</label>
+          <input
+            id="eventname"
+            name="eventname"
+            placeholder="Enter event name "
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            type="text"
+          />
+        </div>
+        <div>
+          <label htmlFor="basePrice">Price</label>
+          <input
+            id="basePrice"
+            name="basePrice"
+            type="number"
+            placeholder="Enter base price"
+            value={basePrice}
+            onChange={(e) => {
+              setBasePrice(e.target.value);
+            }}
+            required
+          />
+        </div>
         <div>
           <label htmlFor="eventId">Event</label>
           <Select
             id="eventId"
             name="eventId"
-            options={eventOptions}
+            options={allEvents.map((event) => ({
+              value: event.id,
+              label: event.name,
+            }))}
             onChange={(e) => setEventId(e.value)}
             placeholder="Select event"
           />
@@ -132,7 +80,10 @@ function CreateEventStageForm() {
             id="stageId"
             name="stageId"
             onChange={(e) => setStageId(e.value)}
-            options={stageOptions}
+            options={allStages.map((stage) => ({
+              value: stage.id,
+              label: stage.name,
+            }))}
             placeholder="Select stage"
           />
         </div>
@@ -141,7 +92,7 @@ function CreateEventStageForm() {
         </button>
       </form>
 
-      <div className="eventStagelist">
+      <div>
         {loading ? (
           <h1>Loading...</h1>
         ) : (
@@ -150,23 +101,32 @@ function CreateEventStageForm() {
             <table>
               <thead>
                 <tr>
+                  <th>Event Stage Id</th>
                   <th>Event Name</th>
                   <th>Stage Name</th>
                   <th>Base Price</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {eventStages.map((eventStage) => (
+                {allEventStages.map((eventStage) => (
                   <tr key={eventStage.id}>
-                    {/* <td>{events[eventStage.eventId - 1]?.name}</td> */}
+                    <td>{eventStage.id}</td>
                     <td>
-                      {" "}
-                      {events.map((event) =>
+                      {allEvents.map((event) =>
                         event.id === eventStage.eventId ? event.name : null
                       )}
                     </td>
-                    <td>{stages.map((stage) => stage.name)}</td>
+                    <td>{allStages.map((stage) => stage.name)}</td>
                     <td>{eventStage.basePrice}</td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDeleteEventStage(eventStage.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -9,8 +9,6 @@ function CreateCustomerForm({
   allCountries,
   createCustomer,
   deleteCustomer,
-  createAddress,
-  fetchAddress,
   loading,
 }) {
   const [firstname, setFirstname] = useState("Test");
@@ -113,7 +111,6 @@ function CreateCustomerForm({
       longitude,
     };
     createCustomer(customer);
-
     setFirstname("");
     setMiddlename("");
     setLastname("");
@@ -127,8 +124,15 @@ function CreateCustomerForm({
     setFullAddress("");
     setLatitude("");
     setLongitude("");
-
     setSelectedCity(null);
+  };
+  const handleDeleteCustomer = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this country?"
+    );
+    if (confirmDelete) {
+      deleteCustomer(id);
+    }
   };
 
   return (
@@ -312,6 +316,7 @@ function CreateCustomerForm({
                   <th>Phone</th>
                   <th>FullAddress</th>
                   <th>City</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -331,6 +336,15 @@ function CreateCustomerForm({
                     <td>{customer.phone}</td>
                     <td>{customer.fullAddress}</td>
                     <td>{customer.cityName} </td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          handleDeleteCustomer(customer.id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

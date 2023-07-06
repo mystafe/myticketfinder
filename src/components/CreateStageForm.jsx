@@ -4,7 +4,6 @@ import { useState } from "react";
 function CreateStageForm({
   allPlaces,
   allStages,
-  fetchStage,
   createStage,
   deleteStage,
   loading,
@@ -20,8 +19,6 @@ function CreateStageForm({
     if (confirm === false) return;
 
     deleteStage(id);
-
-    fetchStage();
   };
 
   const handleSubmit = (e) => {
@@ -36,7 +33,7 @@ function CreateStageForm({
     };
 
     createStage(stage);
-    fetchStage();
+
     setName("");
     setIsIndoor(true);
     setPlaceId(0);
@@ -135,6 +132,7 @@ function CreateStageForm({
             <table className="table">
               <thead>
                 <tr>
+                  <th scope="col"> Id</th>
                   <th scope="col">Stage Name</th>
                   <th scope="col">Is Indoor</th>
                   <th scope="col">Place</th>
@@ -147,6 +145,7 @@ function CreateStageForm({
               <tbody>
                 {allStages.map((stage) => (
                   <tr key={stage.id}>
+                    <td>{stage.id}</td>
                     <td>{stage.name}</td>
                     <td>{stage.isIndoor ? "Yes" : "No"}</td>
                     <td>{stage.place.name}</td>

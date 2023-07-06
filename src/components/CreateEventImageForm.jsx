@@ -1,137 +1,67 @@
 import React from "react";
 import Select from "react-select";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { set, useForm } from "react-cool-form";
+import { useState } from "react";
 
-function CreateEventImageForm() {
-  const Field = ({ label, id, error, ...rest }) => (
-    <div>
-      <label htmlFor={id}>{label}</label>
-      <input id={id} {...rest} />
-      {error && <p>{error}</p>}
-    </div>
-  );
-
-  const { form, use } = useForm({
-    defaultValues: { username: "", email: "", password: "" },
-    onSubmit: (values) => console.log("onSubmit: ", values),
-  });
-
-  const [events, setEvents] = useState([]);
+function CreateEventImageForm({
+  allEvents,
+  createEventImage,
+  deleteEventImage,
+  allEventImages,
+  loading,
+}) {
   const [urlAddress, setUrlAddress] = useState("");
   const [description, setDescription] = useState("");
   const [eventId, setEventId] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [eventImages, setEventImages] = useState([]);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const res = await axios.get("https://localhost:7169/api/event");
-        setEvents(res.data);
-        const res2 = await axios.get("https://localhost:7169/api/eventimage");
-        setEventImages(res2.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchEvents();
-  }, []);
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
+    console.log("images", { urlAddress, description, eventId });
 
-    // "id": 17,
-    //     "urlAddress": "https://stcdn.ibb.istanbul/Uploads/2020/9/aycarmela-afis-son-01.jpg?width=600&height=847",
-    //     "description": "Default",
-    //     "eventId": 1
-
-    try {
-      setLoading(true);
-      const res = await axios.post("https://localhost:7169/api/eventimage", {
-        urlAddress,
-        description,
-        eventId,
-      });
-
-      setLoading(false);
-      alert("Event image created successfully!");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setEventImages([
-        ...eventImages,
-        {
-          urlAddress,
-          description,
-          eventId,
-        },
-      ]);
-
-      setUrlAddress("");
-      setDescription("");
-      setEventId(0);
-    }
+    await createEventImage({ urlAddress, description, eventId });
+    setUrlAddress("");
+    setDescription("");
+    setEventId(0);
   };
 
-  const eventOptions = events.map((event) => ({
-    value: event.id,
-    label: event.name,
-  }));
-
-  const deleteEventImage = async (e) => {
-    try {
-      console.log("e id", e);
-      setLoading(true);
-      const res = await axios.delete(
-        `https://localhost:7169/api/eventimage/${e.target.value}`
-      );
-
-      setLoading(false);
-      alert("Event image deleted successfully!");
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setEventImages(
-        eventImages.filter((eventImage) => eventImage.id !== e.target.value)
-      );
-      setLoading(false);
-    }
+  const handleDeleteEventImage = async (e) => {
+    const confirmDelete = window.confirm("Are you sure?");
+    if (confirmDelete === false) return;
+    await deleteEventImage(e.target.value);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Create Event Image</h2>
-        <Field
-          label="Url Address"
-          type="url"
-          id="urlAddress"
-          name="urlAddress"
-          placeholder="Enter url address"
-          value={urlAddress}
-          onChange={(e) => {
-            e.preventDefault();
+        <div className="form-group">
+          <label htmlFor="name">Url Address</label>
+          <input
+            type="url"
+            id="urlAddress"
+            name="urlAddress"
+            placeholder="Enter url address"
+            value={urlAddress}
+            onChange={(e) => {
+              e.preventDefault();
 
-            setUrlAddress(e.target.value);
-          }}
-          required
+              setUrlAddress(e.target.value);
+            }}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <input
+            required
+            id="description"
+            name="description"
+            type="text"
+            placeholder="Enter description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
 
-          // error={errors.urlAddress}
-        />
-        <Field
-          label="Description"
-          required
-          id="description"
-          name="description"
-          type="text"
-          placeholder="Enter description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
         <div className="form-group">
           <label htmlFor="event">Event</label>
 
@@ -141,8 +71,14 @@ function CreateEventImageForm() {
             name="eventId"
             required
             default={0}
-            options={eventOptions}
-            onChange={(e) => setEventId(e.value)}
+            options={allEvents.map((event) => ({
+              value: event.id,
+              label: event.name,
+            }))}
+            onChange={(e) => {
+              setEventId(e.value);
+              console.log(e.value);
+            }}
           />
         </div>
         <button type="submit" className="btn btn-primary">
@@ -158,6 +94,7 @@ function CreateEventImageForm() {
           <table>
             <thead>
               <tr>
+                <th> Id</th>
                 <th>Picture</th>
                 <th>Description</th>
                 <th>Event</th>
@@ -165,8 +102,9 @@ function CreateEventImageForm() {
               </tr>
             </thead>
             <tbody>
-              {eventImages.map((eventImage) => (
+              {allEventImages.map((eventImage) => (
                 <tr key={eventImage.id}>
+                  <td>{eventImage.id}</td>
                   <td>
                     <img
                       src={eventImage.urlAddress}
@@ -178,11 +116,10 @@ function CreateEventImageForm() {
                   <td>{eventImage.description}</td>
                   <td>{eventImage.eventId}</td>
                   <td>
-                    {" "}
                     <button
                       className="btn btn-danger"
                       value={eventImage.id}
-                      onClick={(e) => deleteEventImage(e)}
+                      onClick={(e) => handleDeleteEventImage(e)}
                     >
                       Delete
                     </button>

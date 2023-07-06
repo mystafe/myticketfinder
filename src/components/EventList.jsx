@@ -48,7 +48,7 @@ function EventList() {
           <>
             {events && (
               <div>
-                <h2>Here are events</h2>
+                <h2>Events</h2>
                 <table className="eventtable">
                   <thead>
                     <tr>

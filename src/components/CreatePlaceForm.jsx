@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import Select from "react-select";
 
 function CreatePlaceForm({
@@ -7,8 +6,9 @@ function CreatePlaceForm({
   allCities,
   allAddresses,
   allPlaces,
-  fetchAddress,
-  fetchPlace,
+  createAddress,
+  createPlace,
+  deletePlace,
   loading,
 }) {
   const [selectedTable, setSelectedTable] = useState(null);
@@ -71,62 +71,56 @@ function CreatePlaceForm({
     if (selectedAddress == null) {
       console.log("it is here bro no adress:", selectedAddress);
       console.log(fullAddress, latitude, longitude, selectedCity.id);
-      axios
-        .post("https://localhost:7169/api/address", {
-          fullAddress,
-          latitude,
-          longitude,
-          cityId: selectedCity.id,
-        })
-        .then((res) => {
-          fetchAddress();
+      const address = {
+        fullAddress,
+        latitude,
+        longitude,
+        cityId: selectedCity.id,
+      };
+      createAddress(address);
+      const place = {
+        name,
+        openHour,
+        closeHour,
+        isActive,
+        addressId: allAddresses.find(
+          (address) => address.fullAddress === fullAddress
+        ).id,
+      };
+      createPlace(place);
+      setFullAddress("");
+      setLatitude("");
+      setLongitude("");
+      setSelectedCity(null);
+      setSelectedCountry(null);
+      setSelectedAddress(null);
 
-          axios
-            .post("https://localhost:7169/api/place", {
-              name,
-              openHour,
-              closeHour,
-              isActive,
-              addressId: res.data.id,
-            })
-            .then((res) => {
-              fetchPlace();
-              alert("place created with new address");
-
-              setFullAddress("");
-              setLatitude("");
-              setLongitude("");
-              setSelectedCity(null);
-              setSelectedCountry(null);
-              setSelectedAddress(null);
-              // setName("");
-              // setOpenHour("");
-              // setCloseHour("");
-              setIsActive(true);
-            });
-        });
+      setIsActive(true);
     } else {
       console.log("it is here bro with adress:", selectedAddress);
-      axios
+      const place = {
+        name,
+        openHour,
+        closeHour,
+        isActive,
+        addressId: selectedAddress.id,
+      };
+      createPlace(place);
+      setLatitude("");
+      setLongitude("");
 
-        .post("https://localhost:7169/api/place", {
-          name,
-          openHour,
-          closeHour,
-          isActive,
-          addressId: selectedAddress.id,
+      setIsActive(true);
+    }
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this place?")) {
+      deletePlace(id)
+        .then(() => {
+          alert("Place deleted2");
         })
-        .then((res) => {
-          alert("place created");
-          fetchPlace();
-
-          setLatitude("");
-          setLongitude("");
-
-          // setName("");
-          // setOpenHour("");
-          // setCloseHour("");
-          setIsActive(true);
+        .catch((err) => {
+          alert("Place could not be deleted2");
         });
     }
   };
@@ -282,11 +276,13 @@ function CreatePlaceForm({
             <table className="table">
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Place Name</th>
                   <th>Open Hour</th>
                   <th>Close Hour</th>
                   <th>Is Active</th>
                   <th>Address</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -295,10 +291,12 @@ function CreatePlaceForm({
                     key={place.id}
                     onMouseEnter={() => handleSelectedRow(place.id)}
                     onMouseLeave={() => handleUnselectedRow()}
-                    className={
-                      place.id === selectedTable ? "selectedTable" : ""
-                    }
+                    className={`${
+                      selectedTable === place.id ? "selectedTable" : ""
+                    }`}
                   >
+                    <td>{place.id}</td>
+
                     <td>{place.name}</td>
                     <td>{place.openHour}</td>
                     <td>{place.closeHour}</td>
@@ -307,6 +305,15 @@ function CreatePlaceForm({
                       {place.address == null
                         ? "No Address"
                         : place.address?.fullAddress || "No Address"}
+                    </td>
+
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => handleDelete(place.id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}

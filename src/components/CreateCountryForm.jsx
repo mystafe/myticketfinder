@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 
-function CreateCountryForm({ allCountries, fetchCountry, loading }) {
+function CreateCountryForm({
+  allCountries,
+  createCountry,
+  deleteCountry,
+  loading,
+}) {
   const [selectedTable, setSelectedTable] = useState(null);
 
   const handleSelectedRow = (id) => {
@@ -15,17 +19,15 @@ function CreateCountryForm({ allCountries, fetchCountry, loading }) {
     e.preventDefault();
 
     const countryName = e.target["country-name"].value;
-
-    try {
-      axios
-        .post("https://localhost:7169/api/country", {
-          name: countryName,
-        })
-        .then((res) => {
-          fetchCountry();
-        });
-    } catch (error) {
-      console.log(error);
+    const country = { name: countryName };
+    createCountry(country);
+  };
+  const handleDeleteCountry = (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this country?"
+    );
+    if (confirmDelete) {
+      deleteCountry(id);
     }
   };
 
@@ -54,6 +56,7 @@ function CreateCountryForm({ allCountries, fetchCountry, loading }) {
                   <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,6 +78,16 @@ function CreateCountryForm({ allCountries, fetchCountry, loading }) {
                         >
                           {country.name}
                         </a>
+                      </td>
+                      <td>
+                        <button
+                          className="btn-danger"
+                          onClick={() => {
+                            handleDeleteCountry(country.id);
+                          }}
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}

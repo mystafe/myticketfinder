@@ -8,13 +8,14 @@ import CreateAddressForm from "../components/CreateAddressForm";
 import CreatePlaceForm from "../components/CreatePlaceForm";
 import CreateStageForm from "../components/CreateStageForm";
 import CreateCustomerForm from "../components/CreateCustomerForm";
-import CreateEventForm from "../components/CreateEventForm";
+
 import CreateEventImageForm from "../components/CreateEventImageForm";
 import CreateRatingForm from "../components/CreateRatingForm";
 import CreateEventStageForm from "../components/CreateEventStageForm";
 import CreateTicketForm from "../components/CreateTicketForm";
 import ListEventSeatsForm from "../components/ListEventSeatsForm";
-import { set } from "react-cool-form";
+import CreateEventForm from "../components/CreateEventForm";
+import ListSeatsForm from "./ListSeatsForm";
 
 function AdminPage() {
   const [loading, setLoading] = React.useState(true);
@@ -29,6 +30,8 @@ function AdminPage() {
   const [allRatings, setAllRatings] = useState([]);
   const [allEventStages, setAllEventStages] = useState([]);
   const [allTickets, setAllTickets] = useState([]);
+  const [allEventSeats, setAllEventSeats] = useState([]);
+  const [allSeats, setAllSeats] = useState([]);
 
   const fetchCountry = async () => {
     setLoading(true);
@@ -81,7 +84,33 @@ function AdminPage() {
       setLoading(false);
     }
   };
+  const createCity = async (city) => {
+    try {
+      setLoading(true);
+      await axios.post("https://localhost:7169/api/city", city);
+      fetchCity();
+      alert("City Created!");
+    } catch (error) {
+      console.log(error);
+      alert("City could not created!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const deleteCity = async (id) => {
+    try {
+      setLoading(true);
+      await axios.delete(`https://localhost:7169/api/city/${id}`);
+      fetchCity();
+      alert("City Deleted!");
+    } catch (error) {
+      console.log(error);
+      alert("City could not deleted!");
+    } finally {
+      setLoading(false);
+    }
+  };
   const fetchAddress = async () => {
     try {
       setLoading(true);
@@ -241,7 +270,7 @@ function AdminPage() {
   const fetchEvent = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("https://localhost:7169/api/event");
+      const res = await axios.get("https://localhost:7169/api/event/");
       setAllEvents(res.data);
     } catch (error) {
       console.log(error);
@@ -431,6 +460,85 @@ function AdminPage() {
     }
   };
 
+  const fetchEventSeats = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("https://localhost:7169/api/eventseat");
+      setAllEventSeats(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteEventSeat = async (id) => {
+    try {
+      setLoading(true);
+      await axios.delete(`https://localhost:7169/api/eventseat/${id}`);
+      await fetchEventSeats();
+      alert("Event Seat Deleted!");
+    } catch (error) {
+      console.log(error);
+      alert("Event Seat could not deleted!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createEventSeat = async (eventSeat) => {
+    try {
+      setLoading(true);
+      await axios.post("https://localhost:7169/api/eventseat", eventSeat);
+      fetchEventSeats();
+      alert("Event Seat Created!");
+    } catch (error) {
+      console.log(error);
+      alert("Event Seat could not created!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchSeats = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("https://localhost:7169/api/seat");
+      setAllSeats(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createSeat = async (seat) => {
+    try {
+      setLoading(true);
+      await axios.post("https://localhost:7169/api/seat", seat);
+      fetchSeats();
+      alert("Seat Created!");
+    } catch (error) {
+      console.log(error);
+      alert("Seat could not created!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteSeat = async (id) => {
+    try {
+      setLoading(true);
+      await axios.delete(`https://localhost:7169/api/seat/${id}`);
+      fetchSeats();
+      alert("Seat Deleted!");
+    } catch (error) {
+      console.log(error);
+      alert("Seat could not deleted!");
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchCountry();
     fetchCity();
@@ -438,11 +546,13 @@ function AdminPage() {
     fetchPlace();
     fetchStage();
     fetchCustomer();
-    fetchEvent();
     fetchEventImage();
+    fetchEvent();
     fetchRating();
     fetchEventStage();
     fetchTicket();
+    fetchEventSeats();
+    fetchSeats();
   }, []);
 
   return (
@@ -450,20 +560,21 @@ function AdminPage() {
       <h2>Admin Page</h2>
       <CreateCountryForm
         allCountries={allCountries}
-        fetchCountry={fetchCountry}
+        createCountry={createCountry}
+        deleteCountry={deleteCountry}
         loading={loading}
       />
       <CreateCityForm
         allCountries={allCountries}
         allCities={allCities}
-        fetchCity={fetchCity}
+        createCity={createCity}
+        deleteCity={deleteCity}
         loading={loading}
       />
       <CreateAddressForm
         allCountries={allCountries}
         allCities={allCities}
         allAddresses={allAddresses}
-        fetchAddress={fetchAddress}
         createAddress={createAddress}
         deleteAddress={deleteAddress}
         loading={loading}
@@ -473,15 +584,15 @@ function AdminPage() {
         allCities={allCities}
         allAddresses={allAddresses}
         allPlaces={allPlaces}
-        fetchAddress={fetchAddress}
-        fetchPlace={fetchPlace}
+        createAddress={createAddress}
+        createPlace={createPlace}
+        deletePlace={deletePlace}
         loading={loading}
       />
       <CreateStageForm
         allPlaces={allPlaces}
         fetchPlace={fetchPlace}
         allStages={allStages}
-        fetchStage={fetchStage}
         createStage={createStage}
         deleteStage={deleteStage}
         loading={loading}
@@ -493,16 +604,63 @@ function AdminPage() {
         allCountries={allCountries}
         createCustomer={createCustomer}
         deleteCustomer={deleteCustomer}
-        createAddress={createAddress}
-        fetchAddress={fetchAddress}
         loading={loading}
       />
-      <CreateEventForm />
-      <CreateEventImageForm />
-      <CreateRatingForm />
-      <CreateEventStageForm />
-      <CreateTicketForm />
-      <ListEventSeatsForm />
+
+      <CreateEventForm
+        allEvents={allEvents}
+        deleteEvent={deleteEvent}
+        createEvent={createEvent}
+        allStages={allStages}
+        createEventImage={createEventImage}
+        createEventStage={createEventStage}
+        loading={loading}
+      />
+      <CreateEventImageForm
+        allEventImages={allEventImages}
+        createEventImage={createEventImage}
+        deleteEventImage={deleteEventImage}
+        allEvents={allEvents}
+        loading={loading}
+      />
+      <CreateRatingForm
+        allCustomers={allCustomers}
+        allRatings={allRatings}
+        allEvents={allEvents}
+        createRating={createRating}
+        deleteRating={deleteRating}
+        loading={loading}
+      />
+      <CreateEventStageForm
+        allStages={allStages}
+        allEvents={allEvents}
+        allEventStages={allEventStages}
+        createEventStage={createEventStage}
+        deleteEventStage={deleteEventStage}
+        loading={loading}
+      />
+      <CreateTicketForm
+        allTickets={allTickets}
+        createTicket={createTicket}
+        deleteTicket={deleteTicket}
+        allCustomers={allCustomers}
+        allEventSeats={allEventSeats}
+        allEvents={allEvents}
+      />
+      <ListEventSeatsForm
+        allEventSeats={allEventSeats}
+        deleteEventSeat={deleteEventSeat}
+        loading={loading}
+        allEvents={allEvents}
+        allEventStages={allEventStages}
+      />
+      <ListSeatsForm
+        allSeats={allSeats}
+        allStages={allStages}
+        createSeat={createSeat}
+        deleteSeat={deleteSeat}
+        loading={loading}
+      />
     </div>
   );
 }

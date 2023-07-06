@@ -1,30 +1,75 @@
 import "./App.css";
 
-import Events from "../src/UI/Events";
 import Home from "./UI/Home";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import EventDetails from "./components/EventDetails";
-
 import AppLayout from "./UI/AppLayout";
 
 import NotFound from "./UI/NotFound";
 
 import AdminPage from "./UI/AdminPage";
-import CreateTicketForm from "./components/CreateTicketForm";
-import CreateEventForm from "./components/CreateEventForm";
-import CreateCountryForm from "./components/CreateCountryForm";
-import CreateCityForm from "./components/CreateCityForm";
-import CreateAddressForm from "./components/CreateAddressForm";
-import ListEventSeatsForm from "./components/ListEventSeatsForm";
-import CreatePlaceForm from "./components/CreatePlaceForm";
-import CreateCustomerForm from "./components/CreateCustomerForm";
-import CreateRatingForm from "./components/CreateRatingForm";
-import CreateStageForm from "./components/CreateStageForm";
-import CreateEventImageForm from "./components/CreateEventImageForm";
-import CreateEventStageForm from "./components/CreateEventStageForm";
+
 import TestDiv from "./UI/TestDiv";
+import AdminPageNew from "./UI/AdminPageNew";
+import LoginPage from "./UI/LoginPage";
+import Jonas from "./UI/Jonas";
 function App() {
+  const menuLinks = [
+    {
+      name: "All Events",
+      link: "/event/all",
+    },
+    {
+      name: " Popular Events",
+      link: "/event/popularevents",
+    },
+    {
+      name: "Upcoming Events",
+      link: "/event/upcomingevents",
+    },
+    {
+      name: "Past Events",
+      link: "/event/pastevents",
+    },
+    {
+      name: "Free Events",
+      link: "/event/freeevents",
+    },
+    {
+      name: "Today's Events",
+      link: "/event/todaysevents",
+    },
+    {
+      name: "This Week's Events",
+      link: "/event/thisweeksevents",
+    },
+    {
+      name: "Free Events",
+      link: "/event/freeevents",
+    },
+    {
+      name: "Concert Events",
+      link: "/event/concertevents",
+    },
+    {
+      name: "Sports Events",
+      link: "/event/sportsevents",
+    },
+    {
+      name: "Comedy Events",
+      link: "/event/comedyevents",
+    },
+    {
+      name: "Movies",
+      link: "/event/movies",
+    },
+    {
+      name: "Art",
+      link: "/event/art",
+    },
+  ];
+
   const router = createBrowserRouter([
     {
       element: <AppLayout />,
@@ -35,7 +80,15 @@ function App() {
         },
         {
           path: "/",
-          element: <Home />,
+          element: <Jonas />,
+        },
+        // {
+        //   path: "/",
+        //   element: <Home />,
+        // },
+        {
+          path: "/login",
+          element: <LoginPage />,
         },
         {
           path: "/home",
@@ -46,59 +99,64 @@ function App() {
           element: <AdminPage />,
         },
         {
-          path: "/event",
-          element: <Events />,
-        },
-        {
-          path: "/event/create",
-          element: <CreateEventForm />,
-        },
-        {
           path: "/event/:id",
           element: <EventDetails />,
         },
+
         {
-          path: "/country/create",
-          element: <CreateCountryForm />,
+          path: "/admin2",
+          element: <AdminPageNew />,
         },
         {
-          path: "/city/create",
-          element: <CreateCityForm />,
+          path: "/event/all",
+          element: <EventDetails />,
         },
         {
-          path: "/address/create",
-          element: <CreateAddressForm />,
+          path: "/event/popularevents",
+          element: <EventDetails />,
+        },
+        {
+          path: "/event/upcomingevents",
+          element: <EventDetails />,
+        },
+        {
+          path: "/event/pastevents",
+          element: <EventDetails />,
         },
 
         {
-          path: "/ticket/create",
-          element: <CreateTicketForm />,
+          path: "/event/freeevents",
+          element: <EventDetails />,
         },
         {
-          path: "/eventseat/list",
-          element: <ListEventSeatsForm />,
+          path: "/event/todaysevents",
+          element: <EventDetails />,
         },
         {
-          path: "/place/create",
-          element: <CreatePlaceForm />,
+          path: "/event/thisweeksevents",
+          element: <EventDetails />,
         },
         {
-          path: "/customer/create",
-          element: <CreateCustomerForm />,
+          path: "/event/concertevents",
+          element: <EventDetails />,
         },
         {
-          path: "/rating/create",
-          element: <CreateRatingForm />,
+          path: "/event/sportsevents",
+          element: <EventDetails />,
         },
         {
-          path: "/stage/create",
-          element: <CreateStageForm />,
+          path: "/event/comedyevents",
+          element: <EventDetails />,
         },
         {
-          path: "/eventimage/create",
-          element: <CreateEventImageForm />,
+          path: "/event/movies",
+          element: <EventDetails />,
         },
-        { path: "/eventstage/create", element: <CreateEventStageForm /> },
+        {
+          path: "/event/art",
+          element: <EventDetails />,
+        },
+
         {
           path: "*",
           element: <NotFound />,

@@ -8,11 +8,12 @@ import { Outlet } from "react-router-dom";
 function AppLayout() {
   return (
     <div className="App">
-      <Header />
-
+      {/* <Header />
+      <Navbar />
+  */}
       <Outlet />
-
-      <Footer />
+      {/* 
+      <Footer /> */}
     </div>
   );
 }

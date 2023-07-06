@@ -1,38 +1,42 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import axios from "axios";
 
-import { useState } from "react";
-import CreateCountryForm from "../components/CreateCountryForm";
-import CreateCityForm from "../components/CreateCityForm";
-import CreateAddressForm from "../components/CreateAddressForm";
-import CreatePlaceForm from "../components/CreatePlaceForm";
-import CreateStageForm from "../components/CreateStageForm";
-import CreateCustomerForm from "../components/CreateCustomerForm";
+import { AppContext } from "../context/GlobalContext";
+import CreateCountryForm from "../components/AdminComponents/CreateCountryForm";
+import CreateCityForm from "../components/AdminComponents/CreateCityForm";
 
-import CreateEventImageForm from "../components/CreateEventImageForm";
-import CreateRatingForm from "../components/CreateRatingForm";
-import CreateEventStageForm from "../components/CreateEventStageForm";
-import CreateTicketForm from "../components/CreateTicketForm";
-import ListEventSeatsForm from "../components/ListEventSeatsForm";
-import CreateEventForm from "../components/CreateEventForm";
-import ListSeatsForm from "./ListSeatsForm";
+import CreateAddressForm from "../components/AdminComponents/CreateAddressForm";
+import CreatePlaceForm from "../components/AdminComponents/CreatePlaceForm";
+import CreateStageForm from "../components/AdminComponents/CreateStageForm";
+import CreateCustomerForm from "../components/AdminComponents/CreateCustomerForm";
+
+import CreateEventImageForm from "../components/AdminComponents/CreateEventImageForm";
+import CreateRatingForm from "../components/AdminComponents/CreateRatingForm";
+import CreateEventStageForm from "../components/AdminComponents/CreateEventStageForm";
+import CreateTicketForm from "../components/AdminComponents/CreateTicketForm";
+import CreateEventForm from "../components/AdminComponents/CreateEventForm";
+
+import ListEventSeatsForm from "../components/AdminComponents/ListEventSeatsForm";
+import ListSeatsForm from "../components/AdminComponents/ListSeatsForm";
 
 function AdminPage() {
-  const [loading, setLoading] = React.useState(true);
-  const [allCountries, setAllCountries] = useState([]);
-  const [allCities, setAllCities] = useState([]);
-  const [allAddresses, setAllAddresses] = useState([]);
-  const [allPlaces, setAllPlaces] = useState([]);
-  const [allStages, setAllStages] = useState([]);
-  const [allCustomers, setAllCustomers] = useState([]);
-  const [allEvents, setAllEvents] = useState([]);
-  const [allEventImages, setAllEventImages] = useState([]);
-  const [allRatings, setAllRatings] = useState([]);
-  const [allEventStages, setAllEventStages] = useState([]);
-  const [allTickets, setAllTickets] = useState([]);
-  const [allEventSeats, setAllEventSeats] = useState([]);
-  const [allSeats, setAllSeats] = useState([]);
-
+  const {
+    isAdmin,
+    setLoading,
+    setAllCountries,
+    setAllCities,
+    setAllAddresses,
+    setAllPlaces,
+    setAllStages,
+    setAllCustomers,
+    setAllEvents,
+    setAllEventImages,
+    setAllRatings,
+    setAllEventStages,
+    setAllTickets,
+    setAllEventSeats,
+    setAllSeats,
+  } = useContext(AppContext);
   const fetchCountry = async () => {
     setLoading(true);
     try {
@@ -50,7 +54,6 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/country", country);
       fetchCountry();
-      alert("Country Created!");
     } catch (error) {
       console.log(error);
       alert("Country could not created!");
@@ -89,7 +92,6 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/city", city);
       fetchCity();
-      alert("City Created!");
     } catch (error) {
       console.log(error);
       alert("City could not created!");
@@ -103,7 +105,6 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/city/${id}`);
       fetchCity();
-      alert("City Deleted!");
     } catch (error) {
       console.log(error);
       alert("City could not deleted!");
@@ -127,7 +128,6 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/address", address);
       fetchAddress();
-      alert("Address Created!");
     } catch (error) {
       console.log(error);
       alert("Address could not created!");
@@ -167,7 +167,6 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/place", place);
       fetchPlace();
-      alert("Place Created!");
     } catch (error) {
       console.log(error);
       alert("Place could not created!");
@@ -206,7 +205,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/stage", stage);
       fetchStage();
-      alert("Stage Created!");
+      fetchSeats();
     } catch (error) {
       console.log(error);
       alert("Stage could not created!");
@@ -219,6 +218,7 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/stage/${id}`);
       fetchStage();
+      fetchSeats();
       alert("Stage Deleted!");
     } catch (error) {
       console.log(error);
@@ -245,7 +245,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/customer", customer);
       fetchCustomer();
-      alert("Customer Created!");
+      fetchAddress();
     } catch (error) {
       console.log(error);
       alert("Customer could not created!");
@@ -258,7 +258,6 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/customer/${id}`);
       fetchCustomer();
-      alert("Customer Deleted!");
     } catch (error) {
       console.log(error);
       alert("Customer could not deleted!");
@@ -284,7 +283,9 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/event", event);
       fetchEvent();
-      alert("Event Created!");
+      fetchEventImage();
+      fetchEventStage();
+      fetchEventSeats();
     } catch (error) {
       console.log(error);
       alert("Event could not created!");
@@ -298,6 +299,10 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/event/${id}`);
       fetchEvent();
+      fetchEventImage();
+      fetchEventStage();
+      fetchEventSeats();
+
       alert("Event Deleted!");
     } catch (error) {
       console.log(error);
@@ -323,7 +328,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/eventimage", eventImage);
       fetchEventImage();
-      alert("Event Image Created!");
+      fetchEvent();
     } catch (error) {
       console.log(error);
       alert("Event Image could not created!");
@@ -336,6 +341,7 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/eventimage/${id}`);
       fetchEventImage();
+      fetchEvent();
       alert("Event Image Deleted!");
     } catch (error) {
       console.log(error);
@@ -361,7 +367,6 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/rating", rating);
       fetchRating();
-      alert("Rating Created!");
     } catch (error) {
       console.log(error);
       alert("Rating could not created!");
@@ -375,7 +380,6 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/rating/${id}`);
       fetchRating();
-      alert("Rating Deleted!");
     } catch (error) {
       console.log(error);
       alert("Rating could not deleted!");
@@ -400,7 +404,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/eventstage", eventStage);
       fetchEventStage();
-      alert("Event Stage Created!");
+      fetchEventSeats();
     } catch (error) {
       console.log(error);
       alert("Event Stage could not created!");
@@ -413,6 +417,7 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/eventstage/${id}`);
       fetchEventStage();
+      fetchEventSeats();
       alert("Event Stage Deleted!");
     } catch (error) {
       console.log(error);
@@ -433,12 +438,14 @@ function AdminPage() {
       setLoading(false);
     }
   };
+
   const createTicket = async (ticket) => {
     try {
       setLoading(true);
       await axios.post("https://localhost:7169/api/ticket", ticket);
       fetchTicket();
-      alert("Ticket Created!");
+      fetchEventStage();
+      fetchEventSeats();
     } catch (error) {
       console.log(error);
       alert("Ticket could not created!");
@@ -451,6 +458,8 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/ticket/${id}`);
       fetchTicket();
+      fetchEventStage();
+      fetchEventSeats();
       alert("Ticket Deleted!");
     } catch (error) {
       console.log(error);
@@ -476,7 +485,11 @@ function AdminPage() {
     try {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/eventseat/${id}`);
-      await fetchEventSeats();
+      fetchEventSeats();
+      fetchEventStage();
+      fetchEvent();
+      fetchTicket();
+      fetchRating();
       alert("Event Seat Deleted!");
     } catch (error) {
       console.log(error);
@@ -491,7 +504,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/eventseat", eventSeat);
       fetchEventSeats();
-      alert("Event Seat Created!");
+      fetchEventStage();
     } catch (error) {
       console.log(error);
       alert("Event Seat could not created!");
@@ -517,7 +530,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/seat", seat);
       fetchSeats();
-      alert("Seat Created!");
+      fetchStage();
     } catch (error) {
       console.log(error);
       alert("Seat could not created!");
@@ -531,6 +544,10 @@ function AdminPage() {
       setLoading(true);
       await axios.delete(`https://localhost:7169/api/seat/${id}`);
       fetchSeats();
+      fetchStage();
+      fetchEventStage();
+      fetchEventSeats();
+
       alert("Seat Deleted!");
     } catch (error) {
       console.log(error);
@@ -556,111 +573,56 @@ function AdminPage() {
   }, []);
 
   return (
-    <div className="adminPage">
+    <div className={`adminPage ${isAdmin ? "display" : "hide"} `}>
       <h2>Admin Page</h2>
       <CreateCountryForm
-        allCountries={allCountries}
         createCountry={createCountry}
         deleteCountry={deleteCountry}
-        loading={loading}
       />
-      <CreateCityForm
-        allCountries={allCountries}
-        allCities={allCities}
-        createCity={createCity}
-        deleteCity={deleteCity}
-        loading={loading}
-      />
+      <CreateCityForm createCity={createCity} deleteCity={deleteCity} />
       <CreateAddressForm
-        allCountries={allCountries}
-        allCities={allCities}
-        allAddresses={allAddresses}
         createAddress={createAddress}
         deleteAddress={deleteAddress}
-        loading={loading}
       />
       <CreatePlaceForm
-        allCountries={allCountries}
-        allCities={allCities}
-        allAddresses={allAddresses}
-        allPlaces={allPlaces}
         createAddress={createAddress}
         createPlace={createPlace}
         deletePlace={deletePlace}
-        loading={loading}
       />
       <CreateStageForm
-        allPlaces={allPlaces}
         fetchPlace={fetchPlace}
-        allStages={allStages}
         createStage={createStage}
         deleteStage={deleteStage}
-        loading={loading}
       />
       <CreateCustomerForm
-        allCustomers={allCustomers}
-        allAddresses={allAddresses}
-        allCities={allCities}
-        allCountries={allCountries}
         createCustomer={createCustomer}
         deleteCustomer={deleteCustomer}
-        loading={loading}
       />
 
       <CreateEventForm
-        allEvents={allEvents}
         deleteEvent={deleteEvent}
         createEvent={createEvent}
-        allStages={allStages}
         createEventImage={createEventImage}
         createEventStage={createEventStage}
-        loading={loading}
       />
       <CreateEventImageForm
-        allEventImages={allEventImages}
         createEventImage={createEventImage}
         deleteEventImage={deleteEventImage}
-        allEvents={allEvents}
-        loading={loading}
       />
       <CreateRatingForm
-        allCustomers={allCustomers}
-        allRatings={allRatings}
-        allEvents={allEvents}
         createRating={createRating}
         deleteRating={deleteRating}
-        loading={loading}
       />
       <CreateEventStageForm
-        allStages={allStages}
-        allEvents={allEvents}
-        allEventStages={allEventStages}
         createEventStage={createEventStage}
         deleteEventStage={deleteEventStage}
-        loading={loading}
       />
       <CreateTicketForm
-        allTickets={allTickets}
         createTicket={createTicket}
         deleteTicket={deleteTicket}
-        allCustomers={allCustomers}
-        allEventSeats={allEventSeats}
-        allEvents={allEvents}
       />
-      <ListEventSeatsForm
-        allEventSeats={allEventSeats}
-        deleteEventSeat={deleteEventSeat}
-        loading={loading}
-        allEvents={allEvents}
-        allEventStages={allEventStages}
-      />
-      <ListSeatsForm
-        allSeats={allSeats}
-        allStages={allStages}
-        createSeat={createSeat}
-        deleteSeat={deleteSeat}
-        loading={loading}
-      />
+      <ListEventSeatsForm deleteEventSeat={deleteEventSeat} />
+      <ListSeatsForm deleteSeat={deleteSeat} />
     </div>
   );
 }

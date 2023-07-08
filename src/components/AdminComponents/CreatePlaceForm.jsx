@@ -48,6 +48,8 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
   };
 
   const handleCity = (id) => {
+    const mySelectedCity = allCities.find((city) => city.id === id);
+    console.log("mySelectedCity", mySelectedCity);
     setSelectedCity(allCities.find((city) => city.id === id));
   };
 
@@ -64,23 +66,24 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
 
     console.log("second", selectedAddress);
     if (selectedAddress == null) {
-      console.log("it is here bro no adress:", selectedAddress);
-      console.log(fullAddress, latitude, longitude, selectedCity.id);
+      console.log(fullAddress, latitude, longitude, selectedCity?.id);
       const address = {
         fullAddress,
         latitude,
         longitude,
-        cityId: selectedCity.id,
+        cityId: selectedCity?.id,
       };
       createAddress(address);
+      const myAdress = allAddresses.find(
+        (address) => address.fullAddress === fullAddress
+      );
+      console.log("myAdress", myAdress);
       const place = {
         name,
         openHour,
         closeHour,
         isActive,
-        addressId: allAddresses.find(
-          (address) => address.fullAddress === fullAddress
-        ).id,
+        addressId: myAdress?.id,
       };
       createPlace(place);
       setFullAddress("");
@@ -226,7 +229,6 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
                 onChange={(e) => {
                   handleCountry(e.value);
                 }}
-                onSubmit={(e) => handleCountry(e.value)}
                 options={allCountries.map((c) => {
                   return { value: c.id, label: c.name };
                 })}
@@ -237,7 +239,7 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
               <Select
                 className="form-control"
                 id="city"
-                onSubmit={(e) => handleCity(e.value)}
+                onChange={(e) => handleCity(e.value)}
                 options={allCities
                   .filter((city) => city.countryId === selectedCountry?.id)
                   .map((city) => ({ value: city.id, label: city.name }))}
@@ -264,7 +266,7 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
 
       <div className="placelist">
         {loading ? (
-          <div>Loading...</div>
+          <h1>Loading...</h1>
         ) : (
           <div>
             <h2>Places</h2>

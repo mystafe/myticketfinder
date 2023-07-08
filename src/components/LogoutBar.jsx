@@ -15,18 +15,20 @@ function LogoutBar() {
     localStorage.removeItem("login");
   };
 
+  console.log(isLogged);
   return (
-    <div className={`logoutbar ${isLogged ? "display" : "hide"}`}>
-      <button
-        onClick={() => {
-          handleLogout();
-        }}
-      >
-        Logout {isAdmin ? "admin" : "regular"}
-        {console.log("is ADmin???", isAdmin)}
-        {console.log("is logged???", isLogged)}
-      </button>
-    </div>
+    isLogged && (
+      <div className={`logoutbar`}>
+        <div
+          className="btn-logout"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Logout {isAdmin ? "admin" : isLogged ? "regular" : ""}
+        </div>
+      </div>
+    )
   );
 }
 

@@ -1,0 +1,162 @@
+/* Light green: #7ed56f
+Medium green: #55c57a
+Dark green: #28b485
+Light blue: #70c1b3 
+My Purple: #7e316fcc,
+
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #777;
+  padding: 30px;
+  background-color: #00000044;
+}
+
+/* ANIMATIONS */
+
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  80% {
+    transform: translateX(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+@keyframes moveInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  80% {
+    transform: translateX(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+    scale: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.btn,
+.button {
+  border-radius: 5rem;
+  border-color: hsl(0, 0%, 80%);
+  background-color: #29721c;
+  color: #fff;
+
+  font-size: 1.5rem;
+  text-align: center;
+  height: 6rem;
+  text-align: center;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchbar,
+.logoutbar,
+.adminbar,
+.loginbar {
+  display: flex;
+  margin: 0 auto;
+  padding-left: 2rem;
+  color: #fff;
+  min-width: 10rem;
+  size: 4rem;
+}
+
+.searchbar input {
+  min-width: 50rem;
+  margin-right: 2rem;
+  border-radius: 10px;
+}
+.btn-search {
+  min-width: 10rem;
+  background-color: #00000044;
+  cursor: pointer;
+}
+.btn-search:hover {
+  background-color: #00000088;
+  color: #fff;
+  transform: scale(1.1);
+}
+.btn-login,
+.btn-logout,
+.btn-admin {
+  border-radius: 3rem;
+  margin-left: 2rem;
+  font-size: smaller;
+  background-color: #214fc493;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 15rem;
+  justify-content: space-around;
+  cursor: pointer;
+}
+
+.btn-admin {
+  background-color: #214fc493;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  background-color: #214fc4cc;
+  color: #fff;
+  transform: scale(1.1);
+}
+.btn-admin:hover {
+  background-color: #1b633593;
+  color: #fff;
+  transform: scale(1.1);
+}
+.logo {
+  width: 20rem;
+  font-size: xxx-large;
+  font-weight: 900;
+  line-height: 3rem;
+  color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  text-transform: uppercase;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-purchase {
+  padding: 5rem !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #214fc493 !important;
+}

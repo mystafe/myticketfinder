@@ -1,5 +1,5 @@
 import React from "react";
-import Map from "./Map";
+import Map from "./Map/Map";
 // import Header from "./Header";
 // import Navbar from "./Navbar";
 import { useState } from "react";

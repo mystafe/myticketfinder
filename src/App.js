@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 
 import Home from "./UI/Home";
@@ -87,7 +88,7 @@ function App() {
         //   element: <Home />,
         // },
         {
-          path: "/login",
+          path: "/login/",
           element: <LoginPage />,
         },
         {

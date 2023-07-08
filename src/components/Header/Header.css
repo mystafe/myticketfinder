@@ -1,0 +1,138 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+#header-navbar {
+  box-sizing: border-box;
+  background-color: #6822584d;
+  z-index: 100;
+  margin-bottom: 14rem;
+}
+
+#header-navbar ul {
+  list-style: none;
+
+  overflow: hidden;
+  color: #fff;
+  padding: 0;
+
+  transition: 1s;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#header-navbar nav.black ul {
+  background: #000;
+}
+
+#header-navbar nav ul li {
+  display: inline-block;
+  padding: 4rem 0rem;
+}
+
+#header-navbar .header-header a {
+  text-decoration: none !important;
+  color: #fff;
+  font-size: 10px;
+}
+
+@media (max-width: 786px) {
+  #header-navbar nav ul {
+    /* max-height: 0px; */
+    display: flex;
+    /* max-height: 10rem; */
+    width: auto;
+
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    position: static;
+  }
+
+  #header-navbar nav.black ul {
+  }
+
+  #header-navbar nav ul li {
+    box-sizing: border-box;
+    width: 100%;
+
+    text-align: center;
+  }
+}
+
+#header-navbar nav {
+  padding: 1rem 1rem 0 4rem;
+  margin-top: -1rem;
+  position: fixed;
+  width: 100%;
+  top: 20%;
+  line-height: 8rem;
+  z-index: 100;
+  top: -2rem;
+  background: rgba(0, 0, 0, 0.443);
+}
+@media screen and (max-width: 786px) {
+  #header-navbar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+    height: 90rem;
+    position: static;
+    z-index: -100;
+  }
+  #header-navbar nav {
+    position: relative;
+    display: block;
+    width: 100vw;
+  }
+  #header-navbar nav .searchbar input {
+    font-size: x-small;
+    width: 100%;
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+  #header-navbar nav .loginbar,
+  #header-navbar nav .logoutbar,
+  #header-navbar nav .adminbar,
+  .btn-login {
+    margin: 2rem;
+    font-size: x-small;
+    width: 100%;
+  }
+
+  #header-navbar ul {
+    margin: auto;
+    padding: 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  #header-navbar nav ul div {
+    display: block;
+    margin: 0 0;
+    text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 0 0;
+    position: static;
+  }
+  #header-navbar nav ul li a {
+    font-size: 1rem;
+  }
+  #header-navbar nav ul li a:hover {
+    color: #fff;
+  }
+}

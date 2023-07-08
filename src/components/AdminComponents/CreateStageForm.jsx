@@ -122,7 +122,7 @@ function CreateStageForm({ createStage, deleteStage }) {
       </form>
       <div className="stageList">
         {loading ? (
-          <div>Loading...</div>
+          <h1>Loading...</h1>
         ) : (
           <div>
             <h2>Stages</h2>

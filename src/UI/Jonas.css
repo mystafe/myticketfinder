@@ -1,0 +1,180 @@
+.header {
+  background-size: cover;
+  background-position: top;
+  position: relative;
+
+  height: 95vh;
+  margin: 2rem;
+  padding-top: 2rem;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(126, 49, 111, 0.9),
+      rgba(40, 180, 131, 0.3)
+    ),
+    url("/public/concert3.webp");
+  background-size: cover;
+  background-position: bottom;
+  clip-path: polygon(0 0%, 100% 0, 100% 60%, 40% 70%, 60% 70%, 0 60%);
+}
+.header h1 {
+  color: #fff;
+  font-size: 50px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+}
+.header h1 span {
+  padding: 0.3rem;
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(124, 44, 108, 0.9),
+    rgba(29, 170, 120, 0.9)
+  );
+  border-radius: 10px;
+}
+
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  word-spacing: 4px;
+
+  padding-top: 0.2rem;
+}
+.heading-primary--main {
+  display: block;
+  font-size: 50px;
+  font-weight: 500;
+  animation: moveInLeft 1s ease-out;
+  width: 50%;
+  margin: 1rem;
+  clip-path: polygon(0 0%, 100% 0, 100% 80%, 0 100%);
+}
+.heading-primary--sub {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  animation: moveInRight 1s ease-out;
+  width: 35%;
+  margin: 1rem;
+  margin-top: 3rem;
+  clip-path: polygon(0 0%, 100% 0, 100% 100%, 0 100%);
+}
+
+@media screen and (max-width: 840px) {
+  .heading-primary--main {
+    display: block;
+    font-size: 24px;
+    font-weight: 500;
+    animation: moveInLeft 1s ease-out;
+    width: 70%;
+    margin: 1rem;
+  }
+}
+
+.text-box {
+  display: flex;
+  flex-direction: column;
+}
+
+#btnDiscover {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  margin: 12rem auto;
+  border-radius: 10px;
+  text-align: center;
+}
+
+button,
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  background-color: rgba(126, 49, 111, 0.8);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 1 auto;
+}
+
+header .btn--white {
+  background-color: #fff;
+  color: #7e316fcc;
+}
+.adminPage button:hover,
+.adminPage .btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background-color: rgba(92, 209, 168, 0.8);
+  color: white;
+}
+header .btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+header .btn:link,
+header .btn:visited {
+  text-decoration: none;
+  color: #7e316fcc;
+}
+header .btn--animated {
+  animation: moveInBottom 1s ease-out;
+  animation-fill-mode: backwards;
+}
+header .btn--animated:hover {
+  animation: moveInBottom 1s ease-out;
+  animation-fill-mode: backwards;
+}
+header .btn--animated:active {
+  animation: moveInBottom 1s ease-out;
+  animation-fill-mode: backwards;
+}
+header .btn--animated:visited {
+  animation: moveInBottom 1s ease-out;
+  animation-fill-mode: backwards;
+}
+header .btn::after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: all 0.4s;
+}
+
+header .btn:hover::after {
+  transform: scaleX(1.2) scaleY(1.7);
+  border: 5px solid #fff;
+  opacity: 0;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Lato", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: loading 3s infinite;
+}

@@ -8,7 +8,9 @@ function AdminBar() {
 
   return (
     <div className={`adminbar  ${isAdmin ? "display" : "hide"}`}>
-      <Link to="/admin">Admin paneli</Link>
+      <div className="btn-admin">
+        <Link to="/admin">Admin paneli</Link>
+      </div>
     </div>
   );
 }

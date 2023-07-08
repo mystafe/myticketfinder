@@ -22,22 +22,26 @@ function LoginBar() {
   };
 
   return (
-    <div className={`loginbar ${isLogged ? "hide" : "display"}`}>
-      <button
-        onClick={() => {
-          handleRegularUserLogin();
-        }}
-      >
-        Login as regular
-      </button>
-      <button
-        onClick={() => {
-          handleAdminLogin();
-        }}
-      >
-        Login as admin
-      </button>
-    </div>
+    !isLogged && (
+      <div className="loginbar">
+        <div
+          className="btn-login btn-regular-login"
+          onClick={() => {
+            handleRegularUserLogin();
+          }}
+        >
+          Login as regular
+        </div>
+        <btn
+          className="btn-login btn-admin-login"
+          onClick={() => {
+            handleAdminLogin();
+          }}
+        >
+          Login as admin
+        </btn>
+      </div>
+    )
   );
 }
 

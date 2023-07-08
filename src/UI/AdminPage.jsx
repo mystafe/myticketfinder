@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
+import "../UI/AdminPage.css";
 
 import { AppContext } from "../context/GlobalContext";
 import CreateCountryForm from "../components/AdminComponents/CreateCountryForm";
@@ -219,6 +220,8 @@ function AdminPage() {
       await axios.delete(`https://localhost:7169/api/stage/${id}`);
       fetchStage();
       fetchSeats();
+      fetchEventStage();
+      fetchEventSeats();
       alert("Stage Deleted!");
     } catch (error) {
       console.log(error);
@@ -574,7 +577,7 @@ function AdminPage() {
 
   return (
     <div className={`adminPage ${isAdmin ? "display" : "hide"} `}>
-      <h2>Admin Page</h2>
+      <h1>Admin Page</h1>
       <CreateCountryForm
         createCountry={createCountry}
         deleteCountry={deleteCountry}

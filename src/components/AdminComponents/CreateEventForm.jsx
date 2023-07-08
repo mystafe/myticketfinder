@@ -12,6 +12,7 @@ function CreateEventForm({ createEvent, deleteEvent }) {
   const [price, setPrice] = useState(100);
   const [date, setDate] = useState("2023-07-01T18:45");
   const [duration, setDuration] = useState("01:30:00");
+  const [description, setDescription] = useState("Event details");
   const [eventType, setEventType] = useState(0);
   const [stageIds, setStageIds] = useState([]);
   const [eventImages, setEventImages] = useState([]);
@@ -42,39 +43,12 @@ function CreateEventForm({ createEvent, deleteEvent }) {
 
     //Picture feature will be added later
 
-    console.log("STAGE IDS", stageIds);
-
-    console.log("Type of stageIds", typeof stageIds);
-    const setMyEvent = {
-      name,
-      price,
-      date,
-      duration,
-      eventType,
-      eventImages: tempEventImages,
-      stageIds,
-    };
-    console.log("setMyEvent", setMyEvent);
-
-    const test2 = JSON.stringify(setMyEvent);
-    console.log("test2", test2);
-    const test3 = JSON.parse(test2);
-    console.log("test3", test3);
-
-    console.log("Event", {
-      name,
-      price,
-      date,
-      duration,
-      eventType,
-      eventImages: tempEventImages,
-      stageIds,
-    });
     await createEvent({
       name,
       price,
       date,
       duration,
+      description,
       eventType,
       eventImages: tempEventImages,
       stageIds,
@@ -175,6 +149,17 @@ function CreateEventForm({ createEvent, deleteEvent }) {
           />
         </div>
         <div>
+          <label htmlFor="description">Description</label>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            placeholder="Enter event description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+        <div>
           <label htmlFor="images">Images</label>
           <input
             label="Event Images"
@@ -235,11 +220,12 @@ function CreateEventForm({ createEvent, deleteEvent }) {
             <table>
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th>Event Id</th>
                   <th>Event Name</th>
-                  <th>Event Price</th>
-                  <th>Event Date</th>
-                  <th> Duration</th>
+                  <th>Price</th>
+                  <th>Date</th>
+                  <th>Duration</th>
+                  <th>Description</th>
                   <th>Event Type</th>
                   <th>Event Images</th>
                   <th>Event Stages</th>
@@ -255,14 +241,15 @@ function CreateEventForm({ createEvent, deleteEvent }) {
                     <td>{evnt.price}</td>
                     <td>{evnt.date}</td>
                     <td>{evnt.duration}</td>
+                    <td>{evnt.description}</td>
                     <td>
                       {
                         eventTypes.find((e) => e.value === evnt.eventType)
                           ?.label
                       }
                     </td>
+
                     <td>
-                      {" "}
                       <img
                         src={evnt.eventImages[0]?.urlAddress}
                         alt={evnt.eventImages[0]?.description}

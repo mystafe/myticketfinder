@@ -66,7 +66,7 @@ function CreateCityForm({ createCity, deleteCity }) {
       </form>
 
       {loading ? (
-        <h1>Loading...</h1>
+        <h1 className="loading">Loading...</h1>
       ) : (
         <>
           {allCities && (

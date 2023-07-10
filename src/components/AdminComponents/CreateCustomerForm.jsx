@@ -24,7 +24,8 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
   const [phone, setPhone] = useState("123456789");
   const [addressId, setAddressId] = useState(0);
   const [cityId, setCityId] = useState(null);
-  const [fullAddress, setFullAddress] = useState("sample address");
+  const [addressName, setAddressName] = useState("sample address");
+  const [fullAddress, setFullAddress] = useState("sample full adress");
   const [latitude, setLatitude] = useState("41.2");
   const [longitude, setLongitude] = useState("23.4");
   const [selectedTable, setSelectedTable] = useState(null);
@@ -79,9 +80,8 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
       const myAddress = allAddresses.find(
         (address) => address.id === addressId
       );
-      console.log("myAddress", myAddress);
+
       myCity = allCities.find((city) => city.id === myAddress.city.id);
-      console.log("myCityyyy", myCity);
 
       const customer = {
         firstname,
@@ -101,23 +101,25 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
         return;
       }
       setSelectedCity(myCity);
-    }
 
-    const customer = {
-      firstname,
-      middlename,
-      lastname,
-      username,
-      password,
-      email,
-      phone,
-      addressId,
-      cityId: myCity.id,
-      fullAddress,
-      latitude,
-      longitude,
-    };
-    createCustomer(customer);
+      const customer = {
+        firstname,
+        middlename,
+        lastname,
+        username,
+        password,
+        email,
+        phone,
+        addressId,
+        cityId: myCity.id,
+        cityName: myCity.name,
+        addressName,
+        fullAddress,
+        latitude,
+        longitude,
+      };
+      createCustomer(customer);
+    }
     setFirstname(`Name  ${Math.floor(Math.random() * 100).toFixed()}`);
     setLastname(`Surname  ${Math.floor(Math.random() * 100).toFixed()}`);
     setUsername(`Test User  ${Math.floor(Math.random() * 100).toFixed()}`);
@@ -245,6 +247,15 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
               />
             </div>
             <div className="form-group">
+              <label htmlFor="addressname">Address Name</label>
+              <input
+                type="text"
+                id="addressname"
+                value={addressName}
+                onChange={(e) => setAddressName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
               <label htmlFor="fulladdress">Full Address</label>
               <input
                 type="text"
@@ -277,6 +288,7 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
         {!showAdditionalFields && (
           <>
             <div className="form-group" style={{ color: "red" }}>
+              <p>{selectedAddress?.addressName ?? "no address"}</p>
               <p>{selectedAddress?.fullAddress ?? "no address"} </p>
 
               <p>{selectedCity} </p>
@@ -297,11 +309,13 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
             <table>
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Fullname</th>
                   <th>Username</th>
                   <th>Password</th>
                   <th>Email</th>
                   <th>Phone</th>
+                  <th>Addressname</th>
                   <th>FullAddress</th>
                   <th>City</th>
                   <th>Action</th>
@@ -317,11 +331,13 @@ function CreateCustomerForm({ createCustomer, deleteCustomer }) {
                       selectedTable === customer.id ? "selectedTable" : ""
                     }
                   >
+                    <td>{customer.id}</td>
                     <td>{customer.fullname}</td>
                     <td>{customer.username}</td>
                     <td>{customer.password}</td>
                     <td>{customer.email}</td>
                     <td>{customer.phone}</td>
+                    <td>{customer.addressName}</td>
                     <td>{customer.fullAddress}</td>
                     <td>{customer.cityName} </td>
                     <td>

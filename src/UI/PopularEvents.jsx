@@ -1,7 +1,21 @@
 import React from "react";
 import Section from "../components/Section";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function PopularEvents() {
+  const [popularEvents, setPopularEvents] = useState(null);
+  useEffect(() => {
+    const getPopularEvents = async () => {
+      const res = await axios.get("https://localhost:7169/api/event/");
+      const events = res.data.filter((event) => event.avgRating > 3);
+      setPopularEvents(events);
+    };
+    getPopularEvents();
+  }, []);
+
+  console.log("popularEvents", popularEvents);
+
   const populars = {
     name: "Popular Events",
     data: [
@@ -14,7 +28,7 @@ function PopularEvents() {
           "Eminem is one of the best rappers in the world, and he is coming to your city!",
         price: 123.45,
         type: "Concert",
-        image: [
+        eventImages: [
           {
             urlAddress: "https://picsum.photos/230/300",
           },
@@ -33,7 +47,7 @@ function PopularEvents() {
           "Real Madrid and Barcelon are playing a football match in your city!",
         price: 123.45,
         type: "Football",
-        image: [
+        eventImages: [
           {
             urlAddress: "https://picsum.photos/220/300",
           },
@@ -51,7 +65,7 @@ function PopularEvents() {
         description: "Shakspeare is very famous theatre...",
         price: 123.45,
         type: "Theatre",
-        image: [
+        eventImages: [
           {
             urlAddress: "https://picsum.photos/200/300",
           },
@@ -62,9 +76,16 @@ function PopularEvents() {
         },
       },
     ],
-    link: "/popular",
+    link: "/event",
   };
-  return <Section props={populars} />;
+  return (
+    <>
+      {console.log("populars", populars)}
+      {console.log("popularEvents", popularEvents)}
+      <Section data={populars.data} name={"populars"} />
+      <Section data={popularEvents} />
+    </>
+  );
 }
 
 export default PopularEvents;

@@ -122,7 +122,7 @@ body {
 }
 
 .btn-admin {
-  background-color: #214fc493;
+  background-color: #12684793;
 }
 
 .btn-login:hover,
@@ -135,6 +135,9 @@ body {
   background-color: #1b633593;
   color: #fff;
   transform: scale(1.1);
+}
+.btn-admin-login {
+  background-color: #1a840d93;
 }
 .logo {
   width: 20rem;

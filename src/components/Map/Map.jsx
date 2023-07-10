@@ -36,9 +36,11 @@ export default function Map({ geoLocation }) {
         defaultZoom={defaultProps.zoom}
       >
         <AnyReactComponent
-          lat={defaultProps.center.lat}
-          lng={defaultProps.center.lng}
+          // lat={defaultProps.center.lat}
+          // lng={defaultProps.center.lng}
           text="📌"
+          lat={geoLocation.latitude}
+          lng={geoLocation.longitude}
         />
       </GoogleMapReact>
     </div>

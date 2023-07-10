@@ -2,7 +2,7 @@ import React from "react";
 import "./Section.css";
 import { Link } from "react-router-dom";
 
-function Section({ props }) {
+function Section({ name, data }) {
   // const featuredData = [""
   //   {
   //     id: 1,
@@ -65,17 +65,18 @@ function Section({ props }) {
   return (
     <section className="section-tours" id="section-tours">
       <div className="u-center-text u-margin-bottom-big">
-        <h2 className="heading-secondary">{props.name}</h2>
+        <h2 className="heading-secondary">{name}</h2>
       </div>
 
       <div className="row">
-        {props.data.map((item) => (
+        {data?.map((item) => (
           <div className="col-1-of-3">
             <div className="card" style={{ marginBottom: 25 }}>
               <div className="card__side card__side--front">
                 <div
                   style={{
-                    backgroundImage: "url(" + item.image[0]?.urlAddress + ")",
+                    backgroundImage:
+                      "url(" + item?.eventImages[0]?.urlAddress + ")",
                     backgroundSize: "stretch",
                   }}
                   className="card__picture card__picture--1"
@@ -100,12 +101,9 @@ function Section({ props }) {
                 <div className="card__cta">
                   <div className="card__price-box">
                     <p className="card__price-only">Price</p>
-                    <p className="card__price-value">300 tl</p>
+                    <p className="card__price-value">{item?.price} TL</p>
                   </div>
-                  <Link
-                    to={`${props.link + "/" + item.id}`}
-                    class="btn btn--white"
-                  >
+                  <Link to={`/event/${item?.id}`} class="btn btn--white">
                     Go to details
                   </Link>
                 </div>
@@ -115,9 +113,9 @@ function Section({ props }) {
         ))}
       </div>
       <div className="u-center-text u-margin-top-huge">
-        <a href={`${props.link}`} className="btn btn--green">
+        <Link to="event" className="btn btn--green">
           Discover all
-        </a>
+        </Link>
       </div>
     </section>
   );

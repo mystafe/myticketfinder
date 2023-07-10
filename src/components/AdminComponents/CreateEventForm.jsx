@@ -3,6 +3,7 @@ import Select from "react-select";
 import { useState } from "react";
 import { useContext } from "react";
 import { AppContext } from "../../context/GlobalContext";
+import { Link } from "react-router-dom";
 
 function CreateEventForm({ createEvent, deleteEvent }) {
   const { allStages, allEvents, loading } = useContext(AppContext);
@@ -224,6 +225,7 @@ function CreateEventForm({ createEvent, deleteEvent }) {
                   <th>Event Name</th>
                   <th>Price</th>
                   <th>Date</th>
+                  <th>Event Rating</th>
                   <th>Duration</th>
                   <th>Description</th>
                   <th>Event Type</th>
@@ -236,10 +238,19 @@ function CreateEventForm({ createEvent, deleteEvent }) {
               <tbody>
                 {allEvents.map((evnt) => (
                   <tr key={evnt.id}>
-                    <td>{evnt.id}</td>
+                    <td>
+                      <Link to={`/event/${evnt.id}`}>{evnt.id}</Link>
+                    </td>
                     <td>{evnt.name}</td>
                     <td>{evnt.price}</td>
                     <td>{evnt.date}</td>
+                    <td>
+                      {evnt.avgRating === 0
+                        ? "No rating yet"
+                        : evnt.avgRating.toFixed(2)}
+
+                      {console.log(evnt)}
+                    </td>
                     <td>{evnt.duration}</td>
                     <td>{evnt.description}</td>
                     <td>

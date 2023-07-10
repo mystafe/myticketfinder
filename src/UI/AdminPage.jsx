@@ -22,6 +22,7 @@ import ListSeatsForm from "../components/AdminComponents/ListSeatsForm";
 
 function AdminPage() {
   const {
+    isSearchClicked,
     isAdmin,
     setLoading,
     setAllCountries,
@@ -37,6 +38,7 @@ function AdminPage() {
     setAllTickets,
     setAllEventSeats,
     setAllSeats,
+    fetchEvent,
   } = useContext(AppContext);
   const fetchCountry = async () => {
     setLoading(true);
@@ -168,6 +170,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/place", place);
       fetchPlace();
+      fetchAddress();
     } catch (error) {
       console.log(error);
       alert("Place could not created!");
@@ -269,18 +272,6 @@ function AdminPage() {
     }
   };
 
-  const fetchEvent = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get("https://localhost:7169/api/event/");
-      setAllEvents(res.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const createEvent = async (event) => {
     try {
       setLoading(true);
@@ -300,7 +291,7 @@ function AdminPage() {
   const deleteEvent = async (id) => {
     try {
       setLoading(true);
-      await axios.delete(`https://localhost:7169/api/event/${id}`);
+      axios.delete(`https://localhost:7169/api/event/${id}`);
       fetchEvent();
       fetchEventImage();
       fetchEventStage();
@@ -370,6 +361,7 @@ function AdminPage() {
       setLoading(true);
       await axios.post("https://localhost:7169/api/rating", rating);
       fetchRating();
+      fetchEvent();
     } catch (error) {
       console.log(error);
       alert("Rating could not created!");
@@ -576,57 +568,59 @@ function AdminPage() {
   }, []);
 
   return (
-    <div className={`adminPage ${isAdmin ? "display" : "hide"} `}>
-      <h1>Admin Page</h1>
-      <CreateCountryForm
-        createCountry={createCountry}
-        deleteCountry={deleteCountry}
-      />
-      <CreateCityForm createCity={createCity} deleteCity={deleteCity} />
-      <CreateAddressForm
-        createAddress={createAddress}
-        deleteAddress={deleteAddress}
-      />
-      <CreatePlaceForm
-        createAddress={createAddress}
-        createPlace={createPlace}
-        deletePlace={deletePlace}
-      />
-      <CreateStageForm
-        fetchPlace={fetchPlace}
-        createStage={createStage}
-        deleteStage={deleteStage}
-      />
-      <CreateCustomerForm
-        createCustomer={createCustomer}
-        deleteCustomer={deleteCustomer}
-      />
+    isAdmin && (
+      <div className="adminPage">
+        <h1>Admin Page</h1>
+        <CreateCountryForm
+          createCountry={createCountry}
+          deleteCountry={deleteCountry}
+        />
+        <CreateCityForm createCity={createCity} deleteCity={deleteCity} />
+        <CreateAddressForm
+          createAddress={createAddress}
+          deleteAddress={deleteAddress}
+        />
+        <CreatePlaceForm
+          createAddress={createAddress}
+          createPlace={createPlace}
+          deletePlace={deletePlace}
+        />
+        <CreateStageForm
+          fetchPlace={fetchPlace}
+          createStage={createStage}
+          deleteStage={deleteStage}
+        />
+        <CreateCustomerForm
+          createCustomer={createCustomer}
+          deleteCustomer={deleteCustomer}
+        />
 
-      <CreateEventForm
-        deleteEvent={deleteEvent}
-        createEvent={createEvent}
-        createEventImage={createEventImage}
-        createEventStage={createEventStage}
-      />
-      <CreateEventImageForm
-        createEventImage={createEventImage}
-        deleteEventImage={deleteEventImage}
-      />
-      <CreateRatingForm
-        createRating={createRating}
-        deleteRating={deleteRating}
-      />
-      <CreateEventStageForm
-        createEventStage={createEventStage}
-        deleteEventStage={deleteEventStage}
-      />
-      <CreateTicketForm
-        createTicket={createTicket}
-        deleteTicket={deleteTicket}
-      />
-      <ListEventSeatsForm deleteEventSeat={deleteEventSeat} />
-      <ListSeatsForm deleteSeat={deleteSeat} />
-    </div>
+        <CreateEventForm
+          deleteEvent={deleteEvent}
+          createEvent={createEvent}
+          createEventImage={createEventImage}
+          createEventStage={createEventStage}
+        />
+        <CreateEventImageForm
+          createEventImage={createEventImage}
+          deleteEventImage={deleteEventImage}
+        />
+        <CreateRatingForm
+          createRating={createRating}
+          deleteRating={deleteRating}
+        />
+        <CreateEventStageForm
+          createEventStage={createEventStage}
+          deleteEventStage={deleteEventStage}
+        />
+        <CreateTicketForm
+          createTicket={createTicket}
+          deleteTicket={deleteTicket}
+        />
+        <ListEventSeatsForm deleteEventSeat={deleteEventSeat} />
+        <ListSeatsForm deleteSeat={deleteSeat} />
+      </div>
+    )
   );
 }
 

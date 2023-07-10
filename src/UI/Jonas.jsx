@@ -4,7 +4,7 @@ import "./Jonas.css";
 
 import PopularEvents from "./PopularEvents";
 import FootballEvents from "./FootballEvents";
-import EventDetail from "../components/EventDetail";
+import EventDetail from "./EventDetail";
 
 function Jonas() {
   return (
@@ -32,7 +32,6 @@ function Jonas() {
       {/* <Section /> */}
       <PopularEvents />
       <FootballEvents />
-      <EventDetail />
     </>
   );
 }

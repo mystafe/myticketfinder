@@ -9,6 +9,7 @@ function CreateAddressForm({ createAddress, deleteAddress }) {
   const [fullAddress, setFullAddress] = useState(
     `Some Address ${(Math.random() * 100).toFixed()}`
   );
+  const [name, setName] = useState("place name");
   const [latitude, setLatitude] = useState(
     `${(Math.random() * 100).toFixed(3)}`
   );
@@ -37,6 +38,7 @@ function CreateAddressForm({ createAddress, deleteAddress }) {
     e.preventDefault();
 
     const address = {
+      name,
       fullAddress,
       latitude,
       longitude,
@@ -60,6 +62,15 @@ function CreateAddressForm({ createAddress, deleteAddress }) {
     <div>
       <form onSubmit={handleSubmit}>
         <h2>Add Address</h2>
+
+        <div>
+          <label>Address Name</label>
+          <input
+            type="text"
+            defaultValue={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
         <div>
           <label>Full Address</label>
@@ -132,6 +143,8 @@ function CreateAddressForm({ createAddress, deleteAddress }) {
               <table>
                 <thead>
                   <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Address Name</th>
                     <th scope="col">Full Address</th>
                     <th scope="col">GeoLocation</th>
                     <th scope="col">City</th>
@@ -147,9 +160,10 @@ function CreateAddressForm({ createAddress, deleteAddress }) {
                       onMouseLeave={handleUnselectedRow}
                       className={selectedTable === address.id ? "selected" : ""}
                     >
+                      <td>{address.id}</td>
+                      <td>{address.name}</td>
                       <td>{address.fullAddress}</td>
                       <td>
-                        {" "}
                         Lat: {address.geoLocation.slice(1).split(",")[0]} -
                         Long: {address.geoLocation.split(",")[1].slice(0, -1)}
                       </td>

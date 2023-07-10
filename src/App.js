@@ -15,6 +15,8 @@ import TestDiv from "./UI/TestDiv";
 import AdminPageNew from "./UI/AdminPageNew";
 import LoginPage from "./UI/LoginPage";
 import Jonas from "./UI/Jonas";
+import EventDetail from "./UI/EventDetail";
+
 function App() {
   const menuLinks = [
     {
@@ -101,7 +103,7 @@ function App() {
         },
         {
           path: "/event/:id",
-          element: <EventDetails />,
+          element: <EventDetail />,
         },
 
         {

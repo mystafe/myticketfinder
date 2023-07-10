@@ -73,17 +73,21 @@ function CreatePlaceForm({ createAddress, createPlace, deletePlace }) {
         longitude,
         cityId: selectedCity?.id,
       };
-      createAddress(address);
-      const myAdress = allAddresses.find(
-        (address) => address.fullAddress === fullAddress
-      );
-      console.log("myAdress", myAdress);
+      // createAddress(address);
+      // const myAdress = allAddresses.find(
+      //   (address) => address.fullAddress === fullAddress
+      // );
+      // console.log("myAdress", myAdress);
       const place = {
         name,
         openHour,
         closeHour,
         isActive,
-        addressId: myAdress?.id,
+        addressId: null,
+        cityId: selectedCity?.id,
+        latitude,
+        longitude,
+        fullAddress,
       };
       createPlace(place);
       setFullAddress("");

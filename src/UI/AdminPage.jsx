@@ -983,8 +983,6 @@ function AdminPage() {
       await newratings.map(async (rating) => {
         await createRating(rating);
       });
-
-      alert("Data Generated!");
     } catch (error) {
       console.log(error);
     }

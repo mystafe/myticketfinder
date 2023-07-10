@@ -19,55 +19,62 @@ function MainEvents() {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const res = await axios.get("https://localhost:7169/api/event/");
+      try {
+        const res = await axios.get("https://localhost:7169/api/event/");
 
-      const popularevents = res.data
-        .filter((event) => event.avgRating > 3)
-        .slice(0, 3);
-      const concertEvents = res.data.filter((event) => event.eventType === 1);
+        const popularevents = res.data
+          .filter((event) => event.avgRating > 3)
+          .slice(0, 3);
+        const concertEvents = res.data.filter((event) => event.eventType === 1);
 
-      const footballEvents = res.data.filter((event) => event.eventType === 2);
-      const thisWeekEvents = res.data
-        .filter(
-          (event) =>
-            new Date(event.date) <=
-              new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000) &&
-            new Date(event.date) >= new Date(new Date().getTime())
-        )
-        .slice(0, 3);
+        const footballEvents = res.data.filter(
+          (event) => event.eventType === 2
+        );
+        const thisWeekEvents = res.data
+          .filter(
+            (event) =>
+              new Date(event.date) <=
+                new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000) &&
+              new Date(event.date) >= new Date(new Date().getTime())
+          )
+          .slice(0, 3);
 
-      const thisMonthEvents = res.data
-        .filter(
-          (event) =>
-            new Date(event.date) <=
-              new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000) &&
-            new Date(event.date) >= new Date(new Date().getTime())
-        )
-        .slice(0, 3);
-      const pastWeekEvents = res.data
-        .filter(
-          (event) =>
-            new Date(event.date) >=
-              new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) &&
-            new Date(event.date) < new Date(new Date().getTime())
-        )
-        .slice(0, 3);
+        const thisMonthEvents = res.data
+          .filter(
+            (event) =>
+              new Date(event.date) <=
+                new Date(new Date().getTime() + 30 * 24 * 60 * 60 * 1000) &&
+              new Date(event.date) >= new Date(new Date().getTime())
+          )
+          .slice(0, 3);
+        const pastWeekEvents = res.data
+          .filter(
+            (event) =>
+              new Date(event.date) >=
+                new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) &&
+              new Date(event.date) < new Date(new Date().getTime())
+          )
+          .slice(0, 3);
 
-      const eventsNearMe = res.data.filter(
-        (event) => event.eventLocation === "Istanbul"
-      );
+        const eventsNearMe = res.data.filter(
+          (event) => event.eventLocation === "Istanbul"
+        );
 
-      const randomEvents = getRandomElements(res.data).slice(0, 3);
+        const randomEvents = getRandomElements(res.data).slice(0, 3);
 
-      setEventsNearMe(eventsNearMe);
-      setPastWeekEvents(pastWeekEvents);
-      setThisMonthEvents(thisMonthEvents);
-      setPopularEvents(popularevents);
-      setFootballEvents(footballEvents);
-      setConcertEvents(concertEvents);
-      setThisWeekEvents(thisWeekEvents);
-      setRandomEvents(randomEvents);
+        setEventsNearMe(eventsNearMe);
+        setPastWeekEvents(pastWeekEvents);
+        setThisMonthEvents(thisMonthEvents);
+        setPopularEvents(popularevents);
+        setFootballEvents(footballEvents);
+        setConcertEvents(concertEvents);
+        setThisWeekEvents(thisWeekEvents);
+        setRandomEvents(randomEvents);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
     fetchEvents();
   }, []);
 

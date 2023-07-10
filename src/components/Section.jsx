@@ -18,7 +18,7 @@ function Section({ name, data }) {
       </div>
 
       <div className="row">
-        {data?.length === 0 ? (
+        {data?.length === 0 || data == null ? (
           <div className="u-center-text u-margin-bottom">
             <h2 className="">No event found</h2>
           </div>
@@ -53,8 +53,7 @@ function Section({ name, data }) {
                           year: "numeric",
                           month: "long",
                           day: "numeric",
-                        })}
-                        {""}
+                        })}{" "}
                         {new Date(item.date)
                           .toLocaleTimeString("tr-TR", {
                             hour: "numeric",

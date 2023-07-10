@@ -1019,15 +1019,20 @@ function AdminPage() {
       <div className="adminPage">
         <h1>Admin Page</h1>
         <div className="adminPage__container">
-          <button className="button" onClick={() => handleGenerateData()}>
-            Generate Data
-          </button>
-          <button
-            className="button btn-warning"
-            onClick={() => handleDeleteData()}
+          <div
+            className="btn"
+            style={{
+              marginRight: "4rem",
+              color: "white",
+              backgroundColor: "green",
+            }}
+            onClick={() => handleGenerateData()}
           >
+            Generate Data
+          </div>
+          <div className="btn btn-warning" onClick={() => handleDeleteData()}>
             Delete Data
-          </button>
+          </div>
         </div>
 
         <CreateCountryForm

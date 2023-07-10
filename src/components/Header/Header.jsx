@@ -24,7 +24,9 @@ function Header() {
           <div className="menu">
             <ul>
               <li className="logo">
-                <Link to="/">My Ticket Finder</Link>
+                <Link to="/">
+                  <Logo />
+                </Link>
               </li>
 
               <li>

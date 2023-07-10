@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import axios from "axios";
 import "../UI/AdminPage.css";
+// import { GenerateData } from "../services/GenerateData";
 
 import { AppContext } from "../context/GlobalContext";
 import CreateCountryForm from "../components/AdminComponents/CreateCountryForm";
@@ -567,10 +568,468 @@ function AdminPage() {
     fetchSeats();
   }, []);
 
+  const newcountries = [
+    {
+      name: "Turkiye",
+    },
+    {
+      name: "Azerbeijan",
+    },
+    {
+      name: "England",
+    },
+    {
+      name: "Spain",
+    },
+    {
+      name: "Germany",
+    },
+    {
+      name: "Italy",
+    },
+  ];
+
+  const newcities = [
+    {
+      name: "Istanbul",
+      countryId: 1,
+    },
+    {
+      name: "Ankara",
+      countryId: 1,
+    },
+    {
+      name: "Izmir",
+      countryId: 1,
+    },
+    {
+      name: "Baku",
+      countryId: 2,
+    },
+    {
+      name: "London",
+      countryId: 3,
+    },
+    {
+      name: "Madrid",
+      countryId: 4,
+    },
+    {
+      name: "Berlin",
+      countryId: 5,
+    },
+    {
+      name: "Rome",
+      countryId: 6,
+    },
+  ];
+
+  const newaddresses = [
+    {
+      name: "Mustafa's address",
+      cityId: 1,
+      fullAddress: "19 Mayis mh",
+      latitude: "41.015137",
+      longitude: "28.979530",
+    },
+    {
+      name: "Inara's address",
+      cityId: 4,
+      fullAddress: "Baku meydan",
+      latitude: "40.4093",
+      longitude: "49.8671",
+    },
+    {
+      name: "John's address",
+      cityId: 5,
+      fullAddress: "London meydan",
+      latitude: "51.5074",
+      longitude: "0.1278",
+    },
+    {
+      name: "Maria's address",
+      cityId: 6,
+      fullAddress: "Madrid meydan",
+      latitude: "40.4168",
+      longitude: "3.7038",
+    },
+    {
+      name: "Hans's address",
+      cityId: 7,
+      fullAddress: "Berlin meydan",
+      latitude: "52.5200",
+      longitude: "13.4050",
+    },
+    {
+      name: "Giovanni's address",
+      cityId: 8,
+
+      fullAddress: "Rome meydan",
+      latitude: "41.9028",
+      longitude: "12.4964",
+    },
+    {
+      name: "Lutfi kirdar address",
+      cityId: 1,
+      fullAddress: "Harbiye mahallesi",
+      latitude: "41.0451",
+      longitude: "28.9885",
+    },
+    {
+      name: "Cemil topuzlu address",
+      cityId: 1,
+      fullAddress: "Harbiye mahallesi",
+      latitude: "41.0451",
+      longitude: "28.9885",
+    },
+    {
+      name: "Volkswagen arena address",
+      cityId: 1,
+      fullAddress: "Maslak mahallesi",
+      latitude: "41.1055",
+      longitude: "29.0230",
+    },
+    {
+      name: "Kucukciftlik park address",
+      cityId: 1,
+      fullAddress: "Harbiye mahallesi",
+      latitude: "41.0451",
+      longitude: "28.9885",
+    },
+    {
+      name: "Baku Olympic Stadium address",
+      cityId: 4,
+      fullAddress: "Baku meydan",
+      latitude: "40.4093",
+      longitude: "49.8671",
+    },
+    {
+      name: "Wembley Stadium address",
+      cityId: 5,
+      fullAddress: "London meydan",
+      latitude: "51.5074",
+      longitude: "0.1278",
+    },
+    {
+      name: "Ali Samiyen Spor Kompleksi address",
+      cityId: 1,
+      fullAddress: "Maslak mahallesi",
+      latitude: "41.1055",
+      longitude: "29.0230",
+    },
+    {
+      name: "Santiago Bernabeu address",
+      cityId: 4,
+      fullAddress: "Madrid meydan",
+      latitude: "40.4168",
+      longitude: "3.7038",
+    },
+  ];
+  const newcustomers = [
+    {
+      firstname: "Mustafa",
+      lastname: "Evleksiz",
+      username: "mustafae",
+      password: "123456",
+      email: " mustafa@test.com",
+      addressId: 1,
+    },
+    {
+      firstname: "Inara",
+      lastname: "Mammadova",
+      username: "inaramammadova",
+      password: "123456",
+      email: "inara@test.com",
+      addressId: 2,
+    },
+  ];
+
+  const newplaces = [
+    {
+      name: "Lutfi kirdar",
+      addressId: 7,
+      openHour: "14:00",
+      closeHour: "23:30",
+      isActive: true,
+    },
+    {
+      name: "Cemil topuzlu",
+      addressId: 8,
+      openHour: "10:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+    {
+      name: "Volkswagen arena",
+      addressId: 9,
+      openHour: "16:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+    {
+      name: "Kucukciftlik park",
+      addressId: 10,
+      openHour: "16:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+
+    {
+      name: "Baku Olympic Stadium",
+      addressId: 11,
+      openHour: "16:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+    {
+      name: "Wembley Stadium",
+      addressId: 12,
+      openHour: "16:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+    {
+      name: "Ali Samiyen Sports Complex",
+      addressId: 13,
+      openHour: "15:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+    {
+      name: "Santiago Bernabeu complex",
+      addressId: 14,
+      openHour: "16:00",
+      closeHour: "23:00",
+      isActive: true,
+    },
+  ];
+
+  const newstages = [
+    {
+      name: "Lutfi kirdar stage 1",
+      isIndoor: false,
+      placeId: 1,
+      capacityNormal: 10,
+      capacityVip: 3,
+    },
+    {
+      name: "Lutfi kirdar stage 2",
+      isIndoor: true,
+      placeId: 1,
+      capacityNormal: 5,
+      capacityVip: 3,
+    },
+    {
+      name: "Cemil topuzlu stage 1",
+      isIndoor: false,
+      placeId: 2,
+      capacityNormal: 5,
+      capacityVip: 2,
+    },
+    {
+      name: "Nef Stadyumu",
+      isIndoor: false,
+      placeId: 7,
+      capacityNormal: 20,
+      capacityVip: 6,
+    },
+    {
+      name: "Santiago barnebou stadium",
+      isIndoor: false,
+      placeId: 8,
+      capacityNormal: 20,
+      capacityVip: 6,
+    },
+  ];
+
+  const newevents = [
+    {
+      name: "Çılgın Buluşma - Resim Sergisi",
+      price: 100,
+      date: "2021-07-19T12:11:10.741Z",
+      duration: "1:00:00",
+      description:
+        "Çılgın Buluşmaya hazır mısınız? ☺️ Nasrah Nefer, Ayşe Akalın Yalçındağ ve Serpil Topaloğlu 'nun sanatının buluştuğu resim sergisi 19 Temmuz Çarşamba günü saat 17.30'da sizlerle.",
+      eventImages:
+        "https://www.izmir.art/imgServ/img/uploads/image-53817a46a79c751c3cdf047a254551458efcda01.png",
+      eventType: 3,
+      stageIds: [1, 2],
+    },
+    {
+      name: "Başka Sinema Film Geceleri",
+      price: 150,
+      date: "2021-07-15T12:11:10.741Z",
+      duration: "1:30:00",
+      description:
+        "Başka Sinema, ulusal ve uluslararası bağımsız filmlerin gösterilmesi için mekan ve imkan yaratarak, gişe filmlerine alternatif olacak kaliteli sinema ürünlerini izleyiciyle buluşturma hedefiyle ve KARİYO ABABAY VAKFI’nın desteğiyle hayata geçirilmiş bir projedir. 1 Kasım 2013’te 2 şehirde toplam 4 salonda faaliyet göstermeye başlayan BAŞKA SİNEMA Ocak 2023 itibarıyla 18 şehirde gösterilmiştir.",
+      eventImages:
+        "https://www.izmir.art/500/600/img/uploads/image-201934286314459212e684ca1223911816987dff.png",
+      eventType: 1,
+      stageIds: [2, 3],
+    },
+    {
+      name: "Kadıköy Belediyesi Çocuk Tiyatrosu",
+      price: 50,
+      date: "2021-07-15T12:11:10.741Z",
+      duration: "1:30:00",
+      description:
+        "Kadıköy Belediyesi Çocuk Tiyatrosu, çocukların tiyatroyla tanışmasını sağlamak, tiyatro kültürünü geliştirmek, çocukların sanatla iç içe olmasını sağlamak amacıyla 2005 yılında kurulmuştur. 2005 yılından bu yana 15 yıldır çocuklarımızın tiyatro ile buluşmasını sağlayan Kadıköy Belediyesi Çocuk Tiyatrosu, 2019-2020 sezonunda 10 farklı oyunu 10 farklı sahnede 10.000 çocuğumuzla buluşturmuştur. 2020-2021 sezonunda da çocuklarımızın tiyatro ile buluşmasını sağlamak amacıyla 10 farklı oyunu 10 farklı sahnede 10.000 çocuğumuzla buluşturmayı hedeflemektedir.",
+      eventImages:
+        "https://www.izmir.art/500/600/img/uploads/image-201934286314459212e684ca1223911816987dff.png",
+      eventType: 3,
+      stageIds: [3],
+    },
+    {
+      name: "Galatasaray - Fenerbahce",
+      price: 700,
+      date: "2023-07-10T12:11:10.741Z",
+      duration: "1:30:00",
+      description:
+        "Dev istanbul derbisinde gülen kim olacak. Ligin kritik maçında galatasaray ile fenerbahce karşı karşıya geliyor. Maçın biletlerini kaçırmayın.",
+      eventImages:
+        "https://idsb.tmgrup.com.tr/ly/uploads/images/2023/01/09/250718.jpg,https://i.fanatik.com.tr/i/fanatik/75/0x410/647ccda480a03315e4f42c3d.jpg,https://i2.sdacdn.com/haber/2023/06/04/zaniolo-gol-izle-gs-fb-derbi-zaniolo-gol-izle-15995769_2861_amp.jpg",
+      eventType: 2,
+      stageIds: [4],
+    },
+    {
+      name: "Real Madrid - Barcelona",
+      price: 1200,
+      date: "2023-07-08T12:11:10.741Z",
+      duration: "1:30:00",
+      description:
+        "Dev ispanya derbisinde gülen kim olacak. Ligin kritik maçında real madrid ile barcelona karşı karşıya geliyor. Maçın biletlerini kaçırmayın.",
+      eventImages:
+        "https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt87239a238637294c/63f36d813bf6f711199fdf45/22f81d2a-43df-46b2-ad3d-5207848557ef.jpg?auto=webp&format=pjpg&width=1920&quality=60,https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt99e3a230fe87a117/60dbe98e892a730f58850677/52d253adf373db56b90500e53369dab71821f208.jpg?auto=webp&format=pjpg&width=1920&quality=60,https://cdnuploads.aa.com.tr/uploads/Contents/2020/10/24/thumbs_b_c_639925f0dc392927f5a18dc52b975c9b.jpg?v=195213",
+      eventType: 2,
+      stageIds: [5],
+    },
+    {
+      name: "Algılanan Dünyalar",
+      price: 1700,
+      date: "2023-07-15T12:11:10.741Z",
+      duration: "2:30:00",
+      description: "Algılanan Dünyalar, 2023 yılında 4. kez düzenleniyor.",
+      eventImages:
+        "https://www.izmir.art/500/600/img/uploads/image-201934286314459212e684ca1223911816987dff.png",
+      eventType: 3,
+      stageIds: [2],
+    },
+    {
+      name: "İzmir Uluslararası Kısa Film Festivali",
+      price: 1700,
+      date: "2023-07-15T12:11:10.741Z",
+      duration: "2:30:00",
+      description:
+        "İzmir Uluslararası Kısa Film Festivali, 2023 yılında 4. kez düzenleniyor.",
+      eventImages:
+        "https://www.izmir.art/500/600/img/uploads/image-201934286314459212e684ca1223911816987dff.png",
+      eventType: 3,
+      stageIds: [],
+    },
+  ];
+  const newratings = [
+    {
+      eventId: 1,
+      customerId: 1,
+      ratingValue: 5,
+      comment: "Çok güzel bir etkinlikti.",
+    },
+
+    {
+      eventId: 2,
+      customerId: 2,
+      ratingValue: 4,
+      comment: "Sonuna doğru sıkıcı olsada güzel bir etkinlikti",
+    },
+    {
+      eventId: 3,
+      customerId: 2,
+      ratingValue: 3,
+      comment: "Biletler çok pahalıydı",
+    },
+
+    {
+      eventId: 4,
+      customerId: 1,
+      ratingValue: 5,
+      comment: "Çok güzel bir maçtı.",
+    },
+  ];
+
+  const handleGenerateData = async () => {
+    try {
+      await newcountries.map(async (country) => {
+        await createCountry(country);
+      });
+      await newcities.map(async (city) => {
+        await createCity(city);
+      });
+      await newaddresses.map(async (address) => {
+        await createAddress(address);
+      });
+      await newcustomers.map(async (customer) => {
+        await createCustomer(customer);
+      });
+      await newplaces.map(async (place) => {
+        await createPlace(place);
+      });
+      await newstages.map(async (stage) => {
+        await createStage(stage);
+      });
+
+      await newevents.map(async (event) => {
+        await createEvent(event);
+      });
+      await newratings.map(async (rating) => {
+        await createRating(rating);
+      });
+
+      alert("Data Generated!");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleDeleteData = async () => {
+    try {
+      setLoading(true);
+      await axios.get("https://localhost:7169/api/event/deleteAll");
+      fetchCountry();
+      fetchCity();
+      fetchAddress();
+      fetchPlace();
+      fetchStage();
+      fetchCustomer();
+      fetchEventImage();
+      fetchEvent();
+      fetchRating();
+      fetchEventStage();
+      fetchTicket();
+      fetchEventSeats();
+      fetchSeats();
+      alert("Data Deleted!");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     isAdmin && (
       <div className="adminPage">
         <h1>Admin Page</h1>
+        <div className="adminPage__container">
+          <button className="button" onClick={() => handleGenerateData()}>
+            Generate Data
+          </button>
+          <button
+            className="button btn-warning"
+            onClick={() => handleDeleteData()}
+          >
+            Delete Data
+          </button>
+        </div>
+
         <CreateCountryForm
           createCountry={createCountry}
           deleteCountry={deleteCountry}

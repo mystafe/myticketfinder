@@ -11,7 +11,13 @@ function CreateEventForm({ createEvent, deleteEvent }) {
     `Test Event ${Math.random().toFixed(3) * 1000}`
   );
   const [price, setPrice] = useState(100);
-  const [date, setDate] = useState("2023-07-01T18:45");
+  const [date, setDate] = useState(
+    new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000)
+      .toISOString()
+      .slice(0, 16)
+      .replace("T", " ")
+  );
+
   const [duration, setDuration] = useState("01:30:00");
   const [description, setDescription] = useState("Event details");
   const [eventType, setEventType] = useState(0);
@@ -58,7 +64,7 @@ function CreateEventForm({ createEvent, deleteEvent }) {
     setEventImagesInForm([]);
     setEventImages([]);
     setName(`Test Event ${Math.random().toFixed(3) * 1000}`);
-    setDate("2023-07-01T18:45");
+    setDate(new Date(new Date().getTime() + 3 * 24 * 60 * 60 * 1000));
     setDuration("20:45");
     setEventImages([]);
   };

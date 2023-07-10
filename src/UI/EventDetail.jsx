@@ -120,7 +120,9 @@ function EventDetail() {
     try {
       setLoading(true);
       const res = await axios.get("https://localhost:7169/api/place/");
-      const myPlace = res.data.find((place) => place.id == stage?.placeId);
+      const myPlace = await res.data.find(
+        (place) => place.id == stage?.placeId
+      );
 
       setPlace(myPlace);
       setAddress(myPlace?.address);
@@ -131,7 +133,6 @@ function EventDetail() {
     }
   };
   const geoDecoder = async () => {
-    console.log("DECODERDECODER");
     const lt = place?.address?.geoLocation.slice(1).split(",")[0];
     const ln = place?.address?.geoLocation.split(",")[1].slice(0, -1);
     setLat(ln);
@@ -151,7 +152,7 @@ function EventDetail() {
     fetchPlace();
     setAvailableSeats();
     geoDecoder();
-  }, []);
+  }, [selectedSeats]);
 
   const createTicket = async (seatId) => {
     try {
@@ -184,13 +185,8 @@ function EventDetail() {
     geoDecoder();
   };
 
-  console.log("event from menu", event);
-  console.log("seats from menu:", seats);
-
   return (
     <div className="eventdetails">
-      <h1>Event Name</h1>
-      {/* <Slider imgData={concertImages} /> */}
       <Slider imgData={event?.eventImages} />
 
       <div className="eventdetail">
@@ -209,8 +205,8 @@ function EventDetail() {
         <div className="eventdetail__info">
           <div className="eventdetail__info__date">
             <h2>Date</h2>
-            <p>{event?.date.slice(0, 10)} - 12/07/2023</p>
-            <p>{event?.date.slice(11, 16)} -12:00</p>
+            <p>{event?.date.slice(0, 10)} </p>
+            <p>{event?.date.slice(11, 16)} </p>
           </div>
 
           <div className="eventdetail__info__price">
@@ -228,12 +224,12 @@ function EventDetail() {
 
           <div className="evetdetail__info__address">
             <h2>Address</h2>
-            <p> {event?.eventStages[0].name} Lutfi Kirdar Kongre Mrkz.</p>
-            <p>Cemil Topuzlu Sahnesi</p>
-            <p>Osmanbey mh Sadi sk No:3</p>
-
-            <p>Istanbul, Turkiye</p>
-
+            <p>
+              {console.log("Adress inside of address", address, event)}
+              {address
+                ? address.name + " " + address.fullAddress
+                : "No Address"}
+            </p>
             <div className="btn btn-sm btn-location">Show Location</div>
           </div>
 
@@ -289,12 +285,7 @@ function EventDetail() {
       <div className="eventdetail__map">
         <p> Map </p>
         <Map geoLocation={{ latitude: 41.0774, longitude: 28.9719 }} />,
-        {console.log(+lat, +lng)}
-        <Map geoLocation={{ latitude, longitude }} />,
-        {/* <Map geoLocation={{ latitude: {address.geoLocation.la} longitude: 28.9719 }} />, */}
-        {/* {console.log("!1!!!", place?.address)}
-        {console.log("!222!!!", place?.address?.geoLocation[0])}
-        {console.log("!333!!!", lat, lng)} */}
+        {/* <Map geoLocation={{ latitude, longitude }} />, */}
       </div>
     </div>
   );

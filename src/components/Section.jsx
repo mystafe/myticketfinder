@@ -3,65 +3,14 @@ import "./Section.css";
 import { Link } from "react-router-dom";
 
 function Section({ name, data }) {
-  // const featuredData = [""
-  //   {
-  //     id: 1,
-
-  //     name: "Concert of Eminem",
-  //     date: "2023-07-01",
-  //     description:
-  //       "Eminem is one of the best rappers in the world, and he is coming to your city!",
-  //     price: 123.45,
-  //     type: "Concert",
-  //     image: [
-  //       {
-  //         urlAddress: "https://picsum.photos/230/300",
-  //       },
-  //     ],
-  //     stage: {
-  //       name: "Stage 1",
-  //       location: "Istanbul,Turkiye",
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-
-  //     name: "Real Madrid -Barcelon Footbal Match",
-  //     date: "2023-07-02",
-  //     description:
-  //       "Real Madrid and Barcelon are playing a football match in your city!",
-  //     price: 123.45,
-  //     type: "Football",
-  //     image: [
-  //       {
-  //         urlAddress: "https://picsum.photos/220/300",
-  //       },
-  //     ],
-  //     stage: {
-  //       name: "Stage 2",
-  //       location: "Bursa,Turkiye",
-  //     },
-  //   },
-  //   {
-  //     id: 3,
-
-  //     name: "Shakspeare Theatre Play",
-  //     date: "2023-07-03",
-  //     description: "Shakspeare is very famous theatre...",
-  //     price: 123.45,
-  //     type: "Theatre",
-  //     image: [
-  //       {
-  //         urlAddress: "https://picsum.photos/200/300",
-  //       },
-  //     ],
-  //     stage: {
-  //       name: "Stage 3",
-  //       location: "Izmir,Turkiye",
-  //     },
-  //   },
-  // ];
-
+  const eventTypes = {
+    1: "Concert",
+    2: "Football",
+    3: "Art",
+    4: "Cinema",
+    5: "Other",
+  };
+  console.log("event type length", eventTypes.length);
   return (
     <section className="section-tours" id="section-tours">
       <div className="u-center-text u-margin-bottom-big">
@@ -69,6 +18,14 @@ function Section({ name, data }) {
       </div>
 
       <div className="row">
+        {data?.length === 0 ? (
+          <div className="u-center-text u-margin-bottom">
+            <h2 className="">No event found</h2>
+          </div>
+        ) : (
+          ""
+        )}
+
         {data?.map((item) => (
           <div className="col-1-of-3">
             <div className="card" style={{ marginBottom: 25 }}>
@@ -90,10 +47,37 @@ function Section({ name, data }) {
                 </h4>
                 <div className="card__details">
                   <ul>
-                    <p>{item.date}</p>
+                    <p>
+                      <i>
+                        {new Date(item.date).toLocaleDateString("tr-TR", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                        {""}
+                        {new Date(item.date)
+                          .toLocaleTimeString("tr-TR", {
+                            hour: "numeric",
+                            minute: "numeric",
+                          })
+                          .split(" ")
+                          .join(" ")
+                          .replace(",", "")}
+                      </i>
+                    </p>
+                    <hr />
+                    <p>
+                      {item.description.length % 5 < 3 ? "Istanbul" : "Ankara"}
+                    </p>
+
+                    <p>{item.description.slice(0, 30) + ".."}</p>
+                    <hr />
+                    <p>
+                      <strong>{eventTypes[item.eventType]}</strong>{" "}
+                    </p>
+                    <hr />
+
                     <p>{item.type}</p>
-                    <p>{item.stage?.name}</p>
-                    <p>{item.stage?.location}</p>
                   </ul>
                 </div>
               </div>
@@ -111,11 +95,6 @@ function Section({ name, data }) {
             </div>
           </div>
         ))}
-      </div>
-      <div className="u-center-text u-margin-top-huge">
-        <Link to="event" className="btn btn--green">
-          Discover all
-        </Link>
       </div>
     </section>
   );

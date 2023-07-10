@@ -3,11 +3,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Under Construction
+![image](https://github.com/mystafe/myticketfinder/assets/75567558/a8accce9-a847-434e-b0d9-b3712e602c30)
 
-![image](https://github.com/mystafe/myticketfinder/assets/75567558/a04a4998-fe4f-4f62-9ba8-a1f2f1dadb33)
+![image](https://github.com/mystafe/myticketfinder/assets/75567558/1e24eedf-2979-4978-a5a4-7eb8a0ed5502)
+![image](https://github.com/mystafe/myticketfinder/assets/75567558/e2123053-86cb-4f09-bd05-2d5ba75034f1)
 
 admin page:
-![Alt text](image.png)
+![image](https://github.com/mystafe/myticketfinder/assets/75567558/4a955b2d-be47-4117-a6f4-0496f3ef4f7c)
+
 
 ## Available Scripts
 
